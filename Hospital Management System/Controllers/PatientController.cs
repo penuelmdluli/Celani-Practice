@@ -36,7 +36,7 @@ namespace Hospital_Management_System.Controllers
             var model = new CollectionOfAll
             {
                 Ambulances = db.Ambulances.ToList(),
-                Departments = db.Department.ToList(),
+                Departments = db.Centre.ToList(),
                 Psychologists = db.Psychologists.ToList(),
                 Patients = db.Patients.ToList(),
                 Medicines = db.Medicines.ToList(),
@@ -188,15 +188,15 @@ namespace Hospital_Management_System.Controllers
 
         //List of Available Psychologists
         [Authorize(Roles = "Patient")]
-        public ActionResult AvailableDoctors()
+        public ActionResult AvailablePsychologists()
         {
-            var doctor = db.Psychologists.Include(c => c.Department).Where(c => c.Status == "Active").ToList();
+            var doctor = db.Psychologists.Include(c => c.Centre).Where(c => c.Status == "Active").ToList();
             return View(doctor);
         }
 
         //Show Psychologist Schedule
         [Authorize(Roles = "Patient")]
-        public ActionResult DoctorSchedule(int id)
+        public ActionResult PsychologistSchedule(int id)
         {
             var schedule = db.Schedules.Include(c => c.Psychologist).Single(c => c.DoctorId == id);
             return View(schedule);
@@ -204,9 +204,9 @@ namespace Hospital_Management_System.Controllers
 
         //Psychologist Detail
         [Authorize(Roles = "Patient")]
-        public ActionResult DoctorDetail(int id)
+        public ActionResult PsychologistDetail(int id)
         {
-            var doctor = db.Psychologists.Include(c => c.Department).Single(c => c.Id == id);
+            var doctor = db.Psychologists.Include(c => c.Centre).Single(c => c.Id == id);
             return View(doctor);
         }
 

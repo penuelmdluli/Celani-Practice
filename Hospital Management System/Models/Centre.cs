@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Hospital_Management_System.Models
 {
-    public class Department
+    public class Centre
     {
         public int Id { get; set; }
         [Required]

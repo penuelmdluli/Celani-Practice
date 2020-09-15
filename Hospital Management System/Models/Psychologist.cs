@@ -30,8 +30,8 @@ namespace Hospital_Management_System.Models
         [Required]
         public string Designation { get; set; }
 
-        public Department Department { get; set; }
-        [Display(Name = "Department")]
+        public Centre Centre { get; set; }
+        [Display(Name = "Centre")]
         public int DepartmentId { get; set; }
 
         public string Address { get; set; }

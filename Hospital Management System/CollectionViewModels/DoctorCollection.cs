@@ -10,6 +10,6 @@ namespace Hospital_Management_System.CollectionViewModels
     {
         public RegisterViewModel ApplicationUser { get; set; }
         public Psychologist Psychologist { get; set; }
-        public IEnumerable<Department> Departments { get; set; }
+        public IEnumerable<Centre> Departments { get; set; }
     }
 }

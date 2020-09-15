@@ -38,7 +38,7 @@ namespace Hospital_Management_System.Controllers
             var model = new CollectionOfAll
             {
                 Ambulances = db.Ambulances.ToList(),
-                Departments = db.Department.ToList(),
+                Departments = db.Centre.ToList(),
                 Psychologists = db.Psychologists.ToList(),
                 Patients = db.Patients.ToList(),
                 Medicines = db.Medicines.ToList(),

@@ -124,7 +124,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Psychologist.DepartmentId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Psychologist.DepartmentId, new SelectList(Model.Departments, "Id", "Name"), "Select Department", new { @id = "dropdown", @class = "form-control" })
+                @Html.DropDownListFor(model => model.Psychologist.DepartmentId, new SelectList(Model.Departments, "Id", "Name"), "Select Centre", new { @id = "dropdown", @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Psychologist.DepartmentId, "", new { @class = "text-danger" })
             </div>
         </div>

@@ -192,6 +192,10 @@
     <Compile Include="Migrations\202009152045414_AddedPsychologistTable.Designer.cs">
       <DependentUpon>202009152045414_AddedPsychologistTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009152241463_UpdatedDatabase.cs" />
+    <Compile Include="Migrations\202009152241463_UpdatedDatabase.Designer.cs">
+      <DependentUpon>202009152241463_UpdatedDatabase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Ambulance.cs" />
@@ -200,7 +204,7 @@
     <Compile Include="Models\Appointment.cs" />
     <Compile Include="Models\Complaint.cs" />
     <Compile Include="Models\DeleteAnnouncementOnExpire.cs" />
-    <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\Centre.cs" />
     <Compile Include="Models\DepartmentStatus.cs" />
     <Compile Include="Models\Psychologist.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -524,7 +528,7 @@
     <Content Include="Views\Admin\DepartmentList.cshtml" />
     <Content Include="Views\Admin\EditDepartment.cshtml" />
     <Content Include="Views\Admin\DeleteDepartment.cshtml" />
-    <Content Include="Views\Shared\_DoctorLayout.cshtml" />
+    <Content Include="Views\Shared\_PsychologistLayout.cshtml" />
     <Content Include="Views\Psychologist\Index.cshtml" />
     <Content Include="Views\Shared\_PatientLayout.cshtml" />
     <Content Include="Views\Patient\Index.cshtml" />
@@ -580,8 +584,8 @@
     <Content Include="Views\Admin\EditAnnouncement.cshtml" />
     <Content Include="Views\Admin\DeleteAnnouncement.cshtml" />
     <Content Include="Views\Patient\AvailableDoctors.cshtml" />
-    <Content Include="Views\Patient\DoctorSchedule.cshtml" />
-    <Content Include="Views\Patient\DoctorDetail.cshtml" />
+    <Content Include="Views\Patient\PsychologistSchedule.cshtml" />
+    <Content Include="Views\Patient\PsychologistDetail.cshtml" />
     <Content Include="Views\Patient\AddComplain.cshtml" />
     <Content Include="Views\Patient\ListOfComplains.cshtml" />
     <Content Include="Views\Patient\DeleteComplain.cshtml" />
@@ -611,6 +615,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009152045414_AddedPsychologistTable.resx">
       <DependentUpon>202009152045414_AddedPsychologistTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009152241463_UpdatedDatabase.resx">
+      <DependentUpon>202009152241463_UpdatedDatabase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

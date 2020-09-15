@@ -47,7 +47,7 @@ namespace Hospital_Management_System.Controllers
             var model = new CollectionOfAll
             {
                 Ambulances = db.Ambulances.ToList(),
-                Departments = db.Department.ToList(),
+                Departments = db.Centre.ToList(),
                 Psychologists = db.Psychologists.ToList(),
                 Patients = db.Patients.ToList(),
                 Medicines = db.Medicines.ToList(),
@@ -60,17 +60,17 @@ namespace Hospital_Management_System.Controllers
             return View(model);
         }
 
-        //Department Section
+        //Centre Section
 
-        //Department List
+        //Centre List
         [Authorize(Roles = "Admin")]
         public ActionResult DepartmentList()
         {
-            var model = db.Department.ToList();
+            var model = db.Centre.ToList();
             return View(model);
         }
 
-        //Add Department
+        //Add Centre
         [Authorize(Roles = "Admin")]
         public ActionResult AddDepartment()
         {
@@ -79,32 +79,32 @@ namespace Hospital_Management_System.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddDepartment(Department model)
+        public ActionResult AddDepartment(Centre model)
         {
-            if (db.Department.Any(c => c.Name == model.Name))
+            if (db.Centre.Any(c => c.Name == model.Name))
             {
                 ModelState.AddModelError("Name", "Name already present!");
                 return View(model);
             }
 
-            db.Department.Add(model);
+            db.Centre.Add(model);
             db.SaveChanges();
             return RedirectToAction("DepartmentList");
         }
 
-        //Edit Department
+        //Edit Centre
         [Authorize(Roles = "Admin")]
         public ActionResult EditDepartment(int id)
         {
-            var model = db.Department.SingleOrDefault(c => c.Id == id);
+            var model = db.Centre.SingleOrDefault(c => c.Id == id);
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditDepartment(int id, Department model)
+        public ActionResult EditDepartment(int id, Centre model)
         {
-            var department = db.Department.Single(c => c.Id == id);
+            var department = db.Centre.Single(c => c.Id == id);
             department.Name = model.Name;
             department.Description = model.Description;
             department.Status = model.Status;
@@ -115,7 +115,7 @@ namespace Hospital_Management_System.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult DeleteDepartment(int? id)
         {
-            var department = db.Department.Single(c => c.Id == id);
+            var department = db.Centre.Single(c => c.Id == id);
             return View(department);
         }
 
@@ -123,13 +123,13 @@ namespace Hospital_Management_System.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteDepartment(int id)
         {
-            var department = db.Department.SingleOrDefault(c => c.Id == id);
-            db.Department.Remove(department);
+            var department = db.Centre.SingleOrDefault(c => c.Id == id);
+            db.Centre.Remove(department);
             db.SaveChanges();
             return RedirectToAction("DepartmentList");
         }
 
-        //End Department Section
+        //End Centre Section
 
         //Start Ambulance Section
         //Ambulance Driver Section
@@ -371,7 +371,7 @@ namespace Hospital_Management_System.Controllers
             {
                 ApplicationUser = new RegisterViewModel(),
                 Psychologist = new Psychologist(),
-                Departments = db.Department.ToList()
+                Departments = db.Centre.ToList()
             };
             return View(collection);
         }
@@ -423,15 +423,15 @@ namespace Hospital_Management_System.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult ListOfDoctors()
         {
-            var doctor = db.Psychologists.Include(c => c.Department).ToList();
+            var doctor = db.Psychologists.Include(c => c.Centre).ToList();
             return View(doctor);
         }
 
         //Detail of Psychologist
         [Authorize(Roles = "Admin")]
-        public ActionResult DoctorDetail(int id)
+        public ActionResult PsychologistDetail(int id)
         {
-            var doctor = db.Psychologists.Include(c => c.Department).SingleOrDefault(c => c.Id == id);
+            var doctor = db.Psychologists.Include(c => c.Centre).SingleOrDefault(c => c.Id == id);
             return View(doctor);
         }
 
@@ -441,7 +441,7 @@ namespace Hospital_Management_System.Controllers
         {
             var collection = new DoctorCollection
             {
-                Departments = db.Department.ToList(),
+                Departments = db.Centre.ToList(),
                 Psychologist = db.Psychologists.Single(c => c.Id == id)
             };
             return View(collection);
