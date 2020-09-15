@@ -243,9 +243,9 @@ namespace Hospital_Management_System.Controllers
                 {
                     return RedirectToAction("Index", "Admin", new { Message = "Password has been Reset" });
                 }
-                else if (UserManager.IsInRole(user.Id, UserRoles.Doctor))
+                else if (UserManager.IsInRole(user.Id, UserRoles.Psychologist))
                 {
-                    return RedirectToAction("Index", "Doctor", new { Message = "Password has been Reset" });
+                    return RedirectToAction("Index", "Psychologist", new { Message = "Password has been Reset" });
                 }
                 return RedirectToAction("Index", "Patient", new { Message = "Password has been Reset" });
             }

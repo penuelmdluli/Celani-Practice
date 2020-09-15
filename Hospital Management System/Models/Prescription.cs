@@ -11,7 +11,7 @@ namespace Hospital_Management_System.Models
     {
         public int Id { get; set; }
 
-        public Doctor Doctor { get; set; }
+        public Psychologist Psychologist { get; set; }
         public int DoctorId { get; set; }
 
         public string DoctorName { get; set; }

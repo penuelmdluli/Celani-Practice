@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Hospital_Management_System.Models
 {
-    public class Doctor
+    public class Psychologist
     {
         public int Id { get; set; }
 

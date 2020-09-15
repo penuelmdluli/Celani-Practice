@@ -177,7 +177,7 @@
     <Compile Include="CollectionViewModels\ScheduleCollection.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\DoctorController.cs" />
+    <Compile Include="Controllers\PsychologistController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PatientController.cs" />
@@ -187,6 +187,10 @@
     <Compile Include="Migrations\202009151934000_init.cs" />
     <Compile Include="Migrations\202009151934000_init.Designer.cs">
       <DependentUpon>202009151934000_init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202009152045414_AddedPsychologistTable.cs" />
+    <Compile Include="Migrations\202009152045414_AddedPsychologistTable.Designer.cs">
+      <DependentUpon>202009152045414_AddedPsychologistTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -198,7 +202,7 @@
     <Compile Include="Models\DeleteAnnouncementOnExpire.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\DepartmentStatus.cs" />
-    <Compile Include="Models\Doctor.cs" />
+    <Compile Include="Models\Psychologist.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Medicine.cs" />
@@ -521,7 +525,7 @@
     <Content Include="Views\Admin\EditDepartment.cshtml" />
     <Content Include="Views\Admin\DeleteDepartment.cshtml" />
     <Content Include="Views\Shared\_DoctorLayout.cshtml" />
-    <Content Include="Views\Doctor\Index.cshtml" />
+    <Content Include="Views\Psychologist\Index.cshtml" />
     <Content Include="Views\Shared\_PatientLayout.cshtml" />
     <Content Include="Views\Patient\Index.cshtml" />
     <Content Include="Views\Admin\AddAmbulanceDriver.cshtml" />
@@ -544,16 +548,16 @@
     <Content Include="Views\Admin\ListOfSchedules.cshtml" />
     <Content Include="Views\Admin\EditSchedule.cshtml" />
     <Content Include="Views\Admin\DeleteSchedule.cshtml" />
-    <Content Include="Views\Doctor\AddPrescription.cshtml" />
-    <Content Include="Views\Doctor\ListOfPrescription.cshtml" />
-    <Content Include="Views\Doctor\ViewPrescription.cshtml" />
+    <Content Include="Views\Psychologist\AddPrescription.cshtml" />
+    <Content Include="Views\Psychologist\ListOfPrescription.cshtml" />
+    <Content Include="Views\Psychologist\ViewPrescription.cshtml" />
     <Content Include="Views\Admin\DeleteDoctor.cshtml" />
     <Content Include="Views\Admin\ListOfPatients.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Doctor\DeletePrescription.cshtml" />
+    <Content Include="Views\Psychologist\DeletePrescription.cshtml" />
     <Content Include="Views\Admin\EditPatient.cshtml" />
     <Content Include="Views\Admin\DeletePatient.cshtml" />
-    <Content Include="Views\Doctor\EditPrescription.cshtml" />
+    <Content Include="Views\Psychologist\EditPrescription.cshtml" />
     <Content Include="Views\Admin\AddAppointment.cshtml" />
     <Content Include="Views\Admin\ListOfAppointments.cshtml" />
     <Content Include="Views\Admin\EditAppointment.cshtml" />
@@ -562,14 +566,14 @@
     <Content Include="Views\Admin\DeleteAppointment.cshtml" />
     <Content Include="Views\Patient\AddAppointment.cshtml" />
     <Content Include="Views\Patient\ListOfAppointments.cshtml" />
-    <Content Include="Views\Doctor\ScheduleDetail.cshtml" />
-    <Content Include="Views\Doctor\EditSchedule.cshtml" />
-    <Content Include="Views\Doctor\AddAppointment.cshtml" />
-    <Content Include="Views\Doctor\ActiveAppointments.cshtml" />
-    <Content Include="Views\Doctor\PendingAppointments.cshtml" />
-    <Content Include="Views\Doctor\EditAppointment.cshtml" />
-    <Content Include="Views\Doctor\DetailOfAppointment.cshtml" />
-    <Content Include="Views\Doctor\DeleteAppointment.cshtml" />
+    <Content Include="Views\Psychologist\ScheduleDetail.cshtml" />
+    <Content Include="Views\Psychologist\EditSchedule.cshtml" />
+    <Content Include="Views\Psychologist\AddAppointment.cshtml" />
+    <Content Include="Views\Psychologist\ActiveAppointments.cshtml" />
+    <Content Include="Views\Psychologist\PendingAppointments.cshtml" />
+    <Content Include="Views\Psychologist\EditAppointment.cshtml" />
+    <Content Include="Views\Psychologist\DetailOfAppointment.cshtml" />
+    <Content Include="Views\Psychologist\DeleteAppointment.cshtml" />
     <Content Include="Views\Patient\DeleteAppointment.cshtml" />
     <Content Include="Views\Admin\AddAnnouncement.cshtml" />
     <Content Include="Views\Admin\ListOfAnnouncement.cshtml" />
@@ -604,6 +608,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202009151934000_init.resx">
       <DependentUpon>202009151934000_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009152045414_AddedPsychologistTable.resx">
+      <DependentUpon>202009152045414_AddedPsychologistTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Hospital_Management_System.Models.Doctor>
+﻿@model IEnumerable<Hospital_Management_System.Models.Psychologist>
 
 @{
     ViewBag.Title = "ListOfDoctors";
@@ -12,15 +12,15 @@
                 <em class="fa fa-home"></em>
             </a>
         </li>
-        <li class="active">Doctor</li>
-        <li class="active">List of Doctors</li>
+        <li class="active">Psychologist</li>
+        <li class="active">List of Psychologists</li>
     </ol>
 </div>
 
-<h2>List Of Doctors</h2>
+<h2>List Of Psychologists</h2>
 
 <p>
-    @Html.ActionLink("Add Doctor", "AddDoctor", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Add Psychologist", "AddDoctor", null, new { @class = "btn btn-primary" })
 </p>
 <table id="table_id" class="table">
     <thead>

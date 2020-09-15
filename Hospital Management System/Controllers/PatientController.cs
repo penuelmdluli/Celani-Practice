@@ -37,7 +37,7 @@ namespace Hospital_Management_System.Controllers
             {
                 Ambulances = db.Ambulances.ToList(),
                 Departments = db.Department.ToList(),
-                Doctors = db.Doctors.ToList(),
+                Psychologists = db.Psychologists.ToList(),
                 Patients = db.Patients.ToList(),
                 Medicines = db.Medicines.ToList(),
                 ActiveAppointments = db.Appointments.Where(c => c.Status).Where(c => c.PatientId == patient.Id).Where(c => c.AppointmentDate >= date).ToList(),
@@ -84,7 +84,7 @@ namespace Hospital_Management_System.Controllers
             var collection = new AppointmentCollection
             {
                 Appointment = new Appointment(),
-                Doctors = db.Doctors.ToList()
+                Psychologists = db.Psychologists.ToList()
             };
             return View(collection);
         }
@@ -96,7 +96,7 @@ namespace Hospital_Management_System.Controllers
             var collection = new AppointmentCollection
             {
                 Appointment = model.Appointment,
-                Doctors = db.Doctors.ToList()
+                Psychologists = db.Psychologists.ToList()
             };
             if (model.Appointment.AppointmentDate >= DateTime.Now.Date)
             {
@@ -125,7 +125,7 @@ namespace Hospital_Management_System.Controllers
         {
             string user = User.Identity.GetUserId();
             var patient = db.Patients.Single(c => c.ApplicationUserId == user);
-            var appointment = db.Appointments.Include(c => c.Doctor).Where(c => c.PatientId == patient.Id).ToList();
+            var appointment = db.Appointments.Include(c => c.Psychologist).Where(c => c.PatientId == patient.Id).ToList();
             return View(appointment);
         }
 
@@ -136,7 +136,7 @@ namespace Hospital_Management_System.Controllers
             var collection = new AppointmentCollection
             {
                 Appointment = db.Appointments.Single(c => c.Id == id),
-                Doctors = db.Doctors.ToList()
+                Psychologists = db.Psychologists.ToList()
             };
             return View(collection);
         }
@@ -148,7 +148,7 @@ namespace Hospital_Management_System.Controllers
             var collection = new AppointmentCollection
             {
                 Appointment = model.Appointment,
-                Doctors = db.Doctors.ToList()
+                Psychologists = db.Psychologists.ToList()
             };
             if (model.Appointment.AppointmentDate >= DateTime.Now.Date)
             {
@@ -184,33 +184,33 @@ namespace Hospital_Management_System.Controllers
 
         //End Appointment Section
 
-        //Start Doctor Section
+        //Start Psychologist Section
 
-        //List of Available Doctors
+        //List of Available Psychologists
         [Authorize(Roles = "Patient")]
         public ActionResult AvailableDoctors()
         {
-            var doctor = db.Doctors.Include(c => c.Department).Where(c => c.Status == "Active").ToList();
+            var doctor = db.Psychologists.Include(c => c.Department).Where(c => c.Status == "Active").ToList();
             return View(doctor);
         }
 
-        //Show Doctor Schedule
+        //Show Psychologist Schedule
         [Authorize(Roles = "Patient")]
         public ActionResult DoctorSchedule(int id)
         {
-            var schedule = db.Schedules.Include(c => c.Doctor).Single(c => c.DoctorId == id);
+            var schedule = db.Schedules.Include(c => c.Psychologist).Single(c => c.DoctorId == id);
             return View(schedule);
         }
 
-        //Doctor Detail
+        //Psychologist Detail
         [Authorize(Roles = "Patient")]
         public ActionResult DoctorDetail(int id)
         {
-            var doctor = db.Doctors.Include(c => c.Department).Single(c => c.Id == id);
+            var doctor = db.Psychologists.Include(c => c.Department).Single(c => c.Id == id);
             return View(doctor);
         }
 
-        //End Doctor Section
+        //End Psychologist Section
 
         //Start Complaint Section
 
@@ -282,7 +282,7 @@ namespace Hospital_Management_System.Controllers
         {
             string user = User.Identity.GetUserId();
             var patient = db.Patients.Single(c => c.ApplicationUserId == user);
-            var prescription = db.Prescription.Include(c => c.Doctor).Where(c => c.PatientId == patient.Id).ToList();
+            var prescription = db.Prescription.Include(c => c.Psychologist).Where(c => c.PatientId == patient.Id).ToList();
             return View(prescription);
         }
 

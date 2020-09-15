@@ -10,8 +10,8 @@ namespace Hospital_Management_System.Models
     {
         public int Id { get; set; }
 
-        public Doctor Doctor { get; set; }
-        [Display(Name = "Doctor Name")]
+        public Psychologist Psychologist { get; set; }
+        [Display(Name = "Psychologist Name")]
         public int DoctorId { get; set; }
 
         [Required]

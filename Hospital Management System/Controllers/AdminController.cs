@@ -48,7 +48,7 @@ namespace Hospital_Management_System.Controllers
             {
                 Ambulances = db.Ambulances.ToList(),
                 Departments = db.Department.ToList(),
-                Doctors = db.Doctors.ToList(),
+                Psychologists = db.Psychologists.ToList(),
                 Patients = db.Patients.ToList(),
                 Medicines = db.Medicines.ToList(),
                 ActiveAppointments =
@@ -361,16 +361,16 @@ namespace Hospital_Management_System.Controllers
 
         //End Medicine Section
 
-        //Start Doctor Section
+        //Start Psychologist Section
 
-        //Add Doctor 
+        //Add Psychologist 
         [Authorize(Roles = "Admin")]
         public ActionResult AddDoctor()
         {
             var collection = new DoctorCollection
             {
                 ApplicationUser = new RegisterViewModel(),
-                Doctor = new Doctor(),
+                Psychologist = new Psychologist(),
                 Departments = db.Department.ToList()
             };
             return View(collection);
@@ -384,33 +384,33 @@ namespace Hospital_Management_System.Controllers
             {
                 UserName = model.ApplicationUser.UserName,
                 Email = model.ApplicationUser.Email,
-                UserRole = "Doctor",
+                UserRole = "Psychologist",
                 RegisteredDate = DateTime.Now.Date
             };
             var result = await UserManager.CreateAsync(user, model.ApplicationUser.Password);
             if (result.Succeeded)
             {
-                await UserManager.AddToRoleAsync(user.Id, "Doctor");
-                var doctor = new Doctor
+                await UserManager.AddToRoleAsync(user.Id, "Psychologist");
+                var doctor = new Psychologist
                 {
-                    FirstName = model.Doctor.FirstName,
-                    LastName = model.Doctor.LastName,
-                    FullName = "Dr. " + model.Doctor.FirstName + " " + model.Doctor.LastName,
+                    FirstName = model.Psychologist.FirstName,
+                    LastName = model.Psychologist.LastName,
+                    FullName = "Dr. " + model.Psychologist.FirstName + " " + model.Psychologist.LastName,
                     EmailAddress = model.ApplicationUser.Email,
-                    ContactNo = model.Doctor.ContactNo,
-                    PhoneNo = model.Doctor.PhoneNo,
-                    Designation = model.Doctor.Designation,
-                    Education = model.Doctor.Education,
-                    DepartmentId = model.Doctor.DepartmentId,
-                    Specialization = model.Doctor.Specialization,
-                    Gender = model.Doctor.Gender,
-                    BloodGroup = model.Doctor.BloodGroup,
+                    ContactNo = model.Psychologist.ContactNo,
+                    PhoneNo = model.Psychologist.PhoneNo,
+                    Designation = model.Psychologist.Designation,
+                    Education = model.Psychologist.Education,
+                    DepartmentId = model.Psychologist.DepartmentId,
+                    Specialization = model.Psychologist.Specialization,
+                    Gender = model.Psychologist.Gender,
+                    BloodGroup = model.Psychologist.BloodGroup,
                     ApplicationUserId = user.Id,
-                    DateOfBirth = model.Doctor.DateOfBirth,
-                    Address = model.Doctor.Address,
-                    Status = model.Doctor.Status
+                    DateOfBirth = model.Psychologist.DateOfBirth,
+                    Address = model.Psychologist.Address,
+                    Status = model.Psychologist.Status
                 };
-                db.Doctors.Add(doctor);
+                db.Psychologists.Add(doctor);
                 db.SaveChanges();
                 return RedirectToAction("ListOfDoctors");
             }
@@ -419,30 +419,30 @@ namespace Hospital_Management_System.Controllers
 
         }
 
-        //List Of Doctors
+        //List Of Psychologists
         [Authorize(Roles = "Admin")]
         public ActionResult ListOfDoctors()
         {
-            var doctor = db.Doctors.Include(c => c.Department).ToList();
+            var doctor = db.Psychologists.Include(c => c.Department).ToList();
             return View(doctor);
         }
 
-        //Detail of Doctor
+        //Detail of Psychologist
         [Authorize(Roles = "Admin")]
         public ActionResult DoctorDetail(int id)
         {
-            var doctor = db.Doctors.Include(c => c.Department).SingleOrDefault(c => c.Id == id);
+            var doctor = db.Psychologists.Include(c => c.Department).SingleOrDefault(c => c.Id == id);
             return View(doctor);
         }
 
-        //Edit Doctors
+        //Edit Psychologists
         [Authorize(Roles = "Admin")]
         public ActionResult EditDoctors(int id)
         {
             var collection = new DoctorCollection
             {
                 Departments = db.Department.ToList(),
-                Doctor = db.Doctors.Single(c => c.Id == id)
+                Psychologist = db.Psychologists.Single(c => c.Id == id)
             };
             return View(collection);
         }
@@ -451,39 +451,39 @@ namespace Hospital_Management_System.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditDoctors(int id, DoctorCollection model)
         {
-            var doctor = db.Doctors.Single(c => c.Id == id);
-            doctor.FirstName = model.Doctor.FirstName;
-            doctor.LastName = model.Doctor.LastName;
-            doctor.FullName = "Dr. " + model.Doctor.FirstName + " " + model.Doctor.LastName;
-            doctor.ContactNo = model.Doctor.ContactNo;
-            doctor.PhoneNo = model.Doctor.PhoneNo;
-            doctor.Designation = model.Doctor.Designation;
-            doctor.Education = model.Doctor.Education;
-            doctor.DepartmentId = model.Doctor.DepartmentId;
-            doctor.Specialization = model.Doctor.Specialization;
-            doctor.Gender = model.Doctor.Gender;
-            doctor.BloodGroup = model.Doctor.BloodGroup;
-            doctor.DateOfBirth = model.Doctor.DateOfBirth;
-            doctor.Address = model.Doctor.Address;
-            doctor.Status = model.Doctor.Status;
+            var doctor = db.Psychologists.Single(c => c.Id == id);
+            doctor.FirstName = model.Psychologist.FirstName;
+            doctor.LastName = model.Psychologist.LastName;
+            doctor.FullName = "Dr. " + model.Psychologist.FirstName + " " + model.Psychologist.LastName;
+            doctor.ContactNo = model.Psychologist.ContactNo;
+            doctor.PhoneNo = model.Psychologist.PhoneNo;
+            doctor.Designation = model.Psychologist.Designation;
+            doctor.Education = model.Psychologist.Education;
+            doctor.DepartmentId = model.Psychologist.DepartmentId;
+            doctor.Specialization = model.Psychologist.Specialization;
+            doctor.Gender = model.Psychologist.Gender;
+            doctor.BloodGroup = model.Psychologist.BloodGroup;
+            doctor.DateOfBirth = model.Psychologist.DateOfBirth;
+            doctor.Address = model.Psychologist.Address;
+            doctor.Status = model.Psychologist.Status;
             db.SaveChanges();
 
             return RedirectToAction("ListOfDoctors");
         }
 
-        //Delete Doctor
+        //Delete Psychologist
         [Authorize(Roles = "Admin")]
         public ActionResult DeleteDoctor(string id)
         {
-            var UserId = db.Doctors.Single(c => c.ApplicationUserId == id);
+            var UserId = db.Psychologists.Single(c => c.ApplicationUserId == id);
             return View(UserId);
         }
 
         [HttpPost, ActionName("DeleteDoctor")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteDoctor(string id, Doctor model)
+        public ActionResult DeleteDoctor(string id, Psychologist model)
         {
-            var doctor = db.Doctors.Single(c => c.ApplicationUserId == id);
+            var doctor = db.Psychologists.Single(c => c.ApplicationUserId == id);
             var user = db.Users.Single(c => c.Id == id);
             if (db.Schedules.Where(c => c.DoctorId == doctor.Id).Equals(null))
             {
@@ -492,12 +492,12 @@ namespace Hospital_Management_System.Controllers
             }
 
             db.Users.Remove(user);
-            db.Doctors.Remove(doctor);
+            db.Psychologists.Remove(doctor);
             db.SaveChanges();
             return RedirectToAction("ListOfDoctors");
         }
 
-        //End Doctor Section
+        //End Psychologist Section
 
         //Start Schedule Section
         //Add Schedule
@@ -507,7 +507,7 @@ namespace Hospital_Management_System.Controllers
             var collection = new ScheduleCollection
             {
                 Schedule = new Schedule(),
-                Doctors = db.Doctors.ToList()
+                Psychologists = db.Psychologists.ToList()
             };
             return View(collection);
         }
@@ -521,7 +521,7 @@ namespace Hospital_Management_System.Controllers
                 var collection = new ScheduleCollection
                 {
                     Schedule = model.Schedule,
-                    Doctors = db.Doctors.ToList()
+                    Psychologists = db.Psychologists.ToList()
                 };
                 return View(collection);
             }
@@ -535,7 +535,7 @@ namespace Hospital_Management_System.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult ListOfSchedules()
         {
-            var schedule = db.Schedules.Include(c => c.Doctor).ToList();
+            var schedule = db.Schedules.Include(c => c.Psychologist).ToList();
             return View(schedule);
         }
 
@@ -546,7 +546,7 @@ namespace Hospital_Management_System.Controllers
             var collection = new ScheduleCollection
             {
                 Schedule = db.Schedules.Single(c => c.Id == id),
-                Doctors = db.Doctors.ToList()
+                Psychologists = db.Psychologists.ToList()
             };
             return View(collection);
         }
@@ -662,7 +662,7 @@ namespace Hospital_Management_System.Controllers
             {
                 Appointment = new Appointment(),
                 Patients = db.Patients.ToList(),
-                Doctors = db.Doctors.ToList()
+                Psychologists = db.Psychologists.ToList()
             };
             return View(collection);
         }
@@ -675,7 +675,7 @@ namespace Hospital_Management_System.Controllers
             {
                 Appointment = model.Appointment,
                 Patients = db.Patients.ToList(),
-                Doctors = db.Doctors.ToList()
+                Psychologists = db.Psychologists.ToList()
             };
             if (model.Appointment.AppointmentDate >= DateTime.Now.Date)
             {
@@ -708,7 +708,7 @@ namespace Hospital_Management_System.Controllers
         public ActionResult ListOfAppointments()
         {
             var date = DateTime.Now.Date;
-            var appointment = db.Appointments.Include(c => c.Doctor).Include(c => c.Patient)
+            var appointment = db.Appointments.Include(c => c.Psychologist).Include(c => c.Patient)
                 .Where(c => c.Status == true).Where(c => c.AppointmentDate >= date).ToList();
             return View(appointment);
         }
@@ -718,7 +718,7 @@ namespace Hospital_Management_System.Controllers
         public ActionResult PendingAppointments()
         {
             var date = DateTime.Now.Date;
-            var appointment = db.Appointments.Include(c => c.Doctor).Include(c => c.Patient)
+            var appointment = db.Appointments.Include(c => c.Psychologist).Include(c => c.Patient)
                 .Where(c => c.Status == false).Where(c => c.AppointmentDate >= date).ToList();
             return View(appointment);
         }
@@ -731,7 +731,7 @@ namespace Hospital_Management_System.Controllers
             {
                 Appointment = db.Appointments.Single(c => c.Id == id),
                 Patients = db.Patients.ToList(),
-                Doctors = db.Doctors.ToList()
+                Psychologists = db.Psychologists.ToList()
             };
             return View(collection);
         }
@@ -744,7 +744,7 @@ namespace Hospital_Management_System.Controllers
             {
                 Appointment = model.Appointment,
                 Patients = db.Patients.ToList(),
-                Doctors = db.Doctors.ToList()
+                Psychologists = db.Psychologists.ToList()
             };
             if (model.Appointment.AppointmentDate >= DateTime.Now.Date)
             {
@@ -773,7 +773,7 @@ namespace Hospital_Management_System.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult DetailOfAppointment(int id)
         {
-            var appointment = db.Appointments.Include(c => c.Doctor).Include(c => c.Patient).Single(c => c.Id == id);
+            var appointment = db.Appointments.Include(c => c.Psychologist).Include(c => c.Patient).Single(c => c.Id == id);
             return View(appointment);
         }
 

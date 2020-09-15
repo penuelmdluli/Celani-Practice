@@ -9,6 +9,6 @@ namespace Hospital_Management_System.CollectionViewModels
     public class ScheduleCollection
     {
         public Schedule Schedule { get; set; }
-        public IEnumerable<Doctor> Doctors { get; set; }
+        public IEnumerable<Psychologist> Psychologists { get; set; }
     }
 }

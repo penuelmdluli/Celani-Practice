@@ -14,8 +14,8 @@ namespace Hospital_Management_System.Models
         [Display(Name = "Patient Name")]
         public int PatientId { get; set; }
 
-        public Doctor Doctor { get; set; }
-        [Display(Name = "Doctor Name")]
+        public Psychologist Psychologist { get; set; }
+        [Display(Name = "Psychologist Name")]
         public int DoctorId { get; set; }
 
         [Display(Name = "Appointment Date")]

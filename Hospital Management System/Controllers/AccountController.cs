@@ -86,9 +86,9 @@ namespace Hospital_Management_System.Controllers
                     {
                         return RedirectToAction("Index", "Admin");
                     }
-                    else if (UserManager.IsInRole(user.Id, "Doctor"))
+                    else if (UserManager.IsInRole(user.Id, "Psychologist"))
                     {
-                        return RedirectToAction("Index", "Doctor");
+                        return RedirectToAction("Index", "Psychologist");
                     }
                     else if (UserManager.IsInRole(user.Id, "Patient"))
                     {
