@@ -9,9 +9,8 @@
     <link href="~/Content/css/datepicker3.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="~/Content/datatables/css/datatables.bootstrap.css">
     <link rel="stylesheet" href="~/Content/Chosen/chosen.min.css">
-    <link rel="shortcut icon" type="image/x-icon" href="~/Content/Layout/resources/img/logo.jpg" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/Layout/resources/img/CP.png" />
     <link href="~/Content/css/styles.css" rel="stylesheet">
-    
 
     <!--Custom Font-->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -48,10 +47,10 @@
             <li class="active"><a href="@Url.Action("Index", "Psychologist")"><em class="fa fa-dashboard">&nbsp;</em> DashBoard</a></li>
           
             <li>
-                <button class="collapsible"><em class="fa fa-book">&nbsp; &nbsp;</em>Prescription</button>
+                <button class="collapsible"><em class="fa fa-book">&nbsp; &nbsp;</em>Treatment Plan</button>
                 <div style="width: 100% !important" class="children content">
-                    @Html.ActionLink("Add Prescription", "AddPrescription", "Psychologist", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
-                    @Html.ActionLink("List of Prescriptions", "ListOfPrescription", "Psychologist", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
+                    @Html.ActionLink("Add Treatment Plan", "AddPrescription", "Psychologist", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
+                    @Html.ActionLink("List of Treatment Plan", "ListOfPrescription", "Psychologist", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
                 </div>
             </li>
             <li>

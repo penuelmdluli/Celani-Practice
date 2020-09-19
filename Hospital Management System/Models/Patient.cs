@@ -29,13 +29,24 @@ namespace Hospital_Management_System.Models
         [Display(Name = "Phone No")]
         public string PhoneNo { get; set; }
         public string Contact { get; set; }
-        [Display(Name = "Blood Group")]
-        public string BloodGroup { get; set; }
+
+        [Display(Name = "Age")]
+        public int Age { get; set; }
+
+        [Display(Name = "Level Of Education")]
+        public string LevelOfEducation { get; set; }
+
+        [Display(Name = "Language")]
+        public string Language { get; set; }
+
         public string Gender { get; set; }
         [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? DateOfBirth { get; set; }
         public string Address { get; set; }
+        [Display(Name = "Marital Status ")]
+        public string MaritalStatus { get; set; }
+
     }
 }

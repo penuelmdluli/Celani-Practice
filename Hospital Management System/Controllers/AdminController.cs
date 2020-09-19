@@ -621,7 +621,10 @@ namespace Hospital_Management_System.Controllers
             patient.LastName = model.LastName;
             patient.FullName = model.FirstName + " " + model.LastName;
             patient.Address = model.Address;
-            patient.BloodGroup = model.BloodGroup;
+            patient.LevelOfEducation = model.LevelOfEducation;
+            patient.Age = model.Age;
+            patient.MaritalStatus = model.MaritalStatus;
+            patient.Language = model.Language;
             patient.Contact = model.Contact;
             patient.DateOfBirth = model.DateOfBirth;
             patient.EmailAddress = model.EmailAddress;

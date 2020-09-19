@@ -196,6 +196,10 @@
     <Compile Include="Migrations\202009152241463_UpdatedDatabase.Designer.cs">
       <DependentUpon>202009152241463_UpdatedDatabase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009191127548_updatePatient.cs" />
+    <Compile Include="Migrations\202009191127548_updatePatient.Designer.cs">
+      <DependentUpon>202009191127548_updatePatient.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Ambulance.cs" />
@@ -355,13 +359,16 @@
     <Content Include="Content\js\npm.js" />
     <Content Include="Content\js\respond.min.js" />
     <Content Include="Content\Layout\resources\css\img\banner.jpg" />
+    <Content Include="Content\Layout\resources\css\img\dana.jpg" />
     <Content Include="Content\Layout\resources\css\img\hospital-174924_1280.jpg" />
     <Content Include="Content\Layout\resources\css\queries.css" />
     <Content Include="Content\Layout\resources\css\style.css" />
     <Content Include="Content\Layout\resources\img\app-iPhone.png" />
+    <Content Include="Content\Layout\resources\img\CP.png" />
     <Content Include="Content\Layout\resources\img\customer-1.jpg" />
     <Content Include="Content\Layout\resources\img\customer-2.jpg" />
     <Content Include="Content\Layout\resources\img\customer-3.jpg" />
+    <Content Include="Content\Layout\resources\img\dana.jpg" />
     <Content Include="Content\Layout\resources\img\Faislabad.jpg" />
     <Content Include="Content\Layout\resources\img\Gujranwala.jpg" />
     <Content Include="Content\Layout\resources\img\Lahore.jpg" />
@@ -618,6 +625,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009152241463_UpdatedDatabase.resx">
       <DependentUpon>202009152241463_UpdatedDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009191127548_updatePatient.resx">
+      <DependentUpon>202009191127548_updatePatient.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -25,6 +25,7 @@ namespace Hospital_Management_System.Models
 
         public string Problem { get; set; }
 
+        [Display(Name = "Aprove Appointment")]
         public bool Status { get; set; }
 
     }
