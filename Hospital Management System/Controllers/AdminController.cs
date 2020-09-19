@@ -46,16 +46,16 @@ namespace Hospital_Management_System.Controllers
             ViewBag.Messege = message;
             var model = new CollectionOfAll
             {
-                Ambulances = db.Ambulances.ToList(),
+            
                 Departments = db.Centre.ToList(),
                 Psychologists = db.Psychologists.ToList(),
                 Patients = db.Patients.ToList(),
-                Medicines = db.Medicines.ToList(),
+            
                 ActiveAppointments =
                     db.Appointments.Where(c => c.Status).Where(c => c.AppointmentDate >= date).ToList(),
                 PendingAppointments = db.Appointments.Where(c => c.Status == false)
                     .Where(c => c.AppointmentDate >= date).ToList(),
-                AmbulanceDrivers = db.AmbulanceDrivers.ToList()
+            
             };
             return View(model);
         }
@@ -141,146 +141,11 @@ namespace Hospital_Management_System.Controllers
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult AddAmbulanceDriver(AmbulanceDriver model)
-        {
-            db.AmbulanceDrivers.Add(model);
-            db.SaveChanges();
-            return RedirectToAction("ListOfAmbulanceDrivers");
-        }
 
-        //Edit Ambulance Driver
-        [Authorize(Roles = "Admin")]
-        public ActionResult EditAmbulanceDriver(int id)
-        {
-            var viewmodel = db.AmbulanceDrivers.SingleOrDefault(c => c.Id == id);
-            return View(viewmodel);
-        }
+       
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditAmbulanceDriver(int id, AmbulanceDriver model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
 
-            var driver = db.AmbulanceDrivers.Single(c => c.Id == id);
-            driver.Name = model.Name;
-            driver.Contact = model.Contact;
-            driver.Address = model.Address;
-            driver.Cnic = model.Cnic;
-            db.SaveChanges();
-            return RedirectToAction("ListOfAmbulanceDrivers");
-        }
-
-        //List of Ambulance Drivers
-        [Authorize(Roles = "Admin")]
-        public ActionResult ListOfAmbulanceDrivers()
-        {
-            var model = db.AmbulanceDrivers.ToList();
-            return View(model);
-        }
-
-        //Ambulance Section
-        //Add Ambulance
-        [Authorize(Roles = "Admin")]
-        public ActionResult AddAmbulance()
-        {
-            var model = new AmbulanceCollection
-            {
-                Ambulance = new Ambulance(),
-                AmbulanceDrivers = db.AmbulanceDrivers.ToList()
-            };
-            return View(model);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult AddAmbulance(AmbulanceCollection model)
-        {
-            if (!ModelState.IsValid)
-            {
-                var viewmodel = new AmbulanceCollection
-                {
-                    Ambulance = model.Ambulance,
-                    AmbulanceDrivers = db.AmbulanceDrivers.ToList()
-                };
-                return View(viewmodel);
-            }
-
-            db.Ambulances.Add(model.Ambulance);
-            db.SaveChanges();
-            return RedirectToAction("ListOfAmbulances");
-        }
-
-        //Edit Ambulance
-        [Authorize(Roles = "Admin")]
-        public ActionResult EditAmbulance(int id)
-        {
-            var viewmodel = new AmbulanceCollection
-            {
-                Ambulance = db.Ambulances.Single(c => c.Id == id),
-                AmbulanceDrivers = db.AmbulanceDrivers.ToList()
-            };
-            return View(viewmodel);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditAmbulance(int id, AmbulanceCollection model)
-        {
-            if (!ModelState.IsValid)
-            {
-                var viewmodel = new AmbulanceCollection
-                {
-                    Ambulance = model.Ambulance,
-                    AmbulanceDrivers = db.AmbulanceDrivers.ToList()
-                };
-                return View(viewmodel);
-            }
-            else
-            {
-                var ambulance = db.Ambulances.Single(c => c.Id == id);
-                ambulance.Name = model.Ambulance.Name;
-                ambulance.AmbulanceId = model.Ambulance.AmbulanceId;
-                ambulance.AmbulanceStatus = model.Ambulance.AmbulanceStatus;
-                ambulance.AmbulanceDriverId = model.Ambulance.AmbulanceDriverId;
-            }
-
-            db.SaveChanges();
-            return RedirectToAction("ListOfAmbulances");
-        }
-
-        //List of Ambulances
-        [Authorize(Roles = "Admin")]
-        public ActionResult ListOfAmbulances()
-        {
-            var model = db.Ambulances.Include(c => c.AmbulanceDriver).ToList();
-            return View(model);
-        }
-
-        //Delete Ambulance
-        [Authorize(Roles = "Admin")]
-        public ActionResult DeleteAmbulance(int? id)
-        {
-            var ambulance = db.Ambulances.Single(c => c.Id == id);
-            return View(ambulance);
-        }
-
-        [HttpPost, ActionName("DeleteAmbulance")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteAmbulance(int id)
-        {
-            var ambulance = db.Ambulances.SingleOrDefault(c => c.Id == id);
-            var driver = db.AmbulanceDrivers.Single(c => c.Id == ambulance.AmbulanceDriverId);
-            db.Ambulances.Remove(ambulance);
-            db.AmbulanceDrivers.Remove(driver);
-            db.SaveChanges();
-            return RedirectToAction("ListOfAmbulances");
-        }
+        
 
         //End Ambulance Section
 
@@ -293,77 +158,7 @@ namespace Hospital_Management_System.Controllers
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult AddMedicine(Medicine model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            db.Medicines.Add(model);
-            db.SaveChanges();
-            return RedirectToAction("ListOfMedicine");
-        }
-
-        //List of Medicines
-        [Authorize(Roles = "Admin")]
-        public ActionResult ListOfMedicine()
-        {
-            var medicine = db.Medicines.ToList();
-            return View(medicine);
-        }
-
-        //Edit Medicine
-        [Authorize(Roles = "Admin")]
-        public ActionResult EditMedicine(int id)
-        {
-            var medicine = db.Medicines.Single(c => c.Id == id);
-            return View(medicine);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditMedicine(int id, Medicine model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var medicine = db.Medicines.Single(c => c.Id == id);
-            medicine.Name = model.Name;
-            medicine.Description = model.Description;
-            medicine.Price = model.Price;
-            medicine.Quantity = model.Quantity;
-
-            db.SaveChanges();
-            return RedirectToAction("ListOfMedicine");
-        }
-
-        //Delete Medicine
-        [Authorize(Roles = "Admin")]
-        public ActionResult DeleteMedicine(int? id)
-        {
-            return View();
-        }
-
-        [HttpPost, ActionName("DeleteMedicine")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteMedicine(int id)
-        {
-            var medicine = db.Medicines.Single(c => c.Id == id);
-            db.Medicines.Remove(medicine);
-            db.SaveChanges();
-            return RedirectToAction("ListOfMedicine");
-        }
-
-        //End Medicine Section
-
-        //Start Psychologist Section
-
-        //Add Psychologist 
+        
         [Authorize(Roles = "Admin")]
         public ActionResult AddDoctor()
         {

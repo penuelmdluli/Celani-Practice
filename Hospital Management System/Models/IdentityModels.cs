@@ -26,9 +26,6 @@ namespace Hospital_Management_System.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Centre> Centre { get; set; }
-        public DbSet<AmbulanceDriver> AmbulanceDrivers { get; set; }
-        public DbSet<Ambulance> Ambulances { get; set; }
-        public DbSet<Medicine> Medicines { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Psychologist> Psychologists { get; set; }
         public DbSet<Schedule> Schedules { get; set; }

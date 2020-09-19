@@ -37,14 +37,13 @@ namespace Hospital_Management_System.Controllers
             var doctor = db.Psychologists.Single(c => c.ApplicationUserId == user);
             var model = new CollectionOfAll
             {
-                Ambulances = db.Ambulances.ToList(),
+                
                 Departments = db.Centre.ToList(),
                 Psychologists = db.Psychologists.ToList(),
                 Patients = db.Patients.ToList(),
-                Medicines = db.Medicines.ToList(),
                 ActiveAppointments = db.Appointments.Where(c => c.DoctorId == doctor.Id).Where(c => c.Status).Where(c => c.AppointmentDate >= date).ToList(),
                 PendingAppointments = db.Appointments.Where(c => c.DoctorId == doctor.Id).Where(c => c.Status == false).Where(c => c.AppointmentDate >= date).ToList(),
-                AmbulanceDrivers = db.AmbulanceDrivers.ToList(),
+            
                 Announcements = db.Announcements.Where(c => c.AnnouncementFor == "Psychologist").ToList()
             };
             return View(model);

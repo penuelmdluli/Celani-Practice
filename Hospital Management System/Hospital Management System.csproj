@@ -168,7 +168,6 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="CollectionViewModels\AmbulanceCollection.cs" />
     <Compile Include="CollectionViewModels\AppointmentCollection.cs" />
     <Compile Include="CollectionViewModels\CollectionOfAll.cs" />
     <Compile Include="CollectionViewModels\DoctorCollection.cs" />
@@ -200,10 +199,12 @@
     <Compile Include="Migrations\202009191127548_updatePatient.Designer.cs">
       <DependentUpon>202009191127548_updatePatient.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009191433481_updateteDatabse.cs" />
+    <Compile Include="Migrations\202009191433481_updateteDatabse.Designer.cs">
+      <DependentUpon>202009191433481_updateteDatabse.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Ambulance.cs" />
-    <Compile Include="Models\AmbulanceDriver.cs" />
     <Compile Include="Models\Announcement.cs" />
     <Compile Include="Models\Appointment.cs" />
     <Compile Include="Models\Complaint.cs" />
@@ -213,7 +214,6 @@
     <Compile Include="Models\Psychologist.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Medicine.cs" />
     <Compile Include="Models\Patient.cs" />
     <Compile Include="Models\Prescription.cs" />
     <Compile Include="Models\Schedule.cs" />
@@ -628,6 +628,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202009191127548_updatePatient.resx">
       <DependentUpon>202009191127548_updatePatient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009191433481_updateteDatabse.resx">
+      <DependentUpon>202009191433481_updateteDatabse.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

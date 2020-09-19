@@ -35,14 +35,13 @@ namespace Hospital_Management_System.Controllers
             var date = DateTime.Now.Date;
             var model = new CollectionOfAll
             {
-                Ambulances = db.Ambulances.ToList(),
+               
                 Departments = db.Centre.ToList(),
                 Psychologists = db.Psychologists.ToList(),
                 Patients = db.Patients.ToList(),
-                Medicines = db.Medicines.ToList(),
                 ActiveAppointments = db.Appointments.Where(c => c.Status).Where(c => c.PatientId == patient.Id).Where(c => c.AppointmentDate >= date).ToList(),
                 PendingAppointments = db.Appointments.Where(c => c.Status == false).Where(c => c.PatientId == patient.Id).Where(c => c.AppointmentDate >= date).ToList(),
-                AmbulanceDrivers = db.AmbulanceDrivers.ToList(),
+           
                 Announcements = db.Announcements.Where(c => c.AnnouncementFor == "Patient").ToList()
             };
             return View(model);
