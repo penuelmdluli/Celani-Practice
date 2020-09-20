@@ -371,6 +371,8 @@
     <Content Include="Content\Layout\resources\img\download %282%29.png" />
     <Content Include="Content\Layout\resources\img\download.jpg" />
     <Content Include="Content\Layout\resources\img\Leratocust.jpeg" />
+    <Content Include="Content\Layout\resources\img\xx.jpeg" />
+    <Content Include="Content\Layout\resources\img\xxx.jpeg" />
     <Content Include="Content\Layout\resources\js\script.js" />
     <Content Include="Content\Layout\vendors\css\animate.css" />
     <Content Include="Content\Layout\vendors\css\grid.css" />
