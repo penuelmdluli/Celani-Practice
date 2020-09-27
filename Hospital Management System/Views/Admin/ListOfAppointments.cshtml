@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Hospital_Management_System.Models.Appointment>
+﻿@model IEnumerable<Hospital_Management_System.Models.Dto.AppointmentDto>
 
 @{
     ViewBag.Title = "ListOfAppointments";
@@ -48,10 +48,10 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Psychologist.FullName)
+                    @Html.DisplayFor(modelItem => item.PsychologistName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Patient.FullName)
+                    @Html.DisplayFor(modelItem => item.PatientName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.AppointmentDate)

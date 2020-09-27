@@ -211,6 +211,7 @@
     <Compile Include="Models\DeleteAnnouncementOnExpire.cs" />
     <Compile Include="Models\Centre.cs" />
     <Compile Include="Models\DepartmentStatus.cs" />
+    <Compile Include="Models\Dto\AppointmentDto.cs" />
     <Compile Include="Models\Psychologist.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />

@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Hospital_Management_System.CollectionViewModels;
 using Hospital_Management_System.Models;
+using Hospital_Management_System.Models.Dto;
 
 namespace Hospital_Management_System.Controllers
 {
@@ -186,7 +187,7 @@ namespace Hospital_Management_System.Controllers
             if (result.Succeeded)
             {
                 await UserManager.AddToRoleAsync(user.Id, "Psychologist");
-                var doctor = new Psychologist
+                var  psychologist = new Psychologist
                 {
                     FirstName = model.Psychologist.FirstName,
                     LastName = model.Psychologist.LastName,
@@ -205,7 +206,7 @@ namespace Hospital_Management_System.Controllers
                     Address = model.Psychologist.Address,
                     Status = model.Psychologist.Status
                 };
-                db.Psychologists.Add(doctor);
+                db.Psychologists.Add(psychologist);
                 db.SaveChanges();
                 return RedirectToAction("ListOfDoctors");
             }
@@ -218,16 +219,16 @@ namespace Hospital_Management_System.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult ListOfDoctors()
         {
-            var doctor = db.Psychologists.Include(c => c.Centre).ToList();
-            return View(doctor);
+            var psychologist = db.Psychologists.Include(c => c.Centre).ToList();
+            return View(psychologist);
         }
 
         //Detail of Psychologist
         [Authorize(Roles = "Admin")]
         public ActionResult PsychologistDetail(int id)
         {
-            var doctor = db.Psychologists.Include(c => c.Centre).SingleOrDefault(c => c.Id == id);
-            return View(doctor);
+            var psychologist = db.Psychologists.Include(c => c.Centre).SingleOrDefault(c => c.Id == id);
+            return View(psychologist);
         }
 
         //Edit Psychologists
@@ -507,7 +508,16 @@ namespace Hospital_Management_System.Controllers
         {
             var date = DateTime.Now.Date;
             var appointment = db.Appointments.Include(c => c.Psychologist).Include(c => c.Patient)
-                .Where(c => c.Status == true).Where(c => c.AppointmentDate >= date).ToList();
+                .Select(e => new AppointmentDto()
+                {
+                    AppointmentDate = e.AppointmentDate,
+                    Id = e.Id,
+                    PatientName = e.Patient.FullName,
+                    Problem = e.Problem,
+                    PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.DoctorId).FullName,
+                    Status = e.Status
+                })
+                .ToList();
             return View(appointment);
         }
 
@@ -517,7 +527,15 @@ namespace Hospital_Management_System.Controllers
         {
             var date = DateTime.Now.Date;
             var appointment = db.Appointments.Include(c => c.Psychologist).Include(c => c.Patient)
-                .Where(c => c.Status == false).Where(c => c.AppointmentDate >= date).ToList();
+                .Select(e => new AppointmentDto()
+                {
+                    AppointmentDate = e.AppointmentDate,
+                    Id = e.Id,
+                    PatientName = e.Patient.FullName,
+                    Problem = e.Problem,
+                    PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.DoctorId).FullName,
+                    Status = e.Status
+                });
             return View(appointment);
         }
 

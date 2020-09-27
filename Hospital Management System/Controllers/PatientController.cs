@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Hospital_Management_System.CollectionViewModels;
 using Hospital_Management_System.Models;
+using Hospital_Management_System.Models.Dto;
 using Microsoft.AspNet.Identity;
 
 namespace Hospital_Management_System.Controllers
@@ -35,13 +36,13 @@ namespace Hospital_Management_System.Controllers
             var date = DateTime.Now.Date;
             var model = new CollectionOfAll
             {
-               
+
                 Departments = db.Centre.ToList(),
                 Psychologists = db.Psychologists.ToList(),
                 Patients = db.Patients.ToList(),
                 ActiveAppointments = db.Appointments.Where(c => c.Status).Where(c => c.PatientId == patient.Id).Where(c => c.AppointmentDate >= date).ToList(),
                 PendingAppointments = db.Appointments.Where(c => c.Status == false).Where(c => c.PatientId == patient.Id).Where(c => c.AppointmentDate >= date).ToList(),
-           
+
                 Announcements = db.Announcements.Where(c => c.AnnouncementFor == "Patient").ToList()
             };
             return View(model);
@@ -116,7 +117,7 @@ namespace Hospital_Management_System.Controllers
                 return RedirectToAction("ListOfAppointments");
             }
             ViewBag.Messege = "Please Enter the Date greater than today or equal!!";
-            
+
             return View(collection);
 
         }
@@ -127,7 +128,18 @@ namespace Hospital_Management_System.Controllers
         {
             string user = User.Identity.GetUserId();
             var patient = db.Patients.Single(c => c.ApplicationUserId == user);
-            var appointment = db.Appointments.Include(c => c.Psychologist).Where(c => c.PatientId == patient.Id).ToList();
+            var appointment = db.Appointments.Where(c => c.PatientId == patient.Id)
+                .Select(e => new AppointmentDto()
+                {
+                    AppointmentDate = e.AppointmentDate,
+                    Id = e.Id,
+                    PatientName = e.Patient.FullName,
+                    Problem = e.Problem,
+                    PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.DoctorId).FullName,
+                    Status = e.Status
+                })
+                .ToList();
+
             return View(appointment);
         }
 
