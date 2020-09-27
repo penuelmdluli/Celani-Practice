@@ -2,7 +2,7 @@
 @model Hospital_Management_System.CollectionViewModels.DoctorCollection
 
 @{
-    ViewBag.Title = "EditDoctors";
+    ViewBag.Title = "AddPsychologist";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -14,21 +14,26 @@
             </a>
         </li>
         <li class="active">Psychologist</li>
-        <li class="active">Edit Psychologist</li>
+        <li class="active">Add Psychologist</li>
     </ol>
 </div>
 
-<h2>Edit Psychologist</h2>
+<h2>Add Psychologist</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Psychologist.Id)
-
+        <div class="form-group">
+            @Html.LabelFor(model => model.ApplicationUser.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ApplicationUser.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ApplicationUser.UserName, "", new { @class = "text-danger" })
+            </div>
+        </div>
         <div class="form-group">
             @Html.LabelFor(model => model.Psychologist.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -36,7 +41,6 @@
                 @Html.ValidationMessageFor(model => model.Psychologist.FirstName, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.Psychologist.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -44,39 +48,13 @@
                 @Html.ValidationMessageFor(model => model.Psychologist.LastName, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
-            @Html.LabelFor(model => model.Psychologist.EmailAddress, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ApplicationUser.Email, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Psychologist.EmailAddress, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Psychologist.EmailAddress, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.ApplicationUser.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ApplicationUser.Email, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Psychologist.Designation, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Psychologist.Designation, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Psychologist.Designation, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Psychologist.DepartmentId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Psychologist.DepartmentId, new SelectList(Model.Departments, "Id", "Name"), new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Psychologist.DepartmentId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Psychologist.Address, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Psychologist.Address, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Psychologist.Address, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.Psychologist.PhoneNo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -84,7 +62,6 @@
                 @Html.ValidationMessageFor(model => model.Psychologist.PhoneNo, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.Psychologist.ContactNo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -92,15 +69,6 @@
                 @Html.ValidationMessageFor(model => model.Psychologist.ContactNo, "", new { @class = "text-danger" })
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Psychologist.Specialization, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Psychologist.Specialization, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Psychologist.Specialization, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
         @{
             var bloodlist = new List<Psychologist>
             {
@@ -135,11 +103,10 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Psychologist.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Psychologist.Gender, new SelectList(genderlist, "Gender", "Gender"), "Select Gender", new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Psychologist.Gender, new SelectList(genderlist, "Gender", "Gender"), "Select Gender", new {@class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Psychologist.Gender, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.Psychologist.DateOfBirth, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -147,7 +114,27 @@
                 @Html.ValidationMessageFor(model => model.Psychologist.DateOfBirth, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        <div class="form-group">
+            @Html.LabelFor(model => model.Psychologist.Designation, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Psychologist.Designation, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Psychologist.Designation, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Psychologist.DepartmentId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Psychologist.DepartmentId, new SelectList(Model.Departments, "Id", "Name"), "Select Centre", new { @id = "dropdown", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Psychologist.DepartmentId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Psychologist.Specialization, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Psychologist.Specialization, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Psychologist.Specialization, "", new { @class = "text-danger" })
+            </div>
+        </div>
         <div class="form-group">
             @Html.LabelFor(model => model.Psychologist.Education, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -158,23 +145,43 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Psychologist.Status, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Psychologist.Status, new SelectList(statuslist, "Status", "Status"), "Select Blood Group", new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.Psychologist.Status, new SelectList(statuslist, "Status", "Status"), "Select Status", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Psychologist.Status, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        <div class="form-group">
+            @Html.LabelFor(model => model.ApplicationUser.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ApplicationUser.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ApplicationUser.Password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ApplicationUser.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ApplicationUser.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ApplicationUser.ConfirmPassword, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Update" class="btn btn-success" />
+                <input type="submit" value="Create" class="btn btn-success" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "ListOfDoctors")
+    @Html.ActionLink("Back to List", "ListOfPsychologists")
 </div>
 
-@section scripts {
+@section scripts
+{
     @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function() {
+            $("#dropdown").chosen();
+        });
+    </script>
 }

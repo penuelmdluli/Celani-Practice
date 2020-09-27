@@ -212,6 +212,8 @@
     <Compile Include="Models\Centre.cs" />
     <Compile Include="Models\DepartmentStatus.cs" />
     <Compile Include="Models\Dto\AppointmentDto.cs" />
+    <Compile Include="Models\Dto\PsychologistDto.cs" />
+    <Compile Include="Models\Dto\SchedulesDto.cs" />
     <Compile Include="Models\Psychologist.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -550,10 +552,10 @@
     <Content Include="Views\Admin\EditMedicine.cshtml" />
     <Content Include="Views\Admin\DeleteMedicine.cshtml" />
     <Content Include="Views\Patient\UpdateProfile.cshtml" />
-    <Content Include="Views\Admin\AddDoctor.cshtml" />
-    <Content Include="Views\Admin\ListOfDoctors.cshtml" />
-    <Content Include="Views\Admin\DoctorDetail.cshtml" />
-    <Content Include="Views\Admin\EditDoctors.cshtml" />
+    <Content Include="Views\Admin\AddPsychologist.cshtml" />
+    <Content Include="Views\Admin\ListOfPsychologists.cshtml" />
+    <Content Include="Views\Admin\PsychologistDetail.cshtml" />
+    <Content Include="Views\Admin\EditPsychologists.cshtml" />
     <Content Include="Views\Admin\AddSchedule.cshtml" />
     <Content Include="Views\Admin\ListOfSchedules.cshtml" />
     <Content Include="Views\Admin\EditSchedule.cshtml" />
@@ -561,7 +563,7 @@
     <Content Include="Views\Psychologist\AddPrescription.cshtml" />
     <Content Include="Views\Psychologist\ListOfPrescription.cshtml" />
     <Content Include="Views\Psychologist\ViewPrescription.cshtml" />
-    <Content Include="Views\Admin\DeleteDoctor.cshtml" />
+    <Content Include="Views\Admin\DeletePsychologist.cshtml" />
     <Content Include="Views\Admin\ListOfPatients.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Psychologist\DeletePrescription.cshtml" />

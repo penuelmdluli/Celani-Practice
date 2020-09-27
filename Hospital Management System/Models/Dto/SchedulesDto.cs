@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace Hospital_Management_System.Models
+namespace Hospital_Management_System.Models.Dto
 {
-    public class Schedule
+    public class SchedulesDto
     {
         public int Id { get; set; }
 
-        public Psychologist Psychologist { get; set; }
-        [Display(Name = "Psychologist Name")]
-        public int DoctorId { get; set; }
+        public string PsychologistName { get; set; }
+
 
         [Required]
         [Display(Name = "Start Day")]
@@ -35,7 +38,7 @@ namespace Hospital_Management_System.Models
         public DateTime AvailableEndTime { get; set; }
 
         [Required]
-        [Display(Name = "Per Patient Time (Hours)")]
+        [Display(Name = "Per Patient Time")]
         public string TimePerPatient { get; set; }
 
         [Required]

@@ -1,7 +1,7 @@
-﻿@model IEnumerable<Hospital_Management_System.Models.Psychologist>
+﻿@model IEnumerable<Hospital_Management_System.Models.Dto.PsychologistDto>
 
 @{
-    ViewBag.Title = "ListOfDoctors";
+    ViewBag.Title = "ListOfPsychologists";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -20,7 +20,7 @@
 <h2>List Of Psychologists</h2>
 
 <p>
-    @Html.ActionLink("Add Psychologist", "AddDoctor", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Add Psychologist", "AddPsychologist", null, new { @class = "btn btn-primary" })
 </p>
 <table id="table_id" class="table">
     <thead>
@@ -59,7 +59,7 @@
                     @Html.DisplayFor(modelItem => item.FullName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Centre.Name)
+                    @Html.DisplayFor(modelItem => item.CentreName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Designation)
@@ -77,9 +77,9 @@
                     @Html.DisplayFor(modelItem => item.Status)
                 </td>
                 <td>
-                    <a href="@Url.Action("EditDoctors", new {id = item.Id})" class="fa fa-pencil-square-o" style="font-size: 19px"></a> |
+                    <a href="@Url.Action("EditPsychologists", new {id = item.Id})" class="fa fa-pencil-square-o" style="font-size: 19px"></a> |
                     <a href="@Url.Action("PsychologistDetail", new {id = item.Id})" class="fa fa-info-circle" style="font-size: 19px; color: lightblue"></a> |
-                    <a href="@Url.Action("DeleteDoctor", new {id = item.ApplicationUserId})" class="fa fa-trash" style="font-size: 19px; color: red"></a>
+                    <a href="@Url.Action("DeletePsychologist", new {id = item.ApplicationUserId})" class="fa fa-trash" style="font-size: 19px; color: red"></a>
                 </td>
             </tr>
         }

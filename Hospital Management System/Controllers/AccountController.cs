@@ -177,7 +177,7 @@ namespace Hospital_Management_System.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, UserRole = "Admin", RegisteredDate = DateTime.Now.Date};
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, UserRole = "Patient", RegisteredDate = DateTime.Now.Date};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -191,12 +191,12 @@ namespace Hospital_Management_System.Controllers
                     var patient = new Patient { FirstName = model.FirstName, LastName = model.LastName, EmailAddress = model.Email, ApplicationUserId = user.Id };
                     db.Patients.Add(patient);
                     db.SaveChanges();
-                    await UserManager.AddToRoleAsync(user.Id, "Admin");
+                    await UserManager.AddToRoleAsync(user.Id, "Patient");
                     return RedirectToAction("Login", "Account");
                 }
                 AddErrors(result);
             }
-
+           
             // If we got this far, something failed, redisplay form
 
             return View(model);

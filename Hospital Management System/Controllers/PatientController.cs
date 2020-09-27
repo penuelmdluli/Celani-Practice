@@ -204,7 +204,20 @@ namespace Hospital_Management_System.Controllers
         [Authorize(Roles = "Patient")]
         public ActionResult AvailablePsychologists()
         {
-            var doctor = db.Psychologists.Include(c => c.Centre).Where(c => c.Status == "Active").ToList();
+            var doctor = db.Psychologists.Include(c => c.Centre).Where(c => c.Status == "Active")
+                 .Select(e => new PsychologistDto()
+                 {
+                     FullName = e.FullName,
+                     FirstName = e.FirstName,
+                     LastName = e.LastName,
+                     Address = e.Address,
+                     CentreName = db.Centre.FirstOrDefault(d => d.Id == e.Id).Name,
+                     Status = e.Status,
+                     Designation = e.Designation,
+                     ContactNo = e.ContactNo,
+                     Education = e.Education,
+                     Gender = e.Gender
+                 }).ToList();
             return View(doctor);
         }
 
@@ -212,7 +225,19 @@ namespace Hospital_Management_System.Controllers
         [Authorize(Roles = "Patient")]
         public ActionResult PsychologistSchedule(int id)
         {
-            var schedule = db.Schedules.Include(c => c.Psychologist).Single(c => c.DoctorId == id);
+            var schedule = db.Schedules.Include(c => c.Psychologist)
+                .Select(e => new SchedulesDto()
+                {
+                    PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.DoctorId).FullName,
+                    AvailableStartDay = e.AvailableStartDay,
+                    AvailableEndDay = e.AvailableEndDay,
+                    AvailableEndTime = e.AvailableEndTime,
+                    AvailableStartTime = e.AvailableStartTime,
+                    Status = e.Status,
+                    TimePerPatient = e.TimePerPatient
+                })
+                .Where(x=>x.Id ==id);
+
             return View(schedule);
         }
 
