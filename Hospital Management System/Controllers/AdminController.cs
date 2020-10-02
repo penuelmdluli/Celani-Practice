@@ -349,7 +349,14 @@ namespace Hospital_Management_System.Controllers
             var schedule = db.Schedules.Include(c => c.Psychologist)
                 .Select(e => new SchedulesDto()
                 {
-                    PsychologistName =db.Psychologists.FirstOrDefault(d => d.Id == e.DoctorId).FullName
+                    PsychologistName =db.Psychologists.FirstOrDefault(d => d.Id == e.DoctorId).FullName,
+                    AvailableEndDay = e.AvailableEndDay,
+                    AvailableEndTime = e.AvailableEndTime,
+                    AvailableStartDay = e.AvailableStartDay,
+                    AvailableStartTime = e.AvailableStartTime,
+                    Status = e.Status,
+                    TimePerPatient = e.TimePerPatient +" Hr(s)",
+
                     
                 }).ToList();
             return View(schedule);
