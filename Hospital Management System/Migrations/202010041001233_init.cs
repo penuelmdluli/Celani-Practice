@@ -8,32 +8,6 @@ namespace Hospital_Management_System.Migrations
         public override void Up()
         {
             CreateTable(
-                "dbo.AmbulanceDrivers",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false),
-                        Contact = c.String(nullable: false),
-                        Address = c.String(nullable: false),
-                        Cnic = c.String(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
-                "dbo.Ambulances",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false),
-                        AmbulanceId = c.String(nullable: false),
-                        AmbulanceStatus = c.String(),
-                        AmbulanceDriverId = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.AmbulanceDrivers", t => t.AmbulanceDriverId, cascadeDelete: true)
-                .Index(t => t.AmbulanceDriverId);
-            
-            CreateTable(
                 "dbo.Announcements",
                 c => new
                     {
@@ -54,40 +28,37 @@ namespace Hospital_Management_System.Migrations
                         AppointmentDate = c.DateTime(),
                         Problem = c.String(),
                         Status = c.Boolean(nullable: false),
+                        Psychologist_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Doctors", t => t.DoctorId, cascadeDelete: true)
                 .ForeignKey("dbo.Patients", t => t.PatientId, cascadeDelete: true)
+                .ForeignKey("dbo.Psychologists", t => t.Psychologist_Id)
                 .Index(t => t.PatientId)
-                .Index(t => t.DoctorId);
+                .Index(t => t.Psychologist_Id);
             
             CreateTable(
-                "dbo.Doctors",
+                "dbo.Patients",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
                         ApplicationUserId = c.String(maxLength: 128),
-                        FullName = c.String(),
                         FirstName = c.String(nullable: false),
                         LastName = c.String(nullable: false),
-                        EmailAddress = c.String(nullable: false),
-                        Designation = c.String(nullable: false),
-                        DepartmentId = c.Int(nullable: false),
-                        Address = c.String(),
+                        FullName = c.String(),
+                        EmailAddress = c.String(),
                         PhoneNo = c.String(),
-                        ContactNo = c.String(nullable: false),
-                        Specialization = c.String(nullable: false),
-                        Gender = c.String(nullable: false),
-                        BloodGroup = c.String(nullable: false),
+                        Contact = c.String(),
+                        Age = c.Int(nullable: false),
+                        LevelOfEducation = c.String(),
+                        Language = c.String(),
+                        Gender = c.String(),
                         DateOfBirth = c.DateTime(),
-                        Education = c.String(),
-                        Status = c.String(nullable: false),
+                        Address = c.String(),
+                        MaritalStatus = c.String(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.ApplicationUserId)
-                .ForeignKey("dbo.Departments", t => t.DepartmentId, cascadeDelete: true)
-                .Index(t => t.ApplicationUserId)
-                .Index(t => t.DepartmentId);
+                .Index(t => t.ApplicationUserId);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -150,7 +121,36 @@ namespace Hospital_Management_System.Migrations
                 .Index(t => t.RoleId);
             
             CreateTable(
-                "dbo.Departments",
+                "dbo.Psychologists",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        ApplicationUserId = c.String(maxLength: 128),
+                        FullName = c.String(),
+                        FirstName = c.String(nullable: false),
+                        LastName = c.String(nullable: false),
+                        EmailAddress = c.String(nullable: false),
+                        Designation = c.String(nullable: false),
+                        DepartmentId = c.Int(nullable: false),
+                        Address = c.String(),
+                        PhoneNo = c.String(),
+                        ContactNo = c.String(nullable: false),
+                        Specialization = c.String(nullable: false),
+                        Gender = c.String(nullable: false),
+                        BloodGroup = c.String(nullable: false),
+                        DateOfBirth = c.DateTime(),
+                        Education = c.String(),
+                        Status = c.String(nullable: false),
+                        Centre_Id = c.Int(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.AspNetUsers", t => t.ApplicationUserId)
+                .ForeignKey("dbo.Centres", t => t.Centre_Id)
+                .Index(t => t.ApplicationUserId)
+                .Index(t => t.Centre_Id);
+            
+            CreateTable(
+                "dbo.Centres",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -161,27 +161,6 @@ namespace Hospital_Management_System.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.Patients",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        ApplicationUserId = c.String(maxLength: 128),
-                        FirstName = c.String(nullable: false),
-                        LastName = c.String(nullable: false),
-                        FullName = c.String(),
-                        EmailAddress = c.String(),
-                        PhoneNo = c.String(),
-                        Contact = c.String(),
-                        BloodGroup = c.String(),
-                        Gender = c.String(),
-                        DateOfBirth = c.DateTime(),
-                        Address = c.String(),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.AspNetUsers", t => t.ApplicationUserId)
-                .Index(t => t.ApplicationUserId);
-            
-            CreateTable(
                 "dbo.Complaints",
                 c => new
                     {
@@ -189,18 +168,6 @@ namespace Hospital_Management_System.Migrations
                         Complain = c.String(nullable: false),
                         Reply = c.String(),
                         ComplainDate = c.DateTime(),
-                    })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
-                "dbo.Medicines",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(nullable: false),
-                        Description = c.String(nullable: false),
-                        Quantity = c.Int(nullable: false),
-                        Price = c.Double(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -252,12 +219,13 @@ namespace Hospital_Management_System.Migrations
                         CheckUpAfterDays = c.Int(nullable: false),
                         PrescriptionAddDate = c.DateTime(nullable: false),
                         DoctorTiming = c.String(),
+                        Psychologist_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Doctors", t => t.DoctorId, cascadeDelete: true)
                 .ForeignKey("dbo.Patients", t => t.PatientId, cascadeDelete: true)
-                .Index(t => t.DoctorId)
-                .Index(t => t.PatientId);
+                .ForeignKey("dbo.Psychologists", t => t.Psychologist_Id)
+                .Index(t => t.PatientId)
+                .Index(t => t.Psychologist_Id);
             
             CreateTable(
                 "dbo.AspNetRoles",
@@ -274,66 +242,61 @@ namespace Hospital_Management_System.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        DoctorId = c.Int(nullable: false),
-                        AvailableStartDay = c.String(nullable: false),
-                        AvailableEndDay = c.String(nullable: false),
-                        AvailableStartTime = c.DateTime(nullable: false),
-                        AvailableEndTime = c.DateTime(nullable: false),
+                        PsychologistId = c.Int(nullable: false),
+                        StartDate = c.DateTime(nullable: false),
+                        EndDate = c.DateTime(nullable: false),
+                        StartTime = c.DateTime(nullable: false),
+                        EndTime = c.DateTime(nullable: false),
                         TimePerPatient = c.String(nullable: false),
-                        Status = c.String(nullable: false),
+                        Status = c.String(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Doctors", t => t.DoctorId, cascadeDelete: true)
-                .Index(t => t.DoctorId);
+                .ForeignKey("dbo.Psychologists", t => t.PsychologistId, cascadeDelete: true)
+                .Index(t => t.PsychologistId);
             
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.Schedules", "DoctorId", "dbo.Doctors");
+            DropForeignKey("dbo.Schedules", "PsychologistId", "dbo.Psychologists");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.Prescriptions", "Psychologist_Id", "dbo.Psychologists");
             DropForeignKey("dbo.Prescriptions", "PatientId", "dbo.Patients");
-            DropForeignKey("dbo.Prescriptions", "DoctorId", "dbo.Doctors");
+            DropForeignKey("dbo.Appointments", "Psychologist_Id", "dbo.Psychologists");
+            DropForeignKey("dbo.Psychologists", "Centre_Id", "dbo.Centres");
+            DropForeignKey("dbo.Psychologists", "ApplicationUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Appointments", "PatientId", "dbo.Patients");
             DropForeignKey("dbo.Patients", "ApplicationUserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Appointments", "DoctorId", "dbo.Doctors");
-            DropForeignKey("dbo.Doctors", "DepartmentId", "dbo.Departments");
-            DropForeignKey("dbo.Doctors", "ApplicationUserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Ambulances", "AmbulanceDriverId", "dbo.AmbulanceDrivers");
-            DropIndex("dbo.Schedules", new[] { "DoctorId" });
+            DropIndex("dbo.Schedules", new[] { "PsychologistId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.Prescriptions", new[] { "Psychologist_Id" });
             DropIndex("dbo.Prescriptions", new[] { "PatientId" });
-            DropIndex("dbo.Prescriptions", new[] { "DoctorId" });
-            DropIndex("dbo.Patients", new[] { "ApplicationUserId" });
+            DropIndex("dbo.Psychologists", new[] { "Centre_Id" });
+            DropIndex("dbo.Psychologists", new[] { "ApplicationUserId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
-            DropIndex("dbo.Doctors", new[] { "DepartmentId" });
-            DropIndex("dbo.Doctors", new[] { "ApplicationUserId" });
-            DropIndex("dbo.Appointments", new[] { "DoctorId" });
+            DropIndex("dbo.Patients", new[] { "ApplicationUserId" });
+            DropIndex("dbo.Appointments", new[] { "Psychologist_Id" });
             DropIndex("dbo.Appointments", new[] { "PatientId" });
-            DropIndex("dbo.Ambulances", new[] { "AmbulanceDriverId" });
             DropTable("dbo.Schedules");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.Prescriptions");
-            DropTable("dbo.Medicines");
             DropTable("dbo.Complaints");
-            DropTable("dbo.Patients");
-            DropTable("dbo.Departments");
+            DropTable("dbo.Centres");
+            DropTable("dbo.Psychologists");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
-            DropTable("dbo.Doctors");
+            DropTable("dbo.Patients");
             DropTable("dbo.Appointments");
             DropTable("dbo.Announcements");
-            DropTable("dbo.Ambulances");
-            DropTable("dbo.AmbulanceDrivers");
         }
     }
 }

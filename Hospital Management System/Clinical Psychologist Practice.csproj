@@ -183,25 +183,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202009151934000_init.cs" />
-    <Compile Include="Migrations\202009151934000_init.Designer.cs">
-      <DependentUpon>202009151934000_init.cs</DependentUpon>
+    <Compile Include="Migrations\202010041001233_init.cs" />
+    <Compile Include="Migrations\202010041001233_init.Designer.cs">
+      <DependentUpon>202010041001233_init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202009152045414_AddedPsychologistTable.cs" />
-    <Compile Include="Migrations\202009152045414_AddedPsychologistTable.Designer.cs">
-      <DependentUpon>202009152045414_AddedPsychologistTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202009152241463_UpdatedDatabase.cs" />
-    <Compile Include="Migrations\202009152241463_UpdatedDatabase.Designer.cs">
-      <DependentUpon>202009152241463_UpdatedDatabase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202009191127548_updatePatient.cs" />
-    <Compile Include="Migrations\202009191127548_updatePatient.Designer.cs">
-      <DependentUpon>202009191127548_updatePatient.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202009191433481_updateteDatabse.cs" />
-    <Compile Include="Migrations\202009191433481_updateteDatabse.Designer.cs">
-      <DependentUpon>202009191433481_updateteDatabse.cs</DependentUpon>
+    <Compile Include="Migrations\202010041037183_UpdateAppointment.cs" />
+    <Compile Include="Migrations\202010041037183_UpdateAppointment.Designer.cs">
+      <DependentUpon>202010041037183_UpdateAppointment.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -540,14 +528,11 @@
     <Content Include="Views\Psychologist\Index.cshtml" />
     <Content Include="Views\Shared\_PatientLayout.cshtml" />
     <Content Include="Views\Patient\Index.cshtml" />
-    <Content Include="Views\Admin\AddAmbulanceDriver.cshtml" />
     <Content Include="Views\Admin\ListOfAmbulanceDrivers.cshtml" />
     <Content Include="Views\Admin\ListOfAmbulances.cshtml" />
-    <Content Include="Views\Admin\AddAmbulance.cshtml" />
     <Content Include="Views\Admin\EditAmbulance.cshtml" />
     <Content Include="Views\Admin\DeleteAmbulance.cshtml" />
     <Content Include="Views\Admin\EditAmbulanceDriver.cshtml" />
-    <Content Include="Views\Admin\AddMedicine.cshtml" />
     <Content Include="Views\Admin\ListOfMedicine.cshtml" />
     <Content Include="Views\Admin\EditMedicine.cshtml" />
     <Content Include="Views\Admin\DeleteMedicine.cshtml" />
@@ -618,20 +603,11 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202009151934000_init.resx">
-      <DependentUpon>202009151934000_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202010041001233_init.resx">
+      <DependentUpon>202010041001233_init.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202009152045414_AddedPsychologistTable.resx">
-      <DependentUpon>202009152045414_AddedPsychologistTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202009152241463_UpdatedDatabase.resx">
-      <DependentUpon>202009152241463_UpdatedDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202009191127548_updatePatient.resx">
-      <DependentUpon>202009191127548_updatePatient.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202009191433481_updateteDatabse.resx">
-      <DependentUpon>202009191433481_updateteDatabse.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202010041037183_UpdateAppointment.resx">
+      <DependentUpon>202010041037183_UpdateAppointment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

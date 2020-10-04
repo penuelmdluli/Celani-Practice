@@ -29,16 +29,16 @@
                 Psychologist Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AvailableStartDay)
+                @Html.DisplayNameFor(model => model.StartDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AvailableEndDay)
+                @Html.DisplayNameFor(model => model.EndDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AvailableStartTime)
+                @Html.DisplayNameFor(model => model.StartTime)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AvailableEndTime)
+                @Html.DisplayNameFor(model => model.EndTime)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TimePerPatient)
@@ -57,16 +57,16 @@
                     @Html.DisplayFor(modelItem => item.PsychologistName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.AvailableStartDay)
+                    @Html.DisplayFor(modelItem => item.StartDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.AvailableEndDay)
+                    @Html.DisplayFor(modelItem => item.EndDate)
                 </td>
                 <td>
-                    @item.AvailableStartTime.ToShortTimeString()
+                    @item.StartTime.ToShortTimeString()
                 </td>
                 <td>
-                    @item.AvailableEndTime.ToShortTimeString()
+                    @item.EndTime.ToShortTimeString()
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.TimePerPatient)

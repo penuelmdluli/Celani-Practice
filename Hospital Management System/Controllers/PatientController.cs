@@ -136,7 +136,8 @@ namespace Hospital_Management_System.Controllers
                     PatientName = e.Patient.FullName,
                     Problem = e.Problem,
                     PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.DoctorId).FullName,
-                    Status = e.Status
+                    Status = e.Status,
+    
                 })
                 .ToList();
 
@@ -216,7 +217,9 @@ namespace Hospital_Management_System.Controllers
                      Designation = e.Designation,
                      ContactNo = e.ContactNo,
                      Education = e.Education,
-                     Gender = e.Gender
+                     Gender = e.Gender,
+                     Id = e.Id
+                     
                  }).ToList();
             return View(doctor);
         }
@@ -228,13 +231,15 @@ namespace Hospital_Management_System.Controllers
             var schedule = db.Schedules.Include(c => c.Psychologist)
                 .Select(e => new SchedulesDto()
                 {
-                    PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.DoctorId).FullName,
-                    AvailableStartDay = e.AvailableStartDay,
-                    AvailableEndDay = e.AvailableEndDay,
-                    AvailableEndTime = e.AvailableEndTime,
-                    AvailableStartTime = e.AvailableStartTime,
+                    PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.PsychologistId).FullName,
+                    EndTime = e.EndTime,
+                    StartTime = e.StartTime,
+                    StartDate = e.StartDate,
+                    EndDate = e.EndDate,
                     Status = e.Status,
-                    TimePerPatient = e.TimePerPatient
+                    TimePerPatient = e.TimePerPatient,
+                    Id = e.Id
+                
                 })
                 .Where(x=>x.Id ==id);
 

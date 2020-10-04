@@ -231,7 +231,8 @@ namespace Hospital_Management_System.Controllers
                     Designation = e.Designation,
                     ContactNo = e.ContactNo,
                     Education = e.Education,
-                    Gender = e.Gender
+                    Gender = e.Gender,
+                    Id = e.Id,
                 })
                 .ToList();
 
@@ -296,9 +297,9 @@ namespace Hospital_Management_System.Controllers
         {
             var doctor = db.Psychologists.Single(c => c.ApplicationUserId == id);
             var user = db.Users.Single(c => c.Id == id);
-            if (db.Schedules.Where(c => c.DoctorId == doctor.Id).Equals(null))
+            if (db.Schedules.Where(c => c.PsychologistId == doctor.Id).Equals(null))
             {
-                var schedule = db.Schedules.Single(c => c.DoctorId == doctor.Id);
+                var schedule = db.Schedules.Single(c => c.PsychologistId == doctor.Id);
                 db.Schedules.Remove(schedule);
             }
 
@@ -349,15 +350,16 @@ namespace Hospital_Management_System.Controllers
             var schedule = db.Schedules.Include(c => c.Psychologist)
                 .Select(e => new SchedulesDto()
                 {
-                    PsychologistName =db.Psychologists.FirstOrDefault(d => d.Id == e.DoctorId).FullName,
-                    AvailableEndDay = e.AvailableEndDay,
-                    AvailableEndTime = e.AvailableEndTime,
-                    AvailableStartDay = e.AvailableStartDay,
-                    AvailableStartTime = e.AvailableStartTime,
-                    Status = e.Status,
-                    TimePerPatient = e.TimePerPatient +" Hr(s)",
+                    PsychologistName =db.Psychologists.FirstOrDefault(d => d.Id == e.PsychologistId).FullName,
+                    EndTime = e.EndTime,
+                    StartTime = e.StartTime,
+                    StartDate = e.StartDate,
+                    EndDate  =e.EndDate,
+                    Status = "Available",
+                    TimePerPatient = "1 Hr",
+                    Id = e.Id,
 
-                    
+
                 }).ToList();
             return View(schedule);
         }
@@ -384,11 +386,11 @@ namespace Hospital_Management_System.Controllers
             }
 
             var schedule = db.Schedules.Single(c => c.Id == id);
-            schedule.DoctorId = model.Schedule.DoctorId;
-            schedule.AvailableEndDay = model.Schedule.AvailableEndDay;
-            schedule.AvailableEndTime = model.Schedule.AvailableEndTime;
-            schedule.AvailableStartDay = model.Schedule.AvailableStartDay;
-            schedule.AvailableStartTime = model.Schedule.AvailableStartTime;
+            schedule.PsychologistId = model.Schedule.PsychologistId;
+            schedule.EndTime = model.Schedule.EndTime;
+            schedule.StartDate = model.Schedule.StartDate;
+            schedule.EndDate = model.Schedule.EndDate;
+            schedule.StartTime = model.Schedule.StartTime;
             schedule.Status = model.Schedule.Status;
             schedule.TimePerPatient = model.Schedule.TimePerPatient;
             db.SaveChanges();

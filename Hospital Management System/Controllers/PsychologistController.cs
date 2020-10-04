@@ -68,7 +68,7 @@ namespace Hospital_Management_System.Controllers
             string user = User.Identity.GetUserId();
             var patient = db.Patients.Single(c => c.Id == model.Prescription.PatientId);
             var doctor = db.Psychologists.Single(c => c.ApplicationUserId == user);
-            var schedule = db.Schedules.Single(c => c.DoctorId == doctor.Id);
+            var schedule = db.Schedules.Single(c => c.PsychologistId == doctor.Id);
             var patientuser = db.Users.Single(c => c.Id == patient.ApplicationUserId);
             var prescription = new Prescription
             {
@@ -113,7 +113,7 @@ namespace Hospital_Management_System.Controllers
                 Evening7 = model.Prescription.Evening7,
                 CheckUpAfterDays = model.Prescription.CheckUpAfterDays,
                 PrescriptionAddDate = DateTime.Now.Date,
-                DoctorTiming = "From " + schedule.AvailableStartTime.ToShortTimeString() + " to " + schedule.AvailableEndTime.ToShortTimeString()
+                DoctorTiming = "From " + schedule.StartTime.ToShortTimeString() + " to " + schedule.EndTime.ToShortTimeString()
             };
 
             db.Prescription.Add(prescription);
@@ -216,7 +216,7 @@ namespace Hospital_Management_System.Controllers
         {
             string user = User.Identity.GetUserId();
             var doctor = db.Psychologists.Single(c => c.ApplicationUserId == user);
-            var schedule = db.Schedules.Single(c => c.DoctorId == doctor.Id);
+            var schedule = db.Schedules.Single(c => c.PsychologistId == doctor.Id);
             return View(schedule);
         }
 
@@ -233,10 +233,11 @@ namespace Hospital_Management_System.Controllers
         public ActionResult EditSchedule(int id, Schedule model)
         {
             var schedule = db.Schedules.Single(c => c.Id == id);
-            schedule.AvailableEndDay = model.AvailableEndDay;
-            schedule.AvailableEndTime = model.AvailableEndTime;
-            schedule.AvailableStartDay = model.AvailableStartDay;
-            schedule.AvailableStartTime = model.AvailableStartTime;
+            
+            schedule.StartDate = model.StartDate;
+            schedule.EndDate = model.EndDate;
+            schedule.StartTime = model.StartTime;
+            schedule.EndTime = model.EndTime;
             schedule.Status = model.Status;
             schedule.TimePerPatient = model.TimePerPatient;
             db.SaveChanges();

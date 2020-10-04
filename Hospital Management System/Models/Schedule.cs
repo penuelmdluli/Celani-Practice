@@ -12,33 +12,38 @@ namespace Hospital_Management_System.Models
 
         public Psychologist Psychologist { get; set; }
         [Display(Name = "Psychologist Name")]
-        public int DoctorId { get; set; }
+        public int PsychologistId { get; set; }
 
         [Required]
-        [Display(Name = "Start Day")]
-        public string AvailableStartDay { get; set; }
+        [Display(Name = "Start Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime? StartDate { get; set; }
 
         [Required]
-        [Display(Name = "End Day")]
-        public string AvailableEndDay { get; set; }
+        [Display(Name = "End Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime? EndDate { get; set; }
+
 
         [Required]
         [Display(Name = "Start Time")]
         [DataType(DataType.Time)]
         [DisplayFormat(DataFormatString = "{0:hh:mm}", ApplyFormatInEditMode = true)]
-        public DateTime AvailableStartTime { get; set; }
+        public DateTime StartTime { get; set; }
 
         [Required]
         [Display(Name = "End Time")]
         [DataType(DataType.Time)]
         [DisplayFormat(DataFormatString = "{0:hh:mm}", ApplyFormatInEditMode = true)]
-        public DateTime AvailableEndTime { get; set; }
+        public DateTime EndTime { get; set; }
 
         [Required]
         [Display(Name = "Per Patient Time (Hours)")]
         public string TimePerPatient { get; set; }
 
-        [Required]
+  
         public string Status { get; set; }
     }
 }
