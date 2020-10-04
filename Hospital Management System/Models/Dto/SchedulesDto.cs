@@ -16,6 +16,8 @@ namespace Hospital_Management_System.Models.Dto
 
         public string PsychologistName { get; set; }
 
+        public string CentreName { get; set; }
+
         [Required]
         [Display(Name = "Start Date")]
         [DataType(DataType.Date)]

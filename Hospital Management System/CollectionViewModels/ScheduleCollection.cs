@@ -10,5 +10,6 @@ namespace Hospital_Management_System.CollectionViewModels
     {
         public Schedule Schedule { get; set; }
         public IEnumerable<Psychologist> Psychologists { get; set; }
+        public IEnumerable<Centre> Centres { get; set; }
     }
 }

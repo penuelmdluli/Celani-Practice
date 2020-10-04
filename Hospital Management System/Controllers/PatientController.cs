@@ -101,9 +101,31 @@ namespace Hospital_Management_System.Controllers
                 Appointment = model.Appointment,
                 Psychologists = db.Psychologists.ToList()
             };
-            if (model.Appointment.AppointmentDate >= DateTime.Now.Date)
+
+            if (model.Appointment.AppointmentDate <= DateTime.Now.Date)
             {
-                string user = User.Identity.GetUserId();
+                ViewBag.Messege = "Please Enter the Date greater than today or equal!!";
+                return View(collection);
+            }
+
+            if (model.Appointment.StartTime == model.Appointment.EndTime)
+            {
+                ViewBag.Messege = "Start Time Cannot be equel to endTime";
+                return View(collection);
+            }
+
+            if (model.Appointment.StartTime >= model.Appointment.EndTime)
+            {
+                ViewBag.Messege = "EndTime Can Not be Less  than start time";
+                return View(collection);
+            }
+            if (model.Appointment.EndTime != model.Appointment.StartTime.AddHours(1))
+            {
+                ViewBag.Messege = "You Can Only Book For  One Hour !, Please Change Your End Time";
+                return View(collection);
+            }
+
+            string user = User.Identity.GetUserId();
                 var patient = db.Patients.Single(c => c.ApplicationUserId == user);
                 var appointment = new Appointment();
                 appointment.PatientId = patient.Id;
@@ -117,11 +139,6 @@ namespace Hospital_Management_System.Controllers
                 db.Appointments.Add(appointment);
                 db.SaveChanges();
                 return RedirectToAction("ListOfAppointments");
-            }
-            ViewBag.Messege = "Please Enter the Date greater than today or equal!!";
-
-            return View(collection);
-
         }
 
         //List of Appointments
@@ -169,9 +186,32 @@ namespace Hospital_Management_System.Controllers
                 Appointment = model.Appointment,
                 Psychologists = db.Psychologists.ToList()
             };
-            if (model.Appointment.AppointmentDate >= DateTime.Now.Date)
+
+            if (model.Appointment.AppointmentDate <= DateTime.Now.Date)
             {
-                var appointment = db.Appointments.Single(c => c.Id == id);
+                ViewBag.Messege = "Please Enter the Date greater than today or equal!!";
+                return View(collection);
+            }
+
+            if (model.Appointment.StartTime == model.Appointment.EndTime)
+            {
+                ViewBag.Messege = "Start Time Cannot be equel to endTime";
+                return View(collection);
+            }
+
+            if (model.Appointment.StartTime >= model.Appointment.EndTime)
+            {
+                ViewBag.Messege = "EndTime Can Not be Less  than start time";
+                return View(collection);
+            }
+            if (model.Appointment.EndTime != model.Appointment.StartTime.AddHours(1))
+            {
+                ViewBag.Messege = "You Can Only Book For  One Hour !, Please Change Your End Time";
+                return View(collection);
+            }
+
+
+            var appointment = db.Appointments.Single(c => c.Id == id);
                 appointment.DoctorId = model.Appointment.DoctorId;
                 appointment.AppointmentDate = model.Appointment.AppointmentDate;
                 appointment.StartTime = model.Appointment.StartTime;
@@ -179,10 +219,7 @@ namespace Hospital_Management_System.Controllers
                 appointment.Problem = model.Appointment.Problem;
                 db.SaveChanges();
                 return RedirectToAction("ListOfAppointments");
-            }
-            ViewBag.Messege = "Please Enter the Date greater than today or equal!!";
-
-            return View(collection);
+          
         }
 
         //Delete Appointment
@@ -261,6 +298,30 @@ namespace Hospital_Management_System.Controllers
         }
 
         //End Psychologist Section
+
+
+
+        [Authorize(Roles = "Patient")]
+        public ActionResult ListOfSchedules()
+        {
+            var schedule = db.Schedules.Include(c => c.Psychologist)
+                .Select(e => new SchedulesDto()
+                {
+                    PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.PsychologistId).FullName,
+                    // CentreName = db.Centre.FirstOrDefault(d => d.Id == e.CentreId).Name,
+                    EndTime = e.EndTime,
+                    StartTime = e.StartTime,
+                    StartDate = e.StartDate,
+                    EndDate = e.EndDate,
+                    Status = "Available",
+                    TimePerPatient = "1 Hr",
+                    Id = e.Id,
+
+
+                }).ToList();
+            return View(schedule);
+        }
+
 
         //Start Complaint Section
 

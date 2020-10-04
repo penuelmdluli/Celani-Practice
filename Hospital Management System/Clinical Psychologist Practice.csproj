@@ -191,6 +191,10 @@
     <Compile Include="Migrations\202010041037183_UpdateAppointment.Designer.cs">
       <DependentUpon>202010041037183_UpdateAppointment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202010041244502_AddCentre.cs" />
+    <Compile Include="Migrations\202010041244502_AddCentre.Designer.cs">
+      <DependentUpon>202010041244502_AddCentre.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Announcement.cs" />
@@ -589,6 +593,7 @@
     <Content Include="Views\Patient\EditAppointment.cshtml" />
     <Content Include="Views\Patient\ListOfPrescription.cshtml" />
     <Content Include="Views\Patient\PrescriptionView.cshtml" />
+    <Content Include="Views\Patient\ListOfSchedules.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -608,6 +613,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202010041037183_UpdateAppointment.resx">
       <DependentUpon>202010041037183_UpdateAppointment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010041244502_AddCentre.resx">
+      <DependentUpon>202010041244502_AddCentre.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

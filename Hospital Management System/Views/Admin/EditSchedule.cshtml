@@ -20,6 +20,21 @@
 
 <h2>Edit Schedule</h2>
 
+<div class="form-horizontal">
+    <hr />
+    <div class="form-group">
+        <div class="col-md-10">
+            @if (ViewBag.Messege != null)
+            {
+                <span class="text-danger">@ViewBag.Messege</span>
+            }
+            @Html.ValidationMessageFor(model => model.Schedule, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <hr />
+</div>
+
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()

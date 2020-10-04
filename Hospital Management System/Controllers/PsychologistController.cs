@@ -268,9 +268,31 @@ namespace Hospital_Management_System.Controllers
                 Appointment = model.Appointment,
                 Patients = db.Patients.ToList()
             };
-            if (model.Appointment.AppointmentDate >= DateTime.Now.Date)
+
+            if (model.Appointment.AppointmentDate <= DateTime.Now.Date)
             {
-                var doctor = db.Psychologists.Single(c => c.ApplicationUserId == user);
+                ViewBag.Messege = "Please Enter the Date greater than today or equal!!";
+                return View(collection);
+            }
+
+            if (model.Appointment.StartTime == model.Appointment.EndTime)
+            {
+                ViewBag.Messege = "Start Time Cannot be equel to endTime";
+                return View(collection);
+            }
+
+            if (model.Appointment.StartTime >= model.Appointment.EndTime)
+            {
+                ViewBag.Messege = "EndTime Can Not be Less  than start time";
+                return View(collection);
+            }
+            if (model.Appointment.EndTime != model.Appointment.StartTime.AddHours(1))
+            {
+                ViewBag.Messege = "You Can Only Book For  One Hour !, Please Change Your End Time";
+                return View(collection);
+            }
+
+             var doctor = db.Psychologists.Single(c => c.ApplicationUserId == user);
                 var appointment = new Appointment();
                 appointment.PatientId = model.Appointment.PatientId;
                 appointment.DoctorId = doctor.Id;
@@ -291,10 +313,6 @@ namespace Hospital_Management_System.Controllers
                 {
                     return RedirectToAction("PendingAppointments");
                 }
-            }
-            ViewBag.Messege = "Please Enter the Date greater than today or equal!!";
-
-            return View(collection);
         }
 
         //List of Active Appointments
@@ -339,9 +357,31 @@ namespace Hospital_Management_System.Controllers
                 Appointment = model.Appointment,
                 Patients = db.Patients.ToList()
             };
-            if (model.Appointment.AppointmentDate >= DateTime.Now.Date)
+            if (model.Appointment.AppointmentDate <= DateTime.Now.Date)
             {
-                var appointment = db.Appointments.Single(c => c.Id == id);
+                ViewBag.Messege = "Please Enter the Date greater than today or equal!!";
+                return View(collection);
+            }
+
+            if (model.Appointment.StartTime == model.Appointment.EndTime)
+            {
+                ViewBag.Messege = "Start Time Cannot be equel to endTime";
+                return View(collection);
+            }
+
+            if (model.Appointment.StartTime >= model.Appointment.EndTime)
+            {
+                ViewBag.Messege = "EndTime Can Not be Less  than start time";
+                return View(collection);
+            }
+            if (model.Appointment.EndTime != model.Appointment.StartTime.AddHours(1))
+            {
+                ViewBag.Messege = "You Can Only Book For  One Hour !, Please Change Your End Time";
+                return View(collection);
+            }
+
+
+            var appointment = db.Appointments.Single(c => c.Id == id);
                 appointment.PatientId = model.Appointment.PatientId;
                 appointment.AppointmentDate = model.Appointment.AppointmentDate;
                 appointment.StartTime = model.Appointment.StartTime;
@@ -357,10 +397,6 @@ namespace Hospital_Management_System.Controllers
                 {
                     return RedirectToAction("PendingAppointments");
                 }
-            }
-            ViewBag.Messege = "Please Enter the Date greater than today or equal!!";
-
-            return View(collection);
         }
 
         //Detail of appointment

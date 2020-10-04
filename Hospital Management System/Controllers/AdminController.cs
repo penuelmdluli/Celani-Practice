@@ -142,12 +142,6 @@ namespace Hospital_Management_System.Controllers
             return View();
         }
 
-
-       
-
-
-        
-
         //End Ambulance Section
 
         //Start Medicine Section
@@ -167,7 +161,7 @@ namespace Hospital_Management_System.Controllers
             {
                 ApplicationUser = new RegisterViewModel(),
                 Psychologist = new Psychologist(),
-                Departments = db.Centre.ToList()
+                Centres = db.Centre.ToList()
             };
             return View(collection);
         }
@@ -206,6 +200,7 @@ namespace Hospital_Management_System.Controllers
                     Address = model.Psychologist.Address,
                     Status = model.Psychologist.Status
                 };
+
                 db.Psychologists.Add(psychologist);
                 db.SaveChanges();
                 return RedirectToAction("ListOfPsychologists");
@@ -253,7 +248,7 @@ namespace Hospital_Management_System.Controllers
         {
             var collection = new DoctorCollection
             {
-                Departments = db.Centre.ToList(),
+                Centres = db.Centre.ToList(),
                 Psychologist = db.Psychologists.Single(c => c.Id == id)
             };
             return View(collection);
@@ -319,6 +314,7 @@ namespace Hospital_Management_System.Controllers
             var collection = new ScheduleCollection
             {
                 Schedule = new Schedule(),
+                Centres = db.Centre.ToList(),
                 Psychologists = db.Psychologists.ToList()
             };
             return View(collection);
@@ -328,15 +324,40 @@ namespace Hospital_Management_System.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddSchedule(ScheduleCollection model)
         {
-            if (!ModelState.IsValid)
-            {
+           
                 var collection = new ScheduleCollection
                 {
+                    Centres = db.Centre.ToList(),
                     Schedule = model.Schedule,
                     Psychologists = db.Psychologists.ToList()
                 };
+       
+            if (model.Schedule.StartDate <= DateTime.Now.Date)
+            {
+                ViewBag.Messege = "Please Enter the Date greater than today or equal!!";
                 return View(collection);
             }
+
+            if (model.Schedule.StartDate == model.Schedule.EndDate)
+            {
+                ViewBag.Messege = "Start Date Cannot be Equal to End Date";
+                return View(collection);
+            }
+
+            if (model.Schedule.StartDate <= model.Schedule.EndDate)
+            {
+                ViewBag.Messege = "Please Enter the Date greater than today or equal!!";
+                return View(collection);
+            }
+
+            if (model.Schedule.EndTime <= model.Schedule.StartTime.AddHours(1))
+            {
+                ViewBag.Messege = "Ops ,Please Schedule for atlease One Hour.";
+                return View(collection);
+            }
+
+
+
 
             db.Schedules.Add(model.Schedule);
             db.SaveChanges();
@@ -351,6 +372,7 @@ namespace Hospital_Management_System.Controllers
                 .Select(e => new SchedulesDto()
                 {
                     PsychologistName =db.Psychologists.FirstOrDefault(d => d.Id == e.PsychologistId).FullName,
+                   // CentreName = db.Centre.FirstOrDefault(d => d.Id == e.CentreId).Name,
                     EndTime = e.EndTime,
                     StartTime = e.StartTime,
                     StartDate = e.StartDate,
@@ -370,6 +392,7 @@ namespace Hospital_Management_System.Controllers
         {
             var collection = new ScheduleCollection
             {
+                Centres = db.Centre.ToList(),
                 Schedule = db.Schedules.Single(c => c.Id == id),
                 Psychologists = db.Psychologists.ToList()
             };
@@ -390,6 +413,7 @@ namespace Hospital_Management_System.Controllers
             schedule.EndTime = model.Schedule.EndTime;
             schedule.StartDate = model.Schedule.StartDate;
             schedule.EndDate = model.Schedule.EndDate;
+          //  schedule.CentreId = model.Schedule.CentreId;
             schedule.StartTime = model.Schedule.StartTime;
             schedule.Status = model.Schedule.Status;
             schedule.TimePerPatient = model.Schedule.TimePerPatient;
@@ -508,9 +532,32 @@ namespace Hospital_Management_System.Controllers
             };
 
 
-            if (model.Appointment.AppointmentDate >= DateTime.Now.Date)
+
+
+            if (model.Appointment.AppointmentDate <= DateTime.Now.Date)
             {
-                var appointment = new Appointment();
+                ViewBag.Messege = "Please Enter the Date greater than today or equal!!";
+                return View(collection);
+            }
+
+            if (model.Appointment.StartTime == model.Appointment.EndTime)
+            {
+                ViewBag.Messege = "Start Time Cannot be equel to endTime";
+                return View(collection);
+            }
+
+            if (model.Appointment.StartTime >= model.Appointment.EndTime)
+            {
+                ViewBag.Messege = "EndTime Can Not be Less  than start time";
+                return View(collection);
+            }
+            if (model.Appointment.EndTime != model.Appointment.StartTime.AddHours(1))
+            {
+                ViewBag.Messege = "You Can Only Book For  One Hour !, Please Change Your End Time";
+                return View(collection);
+            }
+
+            var appointment = new Appointment();
                 appointment.PatientId = model.Appointment.PatientId;
                 appointment.DoctorId = model.Appointment.DoctorId;
                 appointment.AppointmentDate = model.Appointment.AppointmentDate;
@@ -529,11 +576,6 @@ namespace Hospital_Management_System.Controllers
                 {
                     return RedirectToAction("PendingAppointments");
                 }
-            }
-
-            ViewBag.Messege = "Please Enter the Date greater than today or equal!!";
-            return View(collection);
-
         }
 
         //List of Active Appointment

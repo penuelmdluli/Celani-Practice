@@ -19,6 +19,26 @@
 
 <h2>Add Appointment</h2>
 
+
+<p>
+    @Html.ActionLink("Please Click Here To View Available Schedule before you book your appointment!", "ListOfSchedules", null, new { @class = "btn btn-primary" })
+</p>
+
+<div class="form-horizontal">
+    <hr />
+    <div class="form-group">
+        <div class="col-md-10">
+            @if (ViewBag.Messege != null)
+            {
+                <span class="text-danger">@ViewBag.Messege</span>
+            }
+            @Html.ValidationMessageFor(model => model.Appointment, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <hr />
+</div>
+
+
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
