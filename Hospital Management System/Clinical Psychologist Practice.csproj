@@ -183,17 +183,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202010041001233_init.cs" />
-    <Compile Include="Migrations\202010041001233_init.Designer.cs">
-      <DependentUpon>202010041001233_init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202010041037183_UpdateAppointment.cs" />
-    <Compile Include="Migrations\202010041037183_UpdateAppointment.Designer.cs">
-      <DependentUpon>202010041037183_UpdateAppointment.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202010041244502_AddCentre.cs" />
-    <Compile Include="Migrations\202010041244502_AddCentre.Designer.cs">
-      <DependentUpon>202010041244502_AddCentre.cs</DependentUpon>
+    <Compile Include="Migrations\202010042147216_init.cs" />
+    <Compile Include="Migrations\202010042147216_init.Designer.cs">
+      <DependentUpon>202010042147216_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -608,14 +600,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202010041001233_init.resx">
-      <DependentUpon>202010041001233_init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010041037183_UpdateAppointment.resx">
-      <DependentUpon>202010041037183_UpdateAppointment.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010041244502_AddCentre.resx">
-      <DependentUpon>202010041244502_AddCentre.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202010042147216_init.resx">
+      <DependentUpon>202010042147216_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -344,7 +344,7 @@ namespace Hospital_Management_System.Controllers
                 return View(collection);
             }
 
-            if (model.Schedule.StartDate <= model.Schedule.EndDate)
+            if (model.Schedule.StartDate >= model.Schedule.EndDate)
             {
                 ViewBag.Messege = "Please Enter the Date greater than today or equal!!";
                 return View(collection);
