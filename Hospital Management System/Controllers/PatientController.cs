@@ -110,6 +110,8 @@ namespace Hospital_Management_System.Controllers
                 appointment.DoctorId = model.Appointment.DoctorId;
                 appointment.AppointmentDate = model.Appointment.AppointmentDate;
                 appointment.Problem = model.Appointment.Problem;
+                appointment.StartTime = model.Appointment.StartTime;
+                appointment.EndTime = model.Appointment.EndTime;
                 appointment.Status = false;
 
                 db.Appointments.Add(appointment);
@@ -135,6 +137,8 @@ namespace Hospital_Management_System.Controllers
                     Id = e.Id,
                     PatientName = e.Patient.FullName,
                     Problem = e.Problem,
+                    StartTime = e.StartTime,
+                    EndTime = e.EndTime,
                     PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.DoctorId).FullName,
                     Status = e.Status,
     
@@ -170,6 +174,8 @@ namespace Hospital_Management_System.Controllers
                 var appointment = db.Appointments.Single(c => c.Id == id);
                 appointment.DoctorId = model.Appointment.DoctorId;
                 appointment.AppointmentDate = model.Appointment.AppointmentDate;
+                appointment.StartTime = model.Appointment.StartTime;
+                appointment.EndTime = model.Appointment.EndTime;
                 appointment.Problem = model.Appointment.Problem;
                 db.SaveChanges();
                 return RedirectToAction("ListOfAppointments");

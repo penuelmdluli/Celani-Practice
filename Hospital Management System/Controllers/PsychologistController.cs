@@ -275,6 +275,8 @@ namespace Hospital_Management_System.Controllers
                 appointment.PatientId = model.Appointment.PatientId;
                 appointment.DoctorId = doctor.Id;
                 appointment.AppointmentDate = model.Appointment.AppointmentDate;
+                appointment.StartTime = model.Appointment.StartTime;
+                appointment.EndTime = model.Appointment.EndTime;
                 appointment.Problem = model.Appointment.Problem;
                 appointment.Status = model.Appointment.Status;
 
@@ -342,6 +344,8 @@ namespace Hospital_Management_System.Controllers
                 var appointment = db.Appointments.Single(c => c.Id == id);
                 appointment.PatientId = model.Appointment.PatientId;
                 appointment.AppointmentDate = model.Appointment.AppointmentDate;
+                appointment.StartTime = model.Appointment.StartTime;
+                appointment.EndTime = model.Appointment.EndTime;
                 appointment.Problem = model.Appointment.Problem;
                 appointment.Status = model.Appointment.Status;
                 db.SaveChanges();

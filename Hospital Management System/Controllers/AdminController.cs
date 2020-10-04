@@ -499,18 +499,23 @@ namespace Hospital_Management_System.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddAppointment(AppointmentCollection model)
         {
+
             var collection = new AppointmentCollection
             {
                 Appointment = model.Appointment,
                 Patients = db.Patients.ToList(),
                 Psychologists = db.Psychologists.ToList()
             };
+
+
             if (model.Appointment.AppointmentDate >= DateTime.Now.Date)
             {
                 var appointment = new Appointment();
                 appointment.PatientId = model.Appointment.PatientId;
                 appointment.DoctorId = model.Appointment.DoctorId;
                 appointment.AppointmentDate = model.Appointment.AppointmentDate;
+                appointment.StartTime = model.Appointment.StartTime;
+                appointment.EndTime = model.Appointment.EndTime;
                 appointment.Problem = model.Appointment.Problem;
                 appointment.Status = model.Appointment.Status;
                 db.Appointments.Add(appointment);
@@ -542,6 +547,8 @@ namespace Hospital_Management_System.Controllers
                     AppointmentDate = e.AppointmentDate,
                     Id = e.Id,
                     PatientName = e.Patient.FullName,
+                    StartTime = e.StartTime,
+                    EndTime = e.EndTime,
                     Problem = e.Problem,
                     PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.DoctorId).FullName,
                     Status = e.Status
@@ -561,6 +568,8 @@ namespace Hospital_Management_System.Controllers
                     AppointmentDate = e.AppointmentDate,
                     Id = e.Id,
                     PatientName = e.Patient.FullName,
+                    StartTime = e.StartTime,
+                    EndTime = e.EndTime,
                     Problem = e.Problem,
                     PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.DoctorId).FullName,
                     Status = e.Status
@@ -597,6 +606,8 @@ namespace Hospital_Management_System.Controllers
                 appointment.PatientId = model.Appointment.PatientId;
                 appointment.DoctorId = model.Appointment.DoctorId;
                 appointment.AppointmentDate = model.Appointment.AppointmentDate;
+                appointment.StartTime = model.Appointment.StartTime;
+                appointment.EndTime = model.Appointment.EndTime;
                 appointment.Problem = model.Appointment.Problem;
                 appointment.Status = model.Appointment.Status;
                 db.SaveChanges();
