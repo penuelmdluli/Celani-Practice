@@ -434,6 +434,7 @@ namespace Hospital_Management_System.Controllers
         {
             var schedule = db.Schedules.Single(c => c.Id == id);
             db.Schedules.Remove(schedule);
+            db.SaveChanges();
             return RedirectToAction("ListOfSchedules");
         }
 
@@ -594,7 +595,7 @@ namespace Hospital_Management_System.Controllers
                     Problem = e.Problem,
                     PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.DoctorId).FullName,
                     Status = e.Status
-                })
+                }).Where(c => c.Status == true).Where(c => c.AppointmentDate >= date)
                 .ToList();
             return View(appointment);
         }
@@ -615,7 +616,7 @@ namespace Hospital_Management_System.Controllers
                     Problem = e.Problem,
                     PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.DoctorId).FullName,
                     Status = e.Status
-                });
+                }).Where(c => c.Status == false).Where(c => c.AppointmentDate >= date).ToList();
             return View(appointment);
         }
 
