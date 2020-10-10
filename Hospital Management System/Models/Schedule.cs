@@ -15,17 +15,10 @@ namespace Hospital_Management_System.Models
         public int PsychologistId { get; set; }
         
         [Required]
-        [Display(Name = "Start Date")]
+        [Display(Name = "Schedule Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime? StartDate { get; set; }
-
-        [Required]
-        [Display(Name = "End Date")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime? EndDate { get; set; }
-
+        public DateTime? ScheduleDate { get; set; }
 
         [Required]
         [Display(Name = "Start Time")]
@@ -39,11 +32,6 @@ namespace Hospital_Management_System.Models
         [DisplayFormat(DataFormatString = "{0:hh:mm}", ApplyFormatInEditMode = true)]
         public DateTime EndTime { get; set; }
 
-        [Required]
-        [Display(Name = "Per Patient Time (Hours)")]
-        public string TimePerPatient { get; set; }
-
-  
-        public string Status { get; set; }
+        
     }
 }

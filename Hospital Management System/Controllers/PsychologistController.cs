@@ -41,8 +41,8 @@ namespace Hospital_Management_System.Controllers
                 Departments = db.Centre.ToList(),
                 Psychologists = db.Psychologists.ToList(),
                 Patients = db.Patients.ToList(),
-                ActiveAppointments = db.Appointments.Where(c => c.DoctorId == doctor.Id).Where(c => c.Status).Where(c => c.AppointmentDate >= date).ToList(),
-                PendingAppointments = db.Appointments.Where(c => c.DoctorId == doctor.Id).Where(c => c.Status == false).Where(c => c.AppointmentDate >= date).ToList(),
+                ActiveAppointments = db.Appointments.Where(c => c.Schedule.PsychologistId == doctor.Id).Where(c => c.Status).Where(c => c.AppointmentDate >= date).ToList(),
+                PendingAppointments = db.Appointments.Where(c => c.Schedule.PsychologistId == doctor.Id).Where(c => c.Status == false).Where(c => c.AppointmentDate >= date).ToList(),
             
                 Announcements = db.Announcements.Where(c => c.AnnouncementFor == "Psychologist").ToList()
             };
@@ -234,12 +234,10 @@ namespace Hospital_Management_System.Controllers
         {
             var schedule = db.Schedules.Single(c => c.Id == id);
             
-            schedule.StartDate = model.StartDate;
-            schedule.EndDate = model.EndDate;
+            schedule.ScheduleDate = model.ScheduleDate;
             schedule.StartTime = model.StartTime;
             schedule.EndTime = model.EndTime;
-            schedule.Status = model.Status;
-            schedule.TimePerPatient = model.TimePerPatient;
+           
             db.SaveChanges();
             return RedirectToAction("ScheduleDetail");
         }
@@ -295,7 +293,7 @@ namespace Hospital_Management_System.Controllers
              var doctor = db.Psychologists.Single(c => c.ApplicationUserId == user);
                 var appointment = new Appointment();
                 appointment.PatientId = model.Appointment.PatientId;
-                appointment.DoctorId = doctor.Id;
+                appointment.Schedule.PsychologistId = doctor.Id;
                 appointment.AppointmentDate = model.Appointment.AppointmentDate;
                 appointment.StartTime = model.Appointment.StartTime;
                 appointment.EndTime = model.Appointment.EndTime;
@@ -322,7 +320,7 @@ namespace Hospital_Management_System.Controllers
             var user = User.Identity.GetUserId();
             var doctor = db.Psychologists.Single(c => c.ApplicationUserId == user);
             var date = DateTime.Now.Date;
-            var appointment = db.Appointments.Include(c => c.Psychologist).Include(c => c.Patient).Where(c => c.DoctorId == doctor.Id).Where(c => c.Status == true).Where(c => c.AppointmentDate >= date).ToList();
+            var appointment = db.Appointments.Include(c => c.Schedule).Include(c => c.Patient).Where(c => c.Schedule.PsychologistId == doctor.Id).Where(c => c.Status == true).Where(c => c.AppointmentDate >= date).ToList();
             return View(appointment);
         }
 
@@ -332,7 +330,7 @@ namespace Hospital_Management_System.Controllers
             var user = User.Identity.GetUserId();
             var doctor = db.Psychologists.Single(c => c.ApplicationUserId == user);
             var date = DateTime.Now.Date;
-            var appointment = db.Appointments.Include(c => c.Psychologist).Include(c => c.Patient).Where(c => c.DoctorId == doctor.Id).Where(c => c.Status == false).Where(c => c.AppointmentDate >= date).ToList();
+            var appointment = db.Appointments.Include(c => c.Schedule).Include(c => c.Patient).Where(c => c.Schedule.PsychologistId == doctor.Id).Where(c => c.Status == false).Where(c => c.AppointmentDate >= date).ToList();
             return View(appointment);
         }
 
@@ -403,7 +401,7 @@ namespace Hospital_Management_System.Controllers
         [Authorize(Roles = "Psychologist")]
         public ActionResult DetailOfAppointment(int id)
         {
-            var appointment = db.Appointments.Include(c => c.Psychologist).Include(c => c.Patient).Single(c => c.Id == id);
+            var appointment = db.Appointments.Include(c => c.Schedule).Include(c => c.Patient).Single(c => c.Id == id);
             return View(appointment);
         }
 

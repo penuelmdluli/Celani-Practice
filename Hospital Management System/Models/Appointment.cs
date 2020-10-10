@@ -14,9 +14,9 @@ namespace Hospital_Management_System.Models
         [Display(Name = "Patient Name")]
         public int PatientId { get; set; }
 
-        public Psychologist Psychologist { get; set; }
+        public Schedule Schedule { get; set; }
         [Display(Name = "Psychologist Name")]
-        public int DoctorId { get; set; }
+        public int ScheduleId { get; set; }
 
         [Display(Name = "Appointment Date")]
         [DataType(DataType.Date)]

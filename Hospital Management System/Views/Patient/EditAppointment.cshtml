@@ -45,10 +45,10 @@
     @Html.HiddenFor(model => model.Appointment.Id)
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Appointment.DoctorId, "PatientId", htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Appointment.Schedule.PsychologistId, "PatientId", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.Appointment.DoctorId, new SelectList(Model.Psychologists, "Id", "FullName"), "Select Psychologist", new { @id = "dropdown", @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Appointment.DoctorId, "", new { @class = "text-danger" })
+            @Html.DropDownListFor(model => model.Appointment.Schedule.PsychologistId, new SelectList(Model.Psychologists, "Id", "FullName"), "Select Psychologist", new { @id = "dropdown", @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Appointment.Schedule.PsychologistId, "", new { @class = "text-danger" })
         </div>
     </div>
 

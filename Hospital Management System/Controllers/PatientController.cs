@@ -129,7 +129,7 @@ namespace Hospital_Management_System.Controllers
                 var patient = db.Patients.Single(c => c.ApplicationUserId == user);
                 var appointment = new Appointment();
                 appointment.PatientId = patient.Id;
-                appointment.DoctorId = model.Appointment.DoctorId;
+                appointment.Schedule.PsychologistId = model.Appointment.Schedule.PsychologistId;
                 appointment.AppointmentDate = model.Appointment.AppointmentDate;
                 appointment.Problem = model.Appointment.Problem;
                 appointment.StartTime = model.Appointment.StartTime;
@@ -156,7 +156,7 @@ namespace Hospital_Management_System.Controllers
                     Problem = e.Problem,
                     StartTime = e.StartTime,
                     EndTime = e.EndTime,
-                    PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.DoctorId).FullName,
+                    PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.Schedule.PsychologistId).FullName,
                     Status = e.Status,
     
                 })
@@ -212,7 +212,7 @@ namespace Hospital_Management_System.Controllers
 
 
             var appointment = db.Appointments.Single(c => c.Id == id);
-                appointment.DoctorId = model.Appointment.DoctorId;
+                appointment.Schedule.PsychologistId = model.Appointment.Schedule.PsychologistId;
                 appointment.AppointmentDate = model.Appointment.AppointmentDate;
                 appointment.StartTime = model.Appointment.StartTime;
                 appointment.EndTime = model.Appointment.EndTime;
@@ -277,10 +277,7 @@ namespace Hospital_Management_System.Controllers
                     PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.PsychologistId).FullName,
                     EndTime = e.EndTime,
                     StartTime = e.StartTime,
-                    StartDate = e.StartDate,
-                    EndDate = e.EndDate,
-                    Status = e.Status,
-                    TimePerPatient = e.TimePerPatient,
+                    ScheduleDate = e.ScheduleDate,
                     Id = e.Id
                 
                 })
@@ -311,10 +308,8 @@ namespace Hospital_Management_System.Controllers
                     // CentreName = db.Centre.FirstOrDefault(d => d.Id == e.CentreId).Name,
                     EndTime = e.EndTime,
                     StartTime = e.StartTime,
-                    StartDate = e.StartDate,
-                    EndDate = e.EndDate,
-                    Status = "Available",
-                    TimePerPatient = "1 Hr",
+                    ScheduleDate = e.ScheduleDate,
+                  
                     Id = e.Id,
 
 

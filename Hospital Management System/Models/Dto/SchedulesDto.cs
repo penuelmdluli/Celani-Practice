@@ -19,19 +19,12 @@ namespace Hospital_Management_System.Models.Dto
         public string CentreName { get; set; }
 
         [Required]
-        [Display(Name = "Start Date")]
+        [Display(Name = "Schedule Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime? StartDate { get; set; }
-
-        [Required]
-        [Display(Name = "End Date")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime? EndDate { get; set; }
+        public DateTime? ScheduleDate { get; set; }
 
 
-        
         [Display(Name = "Start Time")]
         [DataType(DataType.Time)]
         [DisplayFormat(DataFormatString = "{0:hh:mm}", ApplyFormatInEditMode = true)]
@@ -43,11 +36,8 @@ namespace Hospital_Management_System.Models.Dto
         [DisplayFormat(DataFormatString = "{0:hh:mm}", ApplyFormatInEditMode = true)]
         public DateTime EndTime { get; set; }
 
-        [Required]
-        [Display(Name = "Per Patient Time")]
-        public string TimePerPatient { get; set; }
-
+  
         
-        public string Status { get; set; }
+        
     }
 }

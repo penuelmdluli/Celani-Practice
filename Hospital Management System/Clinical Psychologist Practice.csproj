@@ -187,6 +187,14 @@
     <Compile Include="Migrations\202010042147216_init.Designer.cs">
       <DependentUpon>202010042147216_init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202010101039165_scheduel.cs" />
+    <Compile Include="Migrations\202010101039165_scheduel.Designer.cs">
+      <DependentUpon>202010101039165_scheduel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010101322135_appointment.cs" />
+    <Compile Include="Migrations\202010101322135_appointment.Designer.cs">
+      <DependentUpon>202010101322135_appointment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Announcement.cs" />
@@ -602,6 +610,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202010042147216_init.resx">
       <DependentUpon>202010042147216_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010101039165_scheduel.resx">
+      <DependentUpon>202010101039165_scheduel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010101322135_appointment.resx">
+      <DependentUpon>202010101322135_appointment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -39,6 +39,14 @@ namespace Hospital_Management_System.Controllers
             private set { _userManager = value; }
         }
 
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error);
+            }
+        }
+
         // GET: Admin
         [Authorize(Roles = "Admin")]
         public ActionResult Index(string message)
@@ -192,6 +200,7 @@ namespace Hospital_Management_System.Controllers
                     Designation = model.Psychologist.Designation,
                     Education = model.Psychologist.Education,
                     DepartmentId = model.Psychologist.DepartmentId,
+
                     Specialization = model.Psychologist.Specialization,
                     Gender = model.Psychologist.Gender,
                     BloodGroup = model.Psychologist.BloodGroup,
@@ -206,7 +215,8 @@ namespace Hospital_Management_System.Controllers
                 return RedirectToAction("ListOfPsychologists");
             }
 
-            return HttpNotFound();
+            return RedirectToAction("ListOfPsychologists");
+            //return HttpNotFound();
 
         }
 
@@ -258,21 +268,21 @@ namespace Hospital_Management_System.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditPsychologists(int id, DoctorCollection model)
         {
-            var doctor = db.Psychologists.Single(c => c.Id == id);
-            doctor.FirstName = model.Psychologist.FirstName;
-            doctor.LastName = model.Psychologist.LastName;
-            doctor.FullName = "Dr. " + model.Psychologist.FirstName + " " + model.Psychologist.LastName;
-            doctor.ContactNo = model.Psychologist.ContactNo;
-            doctor.PhoneNo = model.Psychologist.PhoneNo;
-            doctor.Designation = model.Psychologist.Designation;
-            doctor.Education = model.Psychologist.Education;
-            doctor.DepartmentId = model.Psychologist.DepartmentId;
-            doctor.Specialization = model.Psychologist.Specialization;
-            doctor.Gender = model.Psychologist.Gender;
-            doctor.BloodGroup = model.Psychologist.BloodGroup;
-            doctor.DateOfBirth = model.Psychologist.DateOfBirth;
-            doctor.Address = model.Psychologist.Address;
-            doctor.Status = model.Psychologist.Status;
+            var psychologist = db.Psychologists.Single(c => c.Id == id);
+            psychologist.FirstName = model.Psychologist.FirstName;
+            psychologist.LastName = model.Psychologist.LastName;
+            psychologist.FullName = "Dr. " + model.Psychologist.FirstName + " " + model.Psychologist.LastName;
+            psychologist.ContactNo = model.Psychologist.ContactNo;
+            psychologist.PhoneNo = model.Psychologist.PhoneNo;
+            psychologist.Designation = model.Psychologist.Designation;
+            psychologist.Education = model.Psychologist.Education;
+            psychologist.DepartmentId = model.Psychologist.DepartmentId;
+            psychologist.Specialization = model.Psychologist.Specialization;
+            psychologist.Gender = model.Psychologist.Gender;
+            psychologist.BloodGroup = model.Psychologist.BloodGroup;
+            psychologist.DateOfBirth = model.Psychologist.DateOfBirth;
+            psychologist.Address = model.Psychologist.Address;
+            psychologist.Status = model.Psychologist.Status;
             db.SaveChanges();
 
             return RedirectToAction("ListOfPsychologists");
@@ -332,31 +342,17 @@ namespace Hospital_Management_System.Controllers
                     Psychologists = db.Psychologists.ToList()
                 };
        
-            if (model.Schedule.StartDate <= DateTime.Now.Date)
+            if (model.Schedule.ScheduleDate <= DateTime.Now.Date)
             {
                 ViewBag.Messege = "Please Enter the Date greater than today or equal!!";
                 return View(collection);
             }
 
-            if (model.Schedule.StartDate == model.Schedule.EndDate)
+            if (model.Schedule.EndTime < model.Schedule.StartTime.AddHours(1) || model.Schedule.EndTime > model.Schedule.StartTime.AddHours(1))
             {
-                ViewBag.Messege = "Start Date Cannot be Equal to End Date";
+                ViewBag.Messege = "Ops ,You Only allowed to to add schedule for 1 Hour Per slot.";
                 return View(collection);
             }
-
-            if (model.Schedule.StartDate >= model.Schedule.EndDate)
-            {
-                ViewBag.Messege = "Please Enter the Date greater than today or equal!!";
-                return View(collection);
-            }
-
-            if (model.Schedule.EndTime <= model.Schedule.StartTime.AddHours(1))
-            {
-                ViewBag.Messege = "Ops ,Please Schedule for atlease One Hour.";
-                return View(collection);
-            }
-
-
 
 
             db.Schedules.Add(model.Schedule);
@@ -372,13 +368,11 @@ namespace Hospital_Management_System.Controllers
                 .Select(e => new SchedulesDto()
                 {
                     PsychologistName =db.Psychologists.FirstOrDefault(d => d.Id == e.PsychologistId).FullName,
-                   // CentreName = db.Centre.FirstOrDefault(d => d.Id == e.CentreId).Name,
+                    CentreName = db.Centre.FirstOrDefault(d => d.Id == e.Id).Name,
                     EndTime = e.EndTime,
                     StartTime = e.StartTime,
-                    StartDate = e.StartDate,
-                    EndDate  =e.EndDate,
-                    Status = "Available",
-                    TimePerPatient = "1 Hr",
+                    ScheduleDate = e.ScheduleDate,
+                   
                     Id = e.Id,
 
 
@@ -411,12 +405,11 @@ namespace Hospital_Management_System.Controllers
             var schedule = db.Schedules.Single(c => c.Id == id);
             schedule.PsychologistId = model.Schedule.PsychologistId;
             schedule.EndTime = model.Schedule.EndTime;
-            schedule.StartDate = model.Schedule.StartDate;
-            schedule.EndDate = model.Schedule.EndDate;
+            schedule.ScheduleDate = model.Schedule.ScheduleDate;
           //  schedule.CentreId = model.Schedule.CentreId;
             schedule.StartTime = model.Schedule.StartTime;
-            schedule.Status = model.Schedule.Status;
-            schedule.TimePerPatient = model.Schedule.TimePerPatient;
+           
+           
             db.SaveChanges();
             return RedirectToAction("ListOfSchedules");
         }
@@ -511,13 +504,29 @@ namespace Hospital_Management_System.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult AddAppointment()
         {
-            var collection = new AppointmentCollection
-            {
-                Appointment = new Appointment(),
-                Patients = db.Patients.ToList(),
-                Psychologists = db.Psychologists.ToList()
-            };
-            return View(collection);
+
+
+            var schedule = db.Schedules.Include(c => c.Psychologist)
+               .Select(e => new SchedulesDto()
+               {
+                   PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.PsychologistId).FullName,
+                   CentreName = db.Centre.FirstOrDefault(d => d.Id == e.Id).Name,
+                   EndTime = e.EndTime,
+                   StartTime = e.StartTime,
+                   ScheduleDate = e.ScheduleDate,
+                  
+                   Id = e.Id,
+               }).ToList();
+            
+
+            //var collection = new AppointmentCollection
+            //{
+            //    Appointment = new Appointment(),
+            //    Patients = db.Patients.ToList(),
+            //    Psychologists = db.Psychologists.ToList()
+            //};
+
+            return View(schedule);
         }
 
         [HttpPost]
@@ -529,7 +538,8 @@ namespace Hospital_Management_System.Controllers
             {
                 Appointment = model.Appointment,
                 Patients = db.Patients.ToList(),
-                Psychologists = db.Psychologists.ToList()
+                Psychologists = db.Psychologists.ToList(),
+                Schedules = db.Schedules.ToList()
             };
 
 
@@ -560,7 +570,6 @@ namespace Hospital_Management_System.Controllers
 
             var appointment = new Appointment();
                 appointment.PatientId = model.Appointment.PatientId;
-                appointment.DoctorId = model.Appointment.DoctorId;
                 appointment.AppointmentDate = model.Appointment.AppointmentDate;
                 appointment.StartTime = model.Appointment.StartTime;
                 appointment.EndTime = model.Appointment.EndTime;
@@ -584,7 +593,7 @@ namespace Hospital_Management_System.Controllers
         public ActionResult ListOfAppointments()
         {
             var date = DateTime.Now.Date;
-            var appointment = db.Appointments.Include(c => c.Psychologist).Include(c => c.Patient)
+            var appointment = db.Appointments.Include(c => c.Schedule).Include(c => c.Patient)
                 .Select(e => new AppointmentDto()
                 {
                     AppointmentDate = e.AppointmentDate,
@@ -593,7 +602,7 @@ namespace Hospital_Management_System.Controllers
                     StartTime = e.StartTime,
                     EndTime = e.EndTime,
                     Problem = e.Problem,
-                    PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.DoctorId).FullName,
+                    PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.Schedule.PsychologistId).FullName,
                     Status = e.Status
                 }).Where(c => c.Status == true).Where(c => c.AppointmentDate >= date)
                 .ToList();
@@ -605,7 +614,7 @@ namespace Hospital_Management_System.Controllers
         public ActionResult PendingAppointments()
         {
             var date = DateTime.Now.Date;
-            var appointment = db.Appointments.Include(c => c.Psychologist).Include(c => c.Patient)
+            var appointment = db.Appointments.Include(c => c.Schedule).Include(c => c.Patient)
                 .Select(e => new AppointmentDto()
                 {
                     AppointmentDate = e.AppointmentDate,
@@ -614,7 +623,7 @@ namespace Hospital_Management_System.Controllers
                     StartTime = e.StartTime,
                     EndTime = e.EndTime,
                     Problem = e.Problem,
-                    PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.DoctorId).FullName,
+                    PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.Schedule.PsychologistId).FullName,
                     Status = e.Status
                 }).Where(c => c.Status == false).Where(c => c.AppointmentDate >= date).ToList();
             return View(appointment);
@@ -647,7 +656,6 @@ namespace Hospital_Management_System.Controllers
             {
                 var appointment = db.Appointments.Single(c => c.Id == id);
                 appointment.PatientId = model.Appointment.PatientId;
-                appointment.DoctorId = model.Appointment.DoctorId;
                 appointment.AppointmentDate = model.Appointment.AppointmentDate;
                 appointment.StartTime = model.Appointment.StartTime;
                 appointment.EndTime = model.Appointment.EndTime;
@@ -672,7 +680,7 @@ namespace Hospital_Management_System.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult DetailOfAppointment(int id)
         {
-            var appointment = db.Appointments.Include(c => c.Psychologist).Include(c => c.Patient).Single(c => c.Id == id);
+            var appointment = db.Appointments.Include(c => c.Schedule).Include(c => c.Patient).Single(c => c.Id == id);
             return View(appointment);
         }
 
