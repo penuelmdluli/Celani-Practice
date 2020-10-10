@@ -108,22 +108,7 @@ namespace Hospital_Management_System.Controllers
                 return View(collection);
             }
 
-            if (model.Appointment.StartTime == model.Appointment.EndTime)
-            {
-                ViewBag.Messege = "Start Time Cannot be equel to endTime";
-                return View(collection);
-            }
-
-            if (model.Appointment.StartTime >= model.Appointment.EndTime)
-            {
-                ViewBag.Messege = "EndTime Can Not be Less  than start time";
-                return View(collection);
-            }
-            if (model.Appointment.EndTime != model.Appointment.StartTime.AddHours(1))
-            {
-                ViewBag.Messege = "You Can Only Book For  One Hour !, Please Change Your End Time";
-                return View(collection);
-            }
+          
 
             string user = User.Identity.GetUserId();
                 var patient = db.Patients.Single(c => c.ApplicationUserId == user);
@@ -132,8 +117,6 @@ namespace Hospital_Management_System.Controllers
                 appointment.Schedule.PsychologistId = model.Appointment.Schedule.PsychologistId;
                 appointment.AppointmentDate = model.Appointment.AppointmentDate;
                 appointment.Problem = model.Appointment.Problem;
-                appointment.StartTime = model.Appointment.StartTime;
-                appointment.EndTime = model.Appointment.EndTime;
                 appointment.Status = false;
 
                 db.Appointments.Add(appointment);
@@ -154,8 +137,6 @@ namespace Hospital_Management_System.Controllers
                     Id = e.Id,
                     PatientName = e.Patient.FullName,
                     Problem = e.Problem,
-                    StartTime = e.StartTime,
-                    EndTime = e.EndTime,
                     PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.Schedule.PsychologistId).FullName,
                     Status = e.Status,
     
@@ -193,29 +174,9 @@ namespace Hospital_Management_System.Controllers
                 return View(collection);
             }
 
-            if (model.Appointment.StartTime == model.Appointment.EndTime)
-            {
-                ViewBag.Messege = "Start Time Cannot be equel to endTime";
-                return View(collection);
-            }
-
-            if (model.Appointment.StartTime >= model.Appointment.EndTime)
-            {
-                ViewBag.Messege = "EndTime Can Not be Less  than start time";
-                return View(collection);
-            }
-            if (model.Appointment.EndTime != model.Appointment.StartTime.AddHours(1))
-            {
-                ViewBag.Messege = "You Can Only Book For  One Hour !, Please Change Your End Time";
-                return View(collection);
-            }
-
-
             var appointment = db.Appointments.Single(c => c.Id == id);
                 appointment.Schedule.PsychologistId = model.Appointment.Schedule.PsychologistId;
                 appointment.AppointmentDate = model.Appointment.AppointmentDate;
-                appointment.StartTime = model.Appointment.StartTime;
-                appointment.EndTime = model.Appointment.EndTime;
                 appointment.Problem = model.Appointment.Problem;
                 db.SaveChanges();
                 return RedirectToAction("ListOfAppointments");

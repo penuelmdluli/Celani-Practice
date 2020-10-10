@@ -23,18 +23,6 @@ namespace Hospital_Management_System.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? AppointmentDate { get; set; }
 
-        
-        [Display(Name = "Start Time")]
-        [DataType(DataType.Time)]
-        [DisplayFormat(DataFormatString = "{0:hh:mm}", ApplyFormatInEditMode = true)]
-        public DateTime StartTime { get; set; }
-
-       
-        [Display(Name = "End Time")]
-        [DataType(DataType.Time)]
-        [DisplayFormat(DataFormatString = "{0:hh:mm}", ApplyFormatInEditMode = true)]
-        public DateTime EndTime { get; set; }
-
         [Display(Name = "Reason for visit")]
         public string Problem { get; set; }
 

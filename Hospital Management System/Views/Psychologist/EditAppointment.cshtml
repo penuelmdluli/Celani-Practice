@@ -59,23 +59,6 @@
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Appointment.StartTime, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Appointment.StartTime, new { htmlAttributes = new { @class = "form-control" } })
-
-            @Html.ValidationMessageFor(model => model.Appointment.StartTime, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Appointment.EndTime, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Appointment.EndTime, new { htmlAttributes = new { @class = "form-control" } })
-
-            @Html.ValidationMessageFor(model => model.Appointment.EndTime, "", new { @class = "text-danger" })
-        </div>
-    </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.Appointment.Problem, htmlAttributes: new { @class = "control-label col-md-2" })

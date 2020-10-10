@@ -273,30 +273,13 @@ namespace Hospital_Management_System.Controllers
                 return View(collection);
             }
 
-            if (model.Appointment.StartTime == model.Appointment.EndTime)
-            {
-                ViewBag.Messege = "Start Time Cannot be equel to endTime";
-                return View(collection);
-            }
-
-            if (model.Appointment.StartTime >= model.Appointment.EndTime)
-            {
-                ViewBag.Messege = "EndTime Can Not be Less  than start time";
-                return View(collection);
-            }
-            if (model.Appointment.EndTime != model.Appointment.StartTime.AddHours(1))
-            {
-                ViewBag.Messege = "You Can Only Book For  One Hour !, Please Change Your End Time";
-                return View(collection);
-            }
 
              var doctor = db.Psychologists.Single(c => c.ApplicationUserId == user);
                 var appointment = new Appointment();
                 appointment.PatientId = model.Appointment.PatientId;
                 appointment.Schedule.PsychologistId = doctor.Id;
                 appointment.AppointmentDate = model.Appointment.AppointmentDate;
-                appointment.StartTime = model.Appointment.StartTime;
-                appointment.EndTime = model.Appointment.EndTime;
+               
                 appointment.Problem = model.Appointment.Problem;
                 appointment.Status = model.Appointment.Status;
 
@@ -361,29 +344,10 @@ namespace Hospital_Management_System.Controllers
                 return View(collection);
             }
 
-            if (model.Appointment.StartTime == model.Appointment.EndTime)
-            {
-                ViewBag.Messege = "Start Time Cannot be equel to endTime";
-                return View(collection);
-            }
-
-            if (model.Appointment.StartTime >= model.Appointment.EndTime)
-            {
-                ViewBag.Messege = "EndTime Can Not be Less  than start time";
-                return View(collection);
-            }
-            if (model.Appointment.EndTime != model.Appointment.StartTime.AddHours(1))
-            {
-                ViewBag.Messege = "You Can Only Book For  One Hour !, Please Change Your End Time";
-                return View(collection);
-            }
-
-
             var appointment = db.Appointments.Single(c => c.Id == id);
                 appointment.PatientId = model.Appointment.PatientId;
                 appointment.AppointmentDate = model.Appointment.AppointmentDate;
-                appointment.StartTime = model.Appointment.StartTime;
-                appointment.EndTime = model.Appointment.EndTime;
+               
                 appointment.Problem = model.Appointment.Problem;
                 appointment.Status = model.Appointment.Status;
                 db.SaveChanges();

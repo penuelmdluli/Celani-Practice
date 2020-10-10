@@ -372,10 +372,7 @@ namespace Hospital_Management_System.Controllers
                     EndTime = e.EndTime,
                     StartTime = e.StartTime,
                     ScheduleDate = e.ScheduleDate,
-                   
                     Id = e.Id,
-
-
                 }).ToList();
             return View(schedule);
         }
@@ -408,8 +405,6 @@ namespace Hospital_Management_System.Controllers
             schedule.ScheduleDate = model.Schedule.ScheduleDate;
           //  schedule.CentreId = model.Schedule.CentreId;
             schedule.StartTime = model.Schedule.StartTime;
-           
-           
             db.SaveChanges();
             return RedirectToAction("ListOfSchedules");
         }
@@ -504,29 +499,17 @@ namespace Hospital_Management_System.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult AddAppointment()
         {
+            var collection = new AppointmentCollection
+            {
+                Appointment = new Appointment(),
+                Patients = db.Patients.ToList(),
+                Psychologists = db.Psychologists.ToList(),
+                Schedules = db.Schedules.ToList()
+                
 
+            };
 
-            var schedule = db.Schedules.Include(c => c.Psychologist)
-               .Select(e => new SchedulesDto()
-               {
-                   PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.PsychologistId).FullName,
-                   CentreName = db.Centre.FirstOrDefault(d => d.Id == e.Id).Name,
-                   EndTime = e.EndTime,
-                   StartTime = e.StartTime,
-                   ScheduleDate = e.ScheduleDate,
-                  
-                   Id = e.Id,
-               }).ToList();
-            
-
-            //var collection = new AppointmentCollection
-            //{
-            //    Appointment = new Appointment(),
-            //    Patients = db.Patients.ToList(),
-            //    Psychologists = db.Psychologists.ToList()
-            //};
-
-            return View(schedule);
+            return View(collection);
         }
 
         [HttpPost]
@@ -541,38 +524,10 @@ namespace Hospital_Management_System.Controllers
                 Psychologists = db.Psychologists.ToList(),
                 Schedules = db.Schedules.ToList()
             };
-
-
-
-
-            if (model.Appointment.AppointmentDate <= DateTime.Now.Date)
-            {
-                ViewBag.Messege = "Please Enter the Date greater than today or equal!!";
-                return View(collection);
-            }
-
-            if (model.Appointment.StartTime == model.Appointment.EndTime)
-            {
-                ViewBag.Messege = "Start Time Cannot be equel to endTime";
-                return View(collection);
-            }
-
-            if (model.Appointment.StartTime >= model.Appointment.EndTime)
-            {
-                ViewBag.Messege = "EndTime Can Not be Less  than start time";
-                return View(collection);
-            }
-            if (model.Appointment.EndTime != model.Appointment.StartTime.AddHours(1))
-            {
-                ViewBag.Messege = "You Can Only Book For  One Hour !, Please Change Your End Time";
-                return View(collection);
-            }
-
             var appointment = new Appointment();
                 appointment.PatientId = model.Appointment.PatientId;
                 appointment.AppointmentDate = model.Appointment.AppointmentDate;
-                appointment.StartTime = model.Appointment.StartTime;
-                appointment.EndTime = model.Appointment.EndTime;
+                
                 appointment.Problem = model.Appointment.Problem;
                 appointment.Status = model.Appointment.Status;
                 db.Appointments.Add(appointment);
@@ -599,8 +554,6 @@ namespace Hospital_Management_System.Controllers
                     AppointmentDate = e.AppointmentDate,
                     Id = e.Id,
                     PatientName = e.Patient.FullName,
-                    StartTime = e.StartTime,
-                    EndTime = e.EndTime,
                     Problem = e.Problem,
                     PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.Schedule.PsychologistId).FullName,
                     Status = e.Status
@@ -620,8 +573,6 @@ namespace Hospital_Management_System.Controllers
                     AppointmentDate = e.AppointmentDate,
                     Id = e.Id,
                     PatientName = e.Patient.FullName,
-                    StartTime = e.StartTime,
-                    EndTime = e.EndTime,
                     Problem = e.Problem,
                     PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.Schedule.PsychologistId).FullName,
                     Status = e.Status
@@ -657,8 +608,6 @@ namespace Hospital_Management_System.Controllers
                 var appointment = db.Appointments.Single(c => c.Id == id);
                 appointment.PatientId = model.Appointment.PatientId;
                 appointment.AppointmentDate = model.Appointment.AppointmentDate;
-                appointment.StartTime = model.Appointment.StartTime;
-                appointment.EndTime = model.Appointment.EndTime;
                 appointment.Problem = model.Appointment.Problem;
                 appointment.Status = model.Appointment.Status;
                 db.SaveChanges();
