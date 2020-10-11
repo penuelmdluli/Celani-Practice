@@ -187,6 +187,18 @@
     <Compile Include="Migrations\202010101347353_init.Designer.cs">
       <DependentUpon>202010101347353_init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202010110925039_updtedAppointment.cs" />
+    <Compile Include="Migrations\202010110925039_updtedAppointment.Designer.cs">
+      <DependentUpon>202010110925039_updtedAppointment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010111020478_updteScheduleDB.cs" />
+    <Compile Include="Migrations\202010111020478_updteScheduleDB.Designer.cs">
+      <DependentUpon>202010111020478_updteScheduleDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010111042453_updtePetentId.cs" />
+    <Compile Include="Migrations\202010111042453_updtePetentId.Designer.cs">
+      <DependentUpon>202010111042453_updtePetentId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Announcement.cs" />
@@ -196,6 +208,7 @@
     <Compile Include="Models\Centre.cs" />
     <Compile Include="Models\DepartmentStatus.cs" />
     <Compile Include="Models\Dto\AppointmentDto.cs" />
+    <Compile Include="Models\Dto\PatientDto.cs" />
     <Compile Include="Models\Dto\PsychologistDto.cs" />
     <Compile Include="Models\Dto\SchedulesDto.cs" />
     <Compile Include="Models\Psychologist.cs" />
@@ -586,6 +599,10 @@
     <Content Include="Views\Patient\ListOfPrescription.cshtml" />
     <Content Include="Views\Patient\PrescriptionView.cshtml" />
     <Content Include="Views\Patient\ListOfSchedules.cshtml" />
+    <Content Include="Views\Admin\CreateAppointment.cshtml" />
+    <Content Include="Views\Patient\CreateAppointment.cshtml" />
+    <Content Include="Views\Psychologist\ListOfSchedules.cshtml" />
+    <Content Include="Views\Psychologist\CreateAppointment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -602,6 +619,15 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202010101347353_init.resx">
       <DependentUpon>202010101347353_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010110925039_updtedAppointment.resx">
+      <DependentUpon>202010110925039_updtedAppointment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010111020478_updteScheduleDB.resx">
+      <DependentUpon>202010111020478_updteScheduleDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010111042453_updtePetentId.resx">
+      <DependentUpon>202010111042453_updtePetentId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

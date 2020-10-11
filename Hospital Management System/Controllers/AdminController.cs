@@ -353,7 +353,7 @@ namespace Hospital_Management_System.Controllers
                 ViewBag.Messege = "Ops ,You Only allowed to to add schedule for 1 Hour Per slot.";
                 return View(collection);
             }
-
+            model.Schedule.IsBooked = false;
 
             db.Schedules.Add(model.Schedule);
             db.SaveChanges();
@@ -403,6 +403,7 @@ namespace Hospital_Management_System.Controllers
             schedule.PsychologistId = model.Schedule.PsychologistId;
             schedule.EndTime = model.Schedule.EndTime;
             schedule.ScheduleDate = model.Schedule.ScheduleDate;
+
           //  schedule.CentreId = model.Schedule.CentreId;
             schedule.StartTime = model.Schedule.StartTime;
             db.SaveChanges();
@@ -434,7 +435,16 @@ namespace Hospital_Management_System.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult ListOfPatients()
         {
-            var patients = db.Patients.ToList();
+            var patients = db.Patients.Select(e =>  new PatientDto { 
+            Id = e.Id,
+            FirstName = e.FirstName,
+            LastName = e.LastName,
+            FullName  = e.FullName,
+            Contact = e.Contact,
+            Age = e.Age,
+            Gender = e.Gender
+            }).
+            ToList();
             return View(patients);
         }
 
@@ -541,6 +551,56 @@ namespace Hospital_Management_System.Controllers
                 {
                     return RedirectToAction("PendingAppointments");
                 }
+        }
+
+
+        //Create Appointment
+        [Authorize(Roles = "Admin")]
+        public ActionResult CreateAppointment(int id)
+        {
+            var collection = new ScheduleCollection
+            {
+                Centres = db.Centre.ToList(),
+                Schedule = db.Schedules.Single(c => c.Id == id),
+                Psychologists = db.Psychologists.ToList(),
+                Patients = db.Patients.ToList()
+            };
+            return View(collection);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateAppointment(int id, ScheduleCollection model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var schedule = db.Schedules.Single(c => c.Id == id);
+            schedule.PsychologistId = model.Schedule.PsychologistId;
+            schedule.EndTime = model.Schedule.EndTime;
+            schedule.ScheduleDate = model.Schedule.ScheduleDate;
+            schedule.Psychologist.Id = model.Schedule.Psychologist.Id;
+            schedule.StartTime = model.Schedule.StartTime;
+            
+
+            var appointment = new Appointment();
+           // appointment.PatientId = mode;
+            appointment.AppointmentDate = schedule.ScheduleDate;
+            appointment.Problem = model.Problem;
+            appointment.Status =false;
+            db.Appointments.Add(appointment);
+            db.SaveChanges();
+
+            if (appointment.Status == true)
+            {
+                return RedirectToAction("ListOfAppointments");
+            }
+            else
+            {
+                return RedirectToAction("PendingAppointments");
+            }
         }
 
         //List of Active Appointment

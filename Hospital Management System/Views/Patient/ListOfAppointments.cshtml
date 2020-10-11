@@ -36,17 +36,21 @@
             <th>
                 @Html.DisplayNameFor(model => model.AppointmentDate)
             </th>
-            
+            <th>
+                @Html.DisplayNameFor(model => model.StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndTime)
+            </th>
 
             <th>
                 @Html.DisplayNameFor(model => model.Problem)
             </th>
             <th>
-                Appointment Id
+                Appointment Status
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
+
+
             <th>Action</th>
         </tr>
     </thead>
@@ -61,8 +65,15 @@
                 @Html.DisplayFor(modelItem => item.AppointmentDate)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Problem)
             </td>
+
             @if (item.Status)
             {
                 <td>
@@ -75,9 +86,7 @@
                     @("Not Approved")
                 </td>
             }
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
+
             <td>
                 <a href="@Url.Action("EditAppointment", new {id = item.Id})" class="fa fa-pencil-square-o" style="font-size: 19px"></a> |
                 <a id="dlt-link" href="@Url.Action("DeleteAppointment", new {id = item.Id})" class="fa fa-trash" style="font-size: 19px; color: red"></a>

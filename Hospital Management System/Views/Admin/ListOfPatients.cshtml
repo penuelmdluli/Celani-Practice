@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Hospital_Management_System.Models.Patient>
+﻿@model IEnumerable<Hospital_Management_System.Models.Dto.PatientDto>
 
 @{
     ViewBag.Title = "ListOfPatients";
@@ -40,24 +40,25 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FullName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Contact)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Age)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Gender)
-                </td>
-                <td>
-                    <a href="@Url.Action("EditPatient", new {id = item.Id})" class="fa fa-pencil-square-o" style="font-size: 19px"></a> |
-                    <a href="@Url.Action("DeletePatient", new {id = item.ApplicationUserId})" class="fa fa-trash" style="font-size: 19px; color: red"></a>
-                </td>
-            </tr>
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Contact)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                <a href="@Url.Action("EditPatient", new {id = item.Id})" class="fa fa-pencil-square-o" style="font-size: 19px"></a> |
+                <a href="@Url.Action("DeletePatient", new {id = item.ApplicationUserId})" class="fa fa-trash" style="font-size: 19px; color: red"></a>
+            </td>
+        </tr>
         }
     </tbody>
 

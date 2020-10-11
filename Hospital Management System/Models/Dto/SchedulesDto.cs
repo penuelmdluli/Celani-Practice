@@ -35,9 +35,8 @@ namespace Hospital_Management_System.Models.Dto
         [DataType(DataType.Time)]
         [DisplayFormat(DataFormatString = "{0:hh:mm}", ApplyFormatInEditMode = true)]
         public DateTime EndTime { get; set; }
+        public bool IsBooked { get; set; }
+        public int PatientId { get; set; }
 
-  
-        
-        
     }
 }

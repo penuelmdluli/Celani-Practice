@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Hospital_Management_System.CollectionViewModels;
@@ -87,11 +88,13 @@ namespace Hospital_Management_System.Controllers
             var collection = new AppointmentCollection
             {
                 Appointment = new Appointment(),
-                Psychologists = db.Psychologists.ToList()
+                Psychologists = db.Psychologists.ToList(),
+                Schedules = db.Schedules.Where(c => c.IsBooked == false).ToList()
             };
             return View(collection);
         }
 
+        [Authorize(Roles = "Patient")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddAppointment(AppointmentCollection model)
@@ -107,9 +110,6 @@ namespace Hospital_Management_System.Controllers
                 ViewBag.Messege = "Please Enter the Date greater than today or equal!!";
                 return View(collection);
             }
-
-          
-
             string user = User.Identity.GetUserId();
                 var patient = db.Patients.Single(c => c.ApplicationUserId == user);
                 var appointment = new Appointment();
@@ -118,10 +118,61 @@ namespace Hospital_Management_System.Controllers
                 appointment.AppointmentDate = model.Appointment.AppointmentDate;
                 appointment.Problem = model.Appointment.Problem;
                 appointment.Status = false;
-
                 db.Appointments.Add(appointment);
                 db.SaveChanges();
                 return RedirectToAction("ListOfAppointments");
+        }
+
+
+
+        //Create Appointment
+        [Authorize(Roles = "Patient")]
+        public ActionResult CreateAppointment(int id)
+        {
+            var collection = new ScheduleCollection
+            {
+                Centres = db.Centre.ToList(),
+                Schedule = db.Schedules.Single(c => c.Id == id),
+                Psychologists = db.Psychologists.ToList(),
+                Patients = db.Patients.ToList()
+            };
+            return View(collection);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateAppointment(int id, ScheduleCollection model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            string user = User.Identity.GetUserId();
+            var patient = db.Patients.Single(c => c.ApplicationUserId == user);
+
+            var schedule = db.Schedules.Single(c => c.Id == id);
+            schedule.PsychologistId = model.Schedule.PsychologistId;
+            schedule.EndTime = model.Schedule.EndTime;
+            schedule.ScheduleDate = model.Schedule.ScheduleDate;
+            schedule.StartTime = model.Schedule.StartTime;
+            schedule.PatientId = patient.Id;
+            schedule.IsBooked = true;
+            db.SaveChanges();
+
+        var appointment = new Appointment();
+            appointment.PatientId = patient.Id;
+            appointment.ScheduleId = schedule.Id;
+            appointment.AppointmentDate = schedule.ScheduleDate;
+            appointment.StartTime = schedule.StartTime;
+            appointment.EndTime = schedule.EndTime;
+            appointment.Problem = model.Problem;
+            appointment.Status = false;
+         
+            db.Appointments.Add(appointment);
+            db.SaveChanges();
+
+            return RedirectToAction("ListOfAppointments");
         }
 
         //List of Appointments

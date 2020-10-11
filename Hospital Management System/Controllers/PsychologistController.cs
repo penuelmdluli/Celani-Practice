@@ -9,6 +9,8 @@ using Hospital_Management_System.Models;
 using Microsoft.AspNet.Identity;
 using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Hospital_Management_System.Models.Dto;
+using System.Net;
 
 namespace Hospital_Management_System.Controllers
 {
@@ -210,6 +212,26 @@ namespace Hospital_Management_System.Controllers
 
         //Start Schedule Section
 
+
+        //List Of Schedules
+        [Authorize(Roles = "Psychologist")]
+        public ActionResult ListOfSchedules()
+        {
+             string user = User.Identity.GetUserId();
+            var doctor = db.Psychologists.Single(c => c.ApplicationUserId == user);
+            var schedule = db.Schedules.Where(c => c.PsychologistId == doctor.Id && c.IsBooked ==false)
+                .Select(e => new SchedulesDto()
+                {
+                    PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.PsychologistId).FullName,
+                    CentreName = db.Centre.FirstOrDefault(d => d.Id == e.Id).Name,
+                    EndTime = e.EndTime,
+                    StartTime = e.StartTime,
+                    ScheduleDate = e.ScheduleDate,
+                    Id = e.Id,
+                }).ToList();
+            return View(schedule);
+        }
+
         //Check his Schedule 
         [Authorize(Roles = "Psychologist")]
         public ActionResult ScheduleDetail()
@@ -248,10 +270,14 @@ namespace Hospital_Management_System.Controllers
         [Authorize(Roles = "Psychologist")]
         public ActionResult AddAppointment()
         {
+            string user = User.Identity.GetUserId();
+            var doctor = db.Psychologists.Single(c => c.ApplicationUserId == user);
+
             var collection = new AppointmentCollection
             {
                 Appointment = new Appointment(),
-                Patients = db.Patients.ToList()
+                Psychologists = db.Psychologists.ToList(),
+                Schedules = db.Schedules.Where(c => c.IsBooked == false && c.PsychologistId== doctor.Id ).ToList()
             };
             return View(collection);
         }
@@ -294,6 +320,63 @@ namespace Hospital_Management_System.Controllers
                 {
                     return RedirectToAction("PendingAppointments");
                 }
+        }
+
+        //Create Appointment
+        [Authorize(Roles = "Psychologist")]
+        public ActionResult CreateAppointment(int id)
+        {
+            var collection = new ScheduleCollection
+            {
+                Centres = db.Centre.ToList(),
+                Schedule = db.Schedules.Single(c => c.Id == id),
+                Psychologists = db.Psychologists.ToList(),
+                Patients = db.Patients.ToList()
+            };
+            return View(collection);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateAppointment(int id, ScheduleCollection model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            string user = User.Identity.GetUserId();
+            var psychologist = db.Psychologists.Single(c => c.ApplicationUserId == user);
+
+            var schedule = db.Schedules.Single(c => c.Id == id);
+            schedule.PatientId = model.Schedule.PatientId;
+            schedule.EndTime = model.Schedule.EndTime;
+            schedule.ScheduleDate = model.Schedule.ScheduleDate;
+            schedule.StartTime = model.Schedule.StartTime;
+            schedule.PsychologistId = psychologist.Id;
+            schedule.IsBooked = true;
+            db.SaveChanges();
+
+            var appointment = new Appointment();
+            appointment.PatientId = schedule.PatientId;
+            appointment.ScheduleId = schedule.Id;
+            appointment.AppointmentDate = schedule.ScheduleDate;
+            appointment.StartTime = schedule.StartTime;
+            appointment.EndTime = schedule.EndTime;
+            appointment.Problem = model.Problem;
+            appointment.Status = false;
+
+            db.Appointments.Add(appointment);
+            db.SaveChanges();
+
+            if (appointment.Status == true)
+            {
+                return RedirectToAction("ActiveAppointments");
+            }
+            else
+            {
+                return RedirectToAction("PendingAppointments");
+            }
         }
 
         //List of Active Appointments
@@ -343,6 +426,7 @@ namespace Hospital_Management_System.Controllers
                 ViewBag.Messege = "Please Enter the Date greater than today or equal!!";
                 return View(collection);
             }
+
 
             var appointment = db.Appointments.Single(c => c.Id == id);
                 appointment.PatientId = model.Appointment.PatientId;

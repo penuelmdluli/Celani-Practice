@@ -45,24 +45,6 @@
     @Html.HiddenFor(model => model.Appointment.Id)
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Appointment.Schedule.PsychologistId, "PatientId", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.Appointment.Schedule.PsychologistId, new SelectList(Model.Psychologists, "Id", "FullName"), "Select Psychologist", new { @id = "dropdown", @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Appointment.Schedule.PsychologistId, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Appointment.AppointmentDate, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Appointment.AppointmentDate, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Appointment.AppointmentDate, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-
-
-    <div class="form-group">
         @Html.LabelFor(model => model.Appointment.Problem, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.TextAreaFor(model => model.Appointment.Problem, new { @class = "form-control" })
