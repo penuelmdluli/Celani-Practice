@@ -170,6 +170,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="CollectionViewModels\AppointmentCollection.cs" />
     <Compile Include="CollectionViewModels\CollectionOfAll.cs" />
+    <Compile Include="CollectionViewModels\ConsultationCollection.cs" />
     <Compile Include="CollectionViewModels\DoctorCollection.cs" />
     <Compile Include="CollectionViewModels\DoctorIndexCollection.cs" />
     <Compile Include="CollectionViewModels\PrescriptionCollection.cs" />
@@ -199,15 +200,25 @@
     <Compile Include="Migrations\202010111042453_updtePetentId.Designer.cs">
       <DependentUpon>202010111042453_updtePetentId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202010111620009_consultation.cs" />
+    <Compile Include="Migrations\202010111620009_consultation.Designer.cs">
+      <DependentUpon>202010111620009_consultation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010111704103_Diagnosis.cs" />
+    <Compile Include="Migrations\202010111704103_Diagnosis.Designer.cs">
+      <DependentUpon>202010111704103_Diagnosis.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Announcement.cs" />
     <Compile Include="Models\Appointment.cs" />
     <Compile Include="Models\Complaint.cs" />
+    <Compile Include="Models\Consultation.cs" />
     <Compile Include="Models\DeleteAnnouncementOnExpire.cs" />
     <Compile Include="Models\Centre.cs" />
     <Compile Include="Models\DepartmentStatus.cs" />
     <Compile Include="Models\Dto\AppointmentDto.cs" />
+    <Compile Include="Models\Dto\ConsultationDto.cs" />
     <Compile Include="Models\Dto\PatientDto.cs" />
     <Compile Include="Models\Dto\PsychologistDto.cs" />
     <Compile Include="Models\Dto\SchedulesDto.cs" />
@@ -603,6 +614,9 @@
     <Content Include="Views\Patient\CreateAppointment.cshtml" />
     <Content Include="Views\Psychologist\ListOfSchedules.cshtml" />
     <Content Include="Views\Psychologist\CreateAppointment.cshtml" />
+    <Content Include="Views\Psychologist\AddConsultation.cshtml" />
+    <Content Include="Views\Psychologist\ListOfConsultation.cshtml" />
+    <Content Include="Views\Patient\ListOfConsultation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -628,6 +642,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202010111042453_updtePetentId.resx">
       <DependentUpon>202010111042453_updtePetentId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010111620009_consultation.resx">
+      <DependentUpon>202010111620009_consultation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010111704103_Diagnosis.resx">
+      <DependentUpon>202010111704103_Diagnosis.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -283,20 +283,20 @@ namespace Hospital_Management_System.Controllers
         [Authorize(Roles = "Patient")]
         public ActionResult PsychologistSchedule(int id)
         {
-            var schedule = db.Schedules.Include(c => c.Psychologist)
+          
+            var schedule = db.Schedules.Where(c => c.PsychologistId == id && c.IsBooked == false)
                 .Select(e => new SchedulesDto()
                 {
                     PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.PsychologistId).FullName,
+                    CentreName = db.Centre.FirstOrDefault(d => d.Id == e.Id).Name,
                     EndTime = e.EndTime,
                     StartTime = e.StartTime,
                     ScheduleDate = e.ScheduleDate,
-                    Id = e.Id
-                
-                })
-                .Where(x=>x.Id ==id);
-
+                    Id = e.Id,
+                }).ToList();
             return View(schedule);
         }
+
 
         //Psychologist Detail
         [Authorize(Roles = "Patient")]
@@ -411,6 +411,26 @@ namespace Hospital_Management_System.Controllers
             return View(prescription);
         }
 
-        //End Prescription Section
+        //End Prescription 
+
+
+        //List Of Schedules
+        [Authorize(Roles = "Patient")]
+        public ActionResult ListOfConsultation()
+        {
+            string user = User.Identity.GetUserId();
+            var petient = db.Patients.Single(c => c.ApplicationUserId == user);
+            var consultations = db.Consultations.Where(c => c.PatientId == petient.Id)
+                .Select(e => new ConsultationDto()
+                {
+                    PatientName = db.Patients.FirstOrDefault(d => d.Id == e.Id).FullName,
+                    PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.PsychologistId).FullName,
+                    ConsultationDate = e.ConsultationDate,
+                    Diagnosis = e.Diagnosis,
+                    TreatmentPlan = e.TreatmentPlan,
+                    Id = e.Id,
+                }).ToList();
+            return View(consultations);
+        }
     }
 }

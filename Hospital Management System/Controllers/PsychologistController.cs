@@ -70,8 +70,8 @@ namespace Hospital_Management_System.Controllers
             string user = User.Identity.GetUserId();
             var patient = db.Patients.Single(c => c.Id == model.Prescription.PatientId);
             var doctor = db.Psychologists.Single(c => c.ApplicationUserId == user);
-            var schedule = db.Schedules.Single(c => c.PsychologistId == doctor.Id);
             var patientuser = db.Users.Single(c => c.Id == patient.ApplicationUserId);
+
             var prescription = new Prescription
             {
                 PatientId = model.Prescription.PatientId,
@@ -115,7 +115,7 @@ namespace Hospital_Management_System.Controllers
                 Evening7 = model.Prescription.Evening7,
                 CheckUpAfterDays = model.Prescription.CheckUpAfterDays,
                 PrescriptionAddDate = DateTime.Now.Date,
-                DoctorTiming = "From " + schedule.StartTime.ToShortTimeString() + " to " + schedule.EndTime.ToShortTimeString()
+          
             };
 
             db.Prescription.Add(prescription);
@@ -476,6 +476,71 @@ namespace Hospital_Management_System.Controllers
             {
                 return RedirectToAction("PendingAppointments");
             }
+        }
+
+        //Start Appointment Section
+        [Authorize(Roles = "Psychologist")]
+        public ActionResult AddConsultation()
+        {
+            var collection = new ConsultationCollection
+            {
+                Consultation = new Consultation(),
+                Patients = db.Patients.ToList()
+            };
+            return View(collection);
+        }
+
+        /// 
+        ///  start  of a  treament plan
+        [Authorize(Roles = "Psychologist")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddConsultation (ConsultationCollection model)
+        {
+            string user = User.Identity.GetUserId();
+            var collection = new ConsultationCollection
+            {
+               Consultation = model.Consultation,
+               Patients = db.Patients.ToList()
+            };
+
+            if (model.Consultation.ConsultationDate != DateTime.Now.Date)
+            {
+                ViewBag.Messege = $"Consultation date Occurs only Today, change date to: {DateTime.Now.Date} ";
+                return View(collection);
+            }
+
+            var doctor = db.Psychologists.Single(c => c.ApplicationUserId == user);
+            var consultation = new Consultation();
+            consultation.PatientId = model.Consultation.PatientId;
+            consultation.PsychologistId = doctor.Id;
+            consultation.ConsultationDate = model.Consultation.ConsultationDate;
+            consultation.TreatmentPlan = model.Consultation.TreatmentPlan;
+            consultation.Diagnosis = model.Consultation.Diagnosis;
+
+            db.Consultations.Add(consultation);
+            db.SaveChanges();
+          return RedirectToAction("ListOfConsultation");
+          
+        }
+
+        //List Of Schedules
+        [Authorize(Roles = "Psychologist")]
+        public ActionResult ListOfConsultation()
+        {
+            string user = User.Identity.GetUserId();
+            var doctor = db.Psychologists.Single(c => c.ApplicationUserId == user);
+            var schedule = db.Consultations.Where(c => c.PsychologistId == doctor.Id)
+                .Select(e => new ConsultationDto()
+                {
+                    PatientName = db.Patients.FirstOrDefault(d => d.Id ==e.Id).FullName,
+                    PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.PsychologistId).FullName,
+                    ConsultationDate = e.ConsultationDate,
+                    Diagnosis = e.Diagnosis,
+                    TreatmentPlan = e.TreatmentPlan,
+                    Id = e.Id,
+                }).ToList();
+            return View(schedule);
         }
     }
 }

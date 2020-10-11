@@ -19,6 +19,7 @@ namespace Hospital_Management_System.Models
 
         public Patient Patient { get; set; }
         [Display(Name = "Patient Name")]
+
         public int PatientId { get; set; }
 
         public string UserName { get; set; }

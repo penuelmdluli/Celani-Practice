@@ -1,7 +1,7 @@
-﻿@model Hospital_Management_System.Models.Dto.SchedulesDto
+﻿@model IEnumerable<Hospital_Management_System.Models.Dto.SchedulesDto>
 
 @{
-    ViewBag.Title = "PsychologistSchedule";
+    ViewBag.Title = "ListOfSchedules";
     Layout = "~/Views/Shared/_PatientLayout.cshtml";
 }
 
@@ -12,54 +12,38 @@
                 <em class="fa fa-home"></em>
             </a>
         </li>
-        <li class="active">Psychologist</li>
-        <li class="active">Psychologist Schedule</li>
+        <li class="active">Schedule</li>
+        <li class="active">List of Schedules</li>
     </ol>
 </div>
 
-<h2>Psychologist Schedule</h2>
+<h2>List Of Schedules</h2>
 
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.PsychologistName)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.PsychologistName)
-        </dd>
+<table id="table_id" class="table">
+    <tbody>
+        <tr>
+            @foreach (var productGroup in Model.Select((e, i) => new { Product = e, Grouping = (i / 2) }).GroupBy(e => e.Grouping))
+            {
+            <tr>
+                @foreach (var product in productGroup.Select(x => x.Product))
+                {
+                    <td>
+                        <button class="btn btn-success" type="button">@product.StartTime.ToShortTimeString() - @product.EndTime.ToShortTimeString()  : @product.ScheduleDate</button>
+                        
+                    </td>
+                }
+            </tr>
+        }
+            </tr>
+        </tbody>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ScheduleDate)
-        </dt>
+    </table>
 
-        <dd>
-            @Html.DisplayFor(model => model.ScheduleDate)
-        </dd>
-
-       
-
-        <dt>
-            @Html.DisplayNameFor(model => model.StartTime)
-        </dt>
-
-        <dd>
-            @Model.StartTime.ToShortTimeString()
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EndTime)
-        </dt>
-
-        <dd>
-            @Model.EndTime.ToShortTimeString()
-        </dd>
-
-      
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>
+    @section scripts {
+        <script>
+            $(document).ready(function () {
+                $("#table_id").dataTable();
+            });
+        </script>
+    }

@@ -50,7 +50,7 @@
             <li>
                 <button class="collapsible"><em class="fa fa-user-o">&nbsp; &nbsp;</em>Profile</button>
                 <div style="width: 100% !important" class="children content">
-                    @Html.ActionLink("Update Profile", "UpdateProfile", "Patient", new {id = User.Identity.GetUserId()}, new {@class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px"})
+                    @Html.ActionLink("Update Profile", "UpdateProfile", "Patient", new { id = User.Identity.GetUserId() }, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
                 </div>
             </li>
             <li>
@@ -66,12 +66,21 @@
                     @Html.ActionLink("Your Appointments", "ListOfAppointments", "Patient", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
                 </div>
             </li>
+
             <li>
-                <button class="collapsible"><em class="fa fa-book">&nbsp; &nbsp;</em>Treatment Plan</button>
+                <button class="collapsible"><em class="fa fa-book">&nbsp; &nbsp;</em>Consultation</button>
+                <div style="width: 100% !important" class="children content">
+                    @Html.ActionLink("List of Consultation", "ListOfConsultation", "Patient", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
+                </div>
+            </li>
+
+            <li>
+                <button class="collapsible"><em class="fa fa-hospital-o">&nbsp; &nbsp;</em>Treatment Plan</button>
                 <div style="width: 100% !important" class="children content">
                     @Html.ActionLink("Your Treatment Plan", "ListOfPrescription", "Patient", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
                 </div>
             </li>
+
             <li>
                 <button class="collapsible"><em class="fa fa-telegram">&nbsp; &nbsp;</em>Complaint</button>
                 <div style="width: 100% !important" class="children content">
@@ -79,6 +88,7 @@
                     @Html.ActionLink("List of Complains", "ListOfComplains", "Patient", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
                 </div>
             </li>
+
             <li>
                 <button class="collapsible"><em class="fa fa-cog">&nbsp; &nbsp;</em>Manage</button>
                 <div style="width: 100% !important" class="children content">
