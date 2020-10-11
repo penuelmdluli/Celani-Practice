@@ -533,7 +533,7 @@ namespace Hospital_Management_System.Controllers
             var schedule = db.Consultations.Where(c => c.PsychologistId == doctor.Id)
                 .Select(e => new ConsultationDto()
                 {
-                    PatientName = db.Patients.FirstOrDefault(d => d.Id ==e.Id).FullName,
+                    PatientName = db.Patients.FirstOrDefault(d => d.Id ==e.PatientId).FullName,
                     PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.PsychologistId).FullName,
                     ConsultationDate = e.ConsultationDate,
                     Diagnosis = e.Diagnosis,
