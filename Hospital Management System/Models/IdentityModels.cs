@@ -34,6 +34,7 @@ namespace Hospital_Management_System.Models
         public DbSet<Announcement> Announcements { get; set; }
         public DbSet<Complaint> Complaints { get; set; }
         public DbSet<Consultation>  Consultations { get; set; }
+        public DbSet<Payment> Payments { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
