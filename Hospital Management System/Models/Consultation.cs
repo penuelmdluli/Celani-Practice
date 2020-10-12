@@ -27,5 +27,9 @@ namespace Hospital_Management_System.Models
         [Display(Name = "Treatment Plan")]
         public string TreatmentPlan { get; set; }
 
+        [Required]
+        [DataType(DataType.ImageUrl)]
+        public string ImageUrl { get; set; }
+
     }
 }

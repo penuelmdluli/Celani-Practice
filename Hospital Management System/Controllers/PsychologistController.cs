@@ -11,6 +11,7 @@ using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Hospital_Management_System.Models.Dto;
 using System.Net;
+using System.IO;
 
 namespace Hospital_Management_System.Controllers
 {
@@ -498,6 +499,24 @@ namespace Hospital_Management_System.Controllers
         public ActionResult AddConsultation (ConsultationCollection model)
         {
             string user = User.Identity.GetUserId();
+
+            var validImageTypes = new string[]
+                {
+                    "image/gif",
+                    "image/jpeg",
+                    "image/pjpeg",
+                    "image/png"
+                 };
+
+            if (model.ImageUpload == null || model.ImageUpload.ContentLength == 0)
+            {
+                ModelState.AddModelError("ImageUpload", "This field is required");
+            }
+            else if (!validImageTypes.Contains(model.ImageUpload.ContentType))
+            {
+                ModelState.AddModelError("ImageUpload", "Please choose either a GIF, JPG or PNG image.");
+            }
+           
             var collection = new ConsultationCollection
             {
                Consultation = model.Consultation,
@@ -510,8 +529,20 @@ namespace Hospital_Management_System.Controllers
                 return View(collection);
             }
 
-            var doctor = db.Psychologists.Single(c => c.ApplicationUserId == user);
             var consultation = new Consultation();
+
+            if (model.ImageUpload != null && model.ImageUpload.ContentLength > 0)
+            {
+                var uploadDir = "~/Content/uploads";
+                var imagePath = Path.Combine(Server.MapPath(uploadDir), model.ImageUpload.FileName);
+                var imageUrl = Path.Combine(uploadDir, model.ImageUpload.FileName);
+                model.ImageUpload.SaveAs(imagePath);
+                consultation.ImageUrl = imageUrl;
+            }
+
+
+            var doctor = db.Psychologists.Single(c => c.ApplicationUserId == user);
+           
             consultation.PatientId = model.Consultation.PatientId;
             consultation.PsychologistId = doctor.Id;
             consultation.ConsultationDate = model.Consultation.ConsultationDate;
