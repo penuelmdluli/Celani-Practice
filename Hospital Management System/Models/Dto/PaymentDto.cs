@@ -12,14 +12,33 @@ namespace Hospital_Management_System.Models.Dto
 
     
         public string PatientName { get; set; }
+        public string PatientNumber { get; set; }
+        public string PatientEmail { get; set; }
+        public string PatientGender { get; set; }
 
-     
+        [Display(Name = "Date Of Birth")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime? DateOfBirth { get; set; }
+
         public string PsychologistName { get; set; }
+        public string PsychologistSpecialist { get; set; }
+        public string PsychologistContact { get; set; }
+
+        public string CentreContact { get; set; }
+
+        public string CentrLocation { get; set; }
+
+        [Display(Name = "Centre Name")]
+        public string CentreName { get; set; }
 
         [Display(Name = "Payment Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? PaymentDate { get; set; }
+
+        [Display(Name = "Patient Address")]
+        public string PatientAddress { get; set; }
 
         [Display(Name = "Service Recived")]
         public string ServiceRecived { get; set; }
@@ -37,7 +56,7 @@ namespace Hospital_Management_System.Models.Dto
         public int PayByCash { get; set; }
 
         [Display(Name = "Total Due")]
-        public int TotalDue { get; set; }
+        public string TotalDue { get; set; }
 
         [Display(Name = "Invoice Refference")]
         public string InvoiceRefNo { get; set; }

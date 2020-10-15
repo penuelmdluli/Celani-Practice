@@ -221,6 +221,30 @@
     <Compile Include="Migrations\202010122002364_payment.Designer.cs">
       <DependentUpon>202010122002364_payment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202010122158192_paymenchanges.cs" />
+    <Compile Include="Migrations\202010122158192_paymenchanges.Designer.cs">
+      <DependentUpon>202010122158192_paymenchanges.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010132022388_updatePayment.cs" />
+    <Compile Include="Migrations\202010132022388_updatePayment.Designer.cs">
+      <DependentUpon>202010132022388_updatePayment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010132109159_updatethepayment.cs" />
+    <Compile Include="Migrations\202010132109159_updatethepayment.Designer.cs">
+      <DependentUpon>202010132109159_updatethepayment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010132120216_PaymentTotal.cs" />
+    <Compile Include="Migrations\202010132120216_PaymentTotal.Designer.cs">
+      <DependentUpon>202010132120216_PaymentTotal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010132230358_removecentre.cs" />
+    <Compile Include="Migrations\202010132230358_removecentre.Designer.cs">
+      <DependentUpon>202010132230358_removecentre.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010142120390_updatepayments.cs" />
+    <Compile Include="Migrations\202010142120390_updatepayments.Designer.cs">
+      <DependentUpon>202010142120390_updatepayments.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Announcement.cs" />
@@ -632,6 +656,9 @@
     <Content Include="Views\Psychologist\AddConsultation.cshtml" />
     <Content Include="Views\Psychologist\ListOfConsultation.cshtml" />
     <Content Include="Views\Patient\ListOfConsultation.cshtml" />
+    <Content Include="Views\Admin\AddPayment.cshtml" />
+    <Content Include="Views\Admin\ListOfPayment.cshtml" />
+    <Content Include="Views\Admin\ViewPaymentInvoice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -673,6 +700,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202010122002364_payment.resx">
       <DependentUpon>202010122002364_payment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010122158192_paymenchanges.resx">
+      <DependentUpon>202010122158192_paymenchanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010132022388_updatePayment.resx">
+      <DependentUpon>202010132022388_updatePayment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010132109159_updatethepayment.resx">
+      <DependentUpon>202010132109159_updatethepayment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010132120216_PaymentTotal.resx">
+      <DependentUpon>202010132120216_PaymentTotal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010132230358_removecentre.resx">
+      <DependentUpon>202010132230358_removecentre.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010142120390_updatepayments.resx">
+      <DependentUpon>202010142120390_updatepayments.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

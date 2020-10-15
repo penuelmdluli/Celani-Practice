@@ -29,6 +29,12 @@
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Contact)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
@@ -40,21 +46,27 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
-                <td>
-                    <a href="@Url.Action("EditDepartment", new {id = item.Id})" class="fa fa-pencil-square-o" style="font-size: 19px"></a> |
-                    <a href="@Url.Action("DeleteDepartment", new {id = item.Id})" class="fa fa-trash" style="font-size: 19px; color: red"></a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Contact)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                <a href="@Url.Action("EditDepartment", new {id = item.Id})" class="fa fa-pencil-square-o" style="font-size: 19px"></a> |
+                <a href="@Url.Action("DeleteDepartment", new {id = item.Id})" class="fa fa-trash" style="font-size: 19px; color: red"></a>
+            </td>
+        </tr>
         }
     </tbody>
 

@@ -69,7 +69,8 @@ namespace Hospital_Management_System.Controllers
             return View(model);
         }
 
-        //Centre Section
+        #region  Centre Section
+
 
         //Centre List
         [Authorize(Roles = "Admin")]
@@ -117,6 +118,9 @@ namespace Hospital_Management_System.Controllers
             department.Name = model.Name;
             department.Description = model.Description;
             department.Status = model.Status;
+            department.Contact = model.Contact;
+            department.Location = model.Location;
+            
             db.SaveChanges();
             return RedirectToAction("DepartmentList");
         }
@@ -140,19 +144,9 @@ namespace Hospital_Management_System.Controllers
 
         //End Centre Section
 
-        //Start Ambulance Section
-        //Ambulance Driver Section
+        #endregion
 
-        //Add Ambulance Driver
-        [Authorize(Roles = "Admin")]
-        public ActionResult AddAmbulanceDriver()
-        {
-            return View();
-        }
-
-        //End Ambulance Section
-
-        //Start Medicine Section
+        #region Start Medicine Section
 
         //Add Medicine
         [Authorize(Roles = "Admin")]
@@ -161,7 +155,7 @@ namespace Hospital_Management_System.Controllers
             return View();
         }
 
-        
+
         [Authorize(Roles = "Admin")]
         public ActionResult AddPsychologist()
         {
@@ -189,7 +183,7 @@ namespace Hospital_Management_System.Controllers
             if (result.Succeeded)
             {
                 await UserManager.AddToRoleAsync(user.Id, "Psychologist");
-                var  psychologist = new Psychologist
+                var psychologist = new Psychologist
                 {
                     FirstName = model.Psychologist.FirstName,
                     LastName = model.Psychologist.LastName,
@@ -315,8 +309,10 @@ namespace Hospital_Management_System.Controllers
         }
 
         //End Psychologist Section
+        #endregion
 
-        //Start Schedule Section
+        #region Start Schedule Section
+
         //Add Schedule
         [Authorize(Roles = "Admin")]
         public ActionResult AddSchedule()
@@ -334,14 +330,14 @@ namespace Hospital_Management_System.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddSchedule(ScheduleCollection model)
         {
-           
-                var collection = new ScheduleCollection
-                {
-                    Centres = db.Centre.ToList(),
-                    Schedule = model.Schedule,
-                    Psychologists = db.Psychologists.ToList()
-                };
-       
+
+            var collection = new ScheduleCollection
+            {
+                Centres = db.Centre.ToList(),
+                Schedule = model.Schedule,
+                Psychologists = db.Psychologists.ToList()
+            };
+
             if (model.Schedule.ScheduleDate <= DateTime.Now.Date)
             {
                 ViewBag.Messege = "Please Enter the Date greater than today or equal!!";
@@ -367,7 +363,7 @@ namespace Hospital_Management_System.Controllers
             var schedule = db.Schedules.Include(c => c.Psychologist)
                 .Select(e => new SchedulesDto()
                 {
-                    PsychologistName =db.Psychologists.FirstOrDefault(d => d.Id == e.PsychologistId).FullName,
+                    PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.PsychologistId).FullName,
                     CentreName = db.Centre.FirstOrDefault(d => d.Id == e.Id).Name,
                     EndTime = e.EndTime,
                     StartTime = e.StartTime,
@@ -404,7 +400,7 @@ namespace Hospital_Management_System.Controllers
             schedule.EndTime = model.Schedule.EndTime;
             schedule.ScheduleDate = model.Schedule.ScheduleDate;
 
-          //  schedule.CentreId = model.Schedule.CentreId;
+            //  schedule.CentreId = model.Schedule.CentreId;
             schedule.StartTime = model.Schedule.StartTime;
             db.SaveChanges();
             return RedirectToAction("ListOfSchedules");
@@ -428,21 +424,24 @@ namespace Hospital_Management_System.Controllers
         }
 
         //End Schedule Section
+        #endregion
 
-        //Start Patient Section
+        #region Start Patient Section
+
 
         //List of Patients
         [Authorize(Roles = "Admin")]
         public ActionResult ListOfPatients()
         {
-            var patients = db.Patients.Select(e =>  new PatientDto { 
-            Id = e.Id,
-            FirstName = e.FirstName,
-            LastName = e.LastName,
-            FullName  = e.FullName,
-            Contact = e.Contact,
-            Age = e.Age,
-            Gender = e.Gender
+            var patients = db.Patients.Select(e => new PatientDto
+            {
+                Id = e.Id,
+                FirstName = e.FirstName,
+                LastName = e.LastName,
+                FullName = e.FullName,
+                Contact = e.Contact,
+                Age = e.Age,
+                Gender = e.Gender
             }).
             ToList();
             return View(patients);
@@ -500,10 +499,11 @@ namespace Hospital_Management_System.Controllers
             db.SaveChanges();
             return RedirectToAction("ListOfPatients");
         }
-
         //End Patient Section
+        #endregion
 
-        //Start Appointment Section
+        #region Start Appointment Section
+
 
         //Add Appointment
         [Authorize(Roles = "Admin")]
@@ -515,7 +515,7 @@ namespace Hospital_Management_System.Controllers
                 Patients = db.Patients.ToList(),
                 Psychologists = db.Psychologists.ToList(),
                 Schedules = db.Schedules.ToList()
-                
+
 
             };
 
@@ -535,22 +535,22 @@ namespace Hospital_Management_System.Controllers
                 Schedules = db.Schedules.ToList()
             };
             var appointment = new Appointment();
-                appointment.PatientId = model.Appointment.PatientId;
-                appointment.AppointmentDate = model.Appointment.AppointmentDate;
-                
-                appointment.Problem = model.Appointment.Problem;
-                appointment.Status = model.Appointment.Status;
-                db.Appointments.Add(appointment);
-                db.SaveChanges();
+            appointment.PatientId = model.Appointment.PatientId;
+            appointment.AppointmentDate = model.Appointment.AppointmentDate;
 
-                if (model.Appointment.Status == true)
-                {
-                    return RedirectToAction("ListOfAppointments");
-                }
-                else
-                {
-                    return RedirectToAction("PendingAppointments");
-                }
+            appointment.Problem = model.Appointment.Problem;
+            appointment.Status = model.Appointment.Status;
+            db.Appointments.Add(appointment);
+            db.SaveChanges();
+
+            if (model.Appointment.Status == true)
+            {
+                return RedirectToAction("ListOfAppointments");
+            }
+            else
+            {
+                return RedirectToAction("PendingAppointments");
+            }
         }
 
 
@@ -583,13 +583,13 @@ namespace Hospital_Management_System.Controllers
             schedule.ScheduleDate = model.Schedule.ScheduleDate;
             schedule.Psychologist.Id = model.Schedule.Psychologist.Id;
             schedule.StartTime = model.Schedule.StartTime;
-            
+
 
             var appointment = new Appointment();
-           // appointment.PatientId = mode;
+            // appointment.PatientId = mode;
             appointment.AppointmentDate = schedule.ScheduleDate;
             appointment.Problem = model.Problem;
-            appointment.Status =false;
+            appointment.Status = false;
             db.Appointments.Add(appointment);
             db.SaveChanges();
 
@@ -717,11 +717,9 @@ namespace Hospital_Management_System.Controllers
                 return RedirectToAction("PendingAppointments");
             }
         }
+        #endregion
 
-        //End Appointment Section
-
-        //Start Announcement Section
-
+        #region End Appointment Section
         //Add Announcement
         [Authorize(Roles = "Admin")]
         public ActionResult AddAnnouncement()
@@ -800,9 +798,9 @@ namespace Hospital_Management_System.Controllers
             db.SaveChanges();
             return RedirectToAction("ListOfAnnouncement");
         }
+        #endregion
 
-        //Start Complaint Section
-
+        #region Start Complaint Section
         //List of Complaints
         [Authorize(Roles = "Admin")]
         public ActionResult ListOfComplains()
@@ -846,5 +844,90 @@ namespace Hospital_Management_System.Controllers
             db.SaveChanges();
             return RedirectToAction("ListOfComplains");
         }
+        #endregion
+
+        #region Start Payment Section
+        [Authorize(Roles = "Admin")]
+        public ActionResult AddPayment()
+        {
+            var collection = new PaymentCollection
+            {
+                Payment = new Payment(),
+                Patients = db.Patients.ToList(),
+                Psychologists = db.Psychologists.ToList(),
+            };
+            return View(collection);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddPayment(PaymentCollection model)
+        {
+            var payment = new Payment {
+
+                PatientAddress = model.Payment.PatientAddress,
+                PaymentDate = DateTime.Now,
+                InvoiceRefNo = model.Payment.InvoiceRefNo,
+                PsychologistId = model.Payment.PsychologistId,
+                PatientId = model.Payment.PatientId,
+                ServiceRecived = model.Payment.ServiceRecived,
+                HoursOfService = model.Payment.HoursOfService,
+                ServiceAmount =model.Payment.ServiceAmount,
+                PaidbyMedicalAid = model.Payment.PaidbyMedicalAid,
+                PayByCash = model.Payment.PayByCash,
+                TotalDue = model.Payment.TotalDue,
+                PatientName = db.Patients.FirstOrDefault(d => d.Id == model.Payment.PatientId).FullName,
+                PatientEmail = db.Patients.FirstOrDefault(d => d.Id == model.Payment.PatientId).EmailAddress,
+                PatientGender= db.Patients.FirstOrDefault(d => d.Id == model.Payment.PatientId).Gender,
+                PatientNumber = db.Patients.FirstOrDefault(d => d.Id == model.Payment.PatientId).Contact,
+                DateOfBirth = db.Patients.FirstOrDefault(d => d.Id == model.Payment.PatientId).DateOfBirth,
+
+                PsychologistContact = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PsychologistId).ContactNo,
+                PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PsychologistId).FullName,
+                PsychologistSpecialist = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PsychologistId).Specialization,
+
+               CentreContact = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PsychologistId).Centre.Contact,
+               CentrLocation = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PsychologistId).Centre.Location,
+               CenterName = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PatientId).Centre.Name,
+
+            };
+            
+            db.Payments.Add(payment);
+            db.SaveChanges();
+            return RedirectToAction("ListOfPayment");
+          
+        }
+
+
+        //List of Active Payment
+        [Authorize(Roles = "Admin")]
+        public ActionResult ListOfPayment()
+        {
+            
+            var appointment = db.Payments.Include(c => c.Psychologist).Include(c => c.Patient)
+                .Select(e => new PaymentDto()
+                {
+                    Id = e.Id,
+                    PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.Psychologist.Id).FullName,
+                    PatientName = db.Patients.FirstOrDefault(d => d.Id == e.PatientId).FirstName,
+                    PaymentDate = e.PaymentDate,
+                    InvoiceRefNo =e.InvoiceRefNo,
+                    ServiceRecived = e.ServiceRecived
+                })
+                .ToList();
+            return View(appointment);
+        }
+
+        //View Of Payment Invoice
+        [Authorize(Roles = "Admin")]
+        public ActionResult ViewPaymentInvoice(int id)
+        {
+            var payments = db.Payments.Single(c => c.Id == id);
+            return View(payments);
+        }
+        #endregion
+
+        
+
     }
 }
