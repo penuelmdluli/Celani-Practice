@@ -22,7 +22,7 @@ namespace Hospital_Management_System.Models.Dto
         [Display(Name = "Schedule Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime? ScheduleDate { get; set; }
+        public DateTime ScheduleDate { get; set; }
 
 
         [Display(Name = "Start Time")]

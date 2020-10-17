@@ -343,12 +343,15 @@ namespace Hospital_Management_System.Controllers
                 ViewBag.Messege = "Please Enter the Date greater than today or equal!!";
                 return View(collection);
             }
+            
 
             if (model.Schedule.EndTime < model.Schedule.StartTime.AddHours(1) || model.Schedule.EndTime > model.Schedule.StartTime.AddHours(1))
             {
                 ViewBag.Messege = "Ops ,You Only allowed to to add schedule for 1 Hour Per slot.";
                 return View(collection);
             }
+            model.Schedule.CentreName = db.Centre.FirstOrDefault(d => d.Id == model.Schedule.PsychologistId).Name;
+            model.Schedule.PsychologistName = db.Psychologists.FirstOrDefault(db => db.Id == model.Schedule.PsychologistId).FullName;
             model.Schedule.IsBooked = false;
 
             db.Schedules.Add(model.Schedule);
@@ -615,6 +618,8 @@ namespace Hospital_Management_System.Controllers
                     Id = e.Id,
                     PatientName = e.Patient.FullName,
                     Problem = e.Problem,
+                    StartTime = e.StartTime,
+                    EndTime = e.EndTime,
                     PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.Schedule.PsychologistId).FullName,
                     Status = e.Status
                 }).Where(c => c.Status == true).Where(c => c.AppointmentDate >= date)

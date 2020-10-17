@@ -245,6 +245,18 @@
     <Compile Include="Migrations\202010142120390_updatepayments.Designer.cs">
       <DependentUpon>202010142120390_updatepayments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202010162311561_centrename.cs" />
+    <Compile Include="Migrations\202010162311561_centrename.Designer.cs">
+      <DependentUpon>202010162311561_centrename.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010162322393_date.cs" />
+    <Compile Include="Migrations\202010162322393_date.Designer.cs">
+      <DependentUpon>202010162322393_date.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202010170056452_name.cs" />
+    <Compile Include="Migrations\202010170056452_name.Designer.cs">
+      <DependentUpon>202010170056452_name.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Announcement.cs" />
@@ -718,6 +730,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202010142120390_updatepayments.resx">
       <DependentUpon>202010142120390_updatepayments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010162311561_centrename.resx">
+      <DependentUpon>202010162311561_centrename.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010162322393_date.resx">
+      <DependentUpon>202010162322393_date.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202010170056452_name.resx">
+      <DependentUpon>202010170056452_name.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -188,6 +188,9 @@ namespace Hospital_Management_System.Controllers
                     Id = e.Id,
                     PatientName = e.Patient.FullName,
                     Problem = e.Problem,
+                    StartTime = e.StartTime,
+                    EndTime = e.EndTime,
+                    
                     PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.Schedule.PsychologistId).FullName,
                     Status = e.Status,
     
@@ -316,12 +319,15 @@ namespace Hospital_Management_System.Controllers
             var schedule = db.Schedules.Include(c => c.Psychologist)
                 .Select(e => new SchedulesDto()
                 {
-                    PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.PsychologistId).FullName,
+                    PsychologistName = e.PsychologistName,
                     // CentreName = db.Centre.FirstOrDefault(d => d.Id == e.CentreId).Name,
                     EndTime = e.EndTime,
                     StartTime = e.StartTime,
                     ScheduleDate = e.ScheduleDate,
-                  
+                    
+
+
+                    CentreName = e.CentreName,
                     Id = e.Id,
 
 

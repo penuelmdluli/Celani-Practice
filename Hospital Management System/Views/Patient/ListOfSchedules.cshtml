@@ -23,6 +23,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.CentreName)
+            </th>
+            <th>
                 Psychologist Name
             </th>
             <th>
@@ -34,31 +37,34 @@
             <th>
                 @Html.DisplayNameFor(model => model.EndTime)
             </th>
-            
+
             <th>Action</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PsychologistName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ScheduleDate)
-                </td>
-                
-                <td>
-                    @item.StartTime.ToShortTimeString()
-                </td>
-                <td>
-                    @item.EndTime.ToShortTimeString()
-                </td>
-               
-                
-               
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CentreName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PsychologistName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScheduleDate.ToShortDateString())
+            </td>
+
+            <td>
+                @item.StartTime.ToShortTimeString()
+            </td>
+            <td>
+                @item.EndTime.ToShortTimeString()
+            </td>
+
+
+
+        </tr>
         }
     </tbody>
 

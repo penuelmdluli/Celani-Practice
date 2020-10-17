@@ -10,6 +10,10 @@ namespace Hospital_Management_System.Models
     {
         public int Id { get; set; }
 
+        public string CentreName { get; set; }
+
+        public string PsychologistName { get; set; }
+
         public Psychologist Psychologist { get; set; }
         [Display(Name = "Psychologist Name")]
         public int PsychologistId { get; set; }
@@ -18,7 +22,7 @@ namespace Hospital_Management_System.Models
         [Display(Name = "Schedule Date")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime? ScheduleDate { get; set; }
+        public DateTime ScheduleDate { get; set; }
 
         [Required]
         [Display(Name = "Start Time")]
