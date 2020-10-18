@@ -4,6 +4,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.ComponentModel.DataAnnotations;
+
 
 namespace Hospital_Management_System.Models
 {
@@ -35,6 +37,7 @@ namespace Hospital_Management_System.Models
         public DbSet<Complaint> Complaints { get; set; }
         public DbSet<Consultation>  Consultations { get; set; }
         public DbSet<Payment> Payments { get; set; }
+        public DbSet<AuditTrial> AuditTrials { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
@@ -44,6 +47,46 @@ namespace Hospital_Management_System.Models
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
+        }
+
+
+        /// <summary>
+        /// I could not import the namespace.
+        /// </summary>
+        public class AuditTrial
+        {
+            public int Id { get; set; }
+            [Required]
+            public string Who { get; set; }
+            [Required]
+            public string Transaction { get; set; }
+
+            [Required]
+            public string Where { get; set; }
+            public DateTime When { get; set; }
+            
+        }
+
+        /// <summary>
+        /// I could not import the namespace.
+        /// </summary>
+        public static class AuditExtension
+        {
+            public static void AddAudit(string who, string what, string tableName)
+            {
+                var context = new ApplicationDbContext();
+
+                var newTrial = new AuditTrial
+                {
+                    When = DateTime.Now,
+                    Who = who,
+                    Transaction = what,
+                    Where = tableName
+                };
+
+                context.AuditTrials.Add(newTrial);
+                context.SaveChanges();
+            }
         }
     }
 }

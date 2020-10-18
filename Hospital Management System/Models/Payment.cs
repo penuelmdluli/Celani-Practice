@@ -80,4 +80,6 @@ namespace Hospital_Management_System.Models
         public string InvoiceRefNo { get; set; }
 
     }
+
+    
 }

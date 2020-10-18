@@ -230,6 +230,7 @@ namespace Hospital_Management_System.Controllers
                     ScheduleDate = e.ScheduleDate,
                     Id = e.Id,
                 }).ToList();
+            
             return View(schedule);
         }
 
@@ -262,6 +263,8 @@ namespace Hospital_Management_System.Controllers
             schedule.EndTime = model.EndTime;
            
             db.SaveChanges();
+            
+
             return RedirectToAction("ScheduleDetail");
         }
 

@@ -185,81 +185,36 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202010101347353_init.cs" />
-    <Compile Include="Migrations\202010101347353_init.Designer.cs">
-      <DependentUpon>202010101347353_init.cs</DependentUpon>
+    <Compile Include="Migrations\202010161045466_new.cs" />
+    <Compile Include="Migrations\202010161045466_new.Designer.cs">
+      <DependentUpon>202010161045466_new.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202010110925039_updtedAppointment.cs" />
-    <Compile Include="Migrations\202010110925039_updtedAppointment.Designer.cs">
-      <DependentUpon>202010110925039_updtedAppointment.cs</DependentUpon>
+    <Compile Include="Migrations\202010181514338_ModelTrialLogEntity.cs" />
+    <Compile Include="Migrations\202010181514338_ModelTrialLogEntity.Designer.cs">
+      <DependentUpon>202010181514338_ModelTrialLogEntity.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202010111020478_updteScheduleDB.cs" />
-    <Compile Include="Migrations\202010111020478_updteScheduleDB.Designer.cs">
-      <DependentUpon>202010111020478_updteScheduleDB.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202010111042453_updtePetentId.cs" />
-    <Compile Include="Migrations\202010111042453_updtePetentId.Designer.cs">
-      <DependentUpon>202010111042453_updtePetentId.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202010111620009_consultation.cs" />
-    <Compile Include="Migrations\202010111620009_consultation.Designer.cs">
-      <DependentUpon>202010111620009_consultation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202010111704103_Diagnosis.cs" />
-    <Compile Include="Migrations\202010111704103_Diagnosis.Designer.cs">
-      <DependentUpon>202010111704103_Diagnosis.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202010112226012_init1.cs" />
-    <Compile Include="Migrations\202010112226012_init1.Designer.cs">
-      <DependentUpon>202010112226012_init1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202010121656190_updload.cs" />
-    <Compile Include="Migrations\202010121656190_updload.Designer.cs">
-      <DependentUpon>202010121656190_updload.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202010122002364_payment.cs" />
-    <Compile Include="Migrations\202010122002364_payment.Designer.cs">
-      <DependentUpon>202010122002364_payment.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202010122158192_paymenchanges.cs" />
-    <Compile Include="Migrations\202010122158192_paymenchanges.Designer.cs">
-      <DependentUpon>202010122158192_paymenchanges.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202010132022388_updatePayment.cs" />
-    <Compile Include="Migrations\202010132022388_updatePayment.Designer.cs">
-      <DependentUpon>202010132022388_updatePayment.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202010132109159_updatethepayment.cs" />
-    <Compile Include="Migrations\202010132109159_updatethepayment.Designer.cs">
-      <DependentUpon>202010132109159_updatethepayment.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202010132120216_PaymentTotal.cs" />
-    <Compile Include="Migrations\202010132120216_PaymentTotal.Designer.cs">
-      <DependentUpon>202010132120216_PaymentTotal.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202010132230358_removecentre.cs" />
-    <Compile Include="Migrations\202010132230358_removecentre.Designer.cs">
-      <DependentUpon>202010132230358_removecentre.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202010142120390_updatepayments.cs" />
-    <Compile Include="Migrations\202010142120390_updatepayments.Designer.cs">
-      <DependentUpon>202010142120390_updatepayments.cs</DependentUpon>
+    <Compile Include="Migrations\202010181523058_UpdateAuditLog.cs" />
+    <Compile Include="Migrations\202010181523058_UpdateAuditLog.Designer.cs">
+      <DependentUpon>202010181523058_UpdateAuditLog.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Announcement.cs" />
     <Compile Include="Models\Appointment.cs" />
+    <Compile Include="Models\AuditTrial.cs" />
     <Compile Include="Models\Complaint.cs" />
     <Compile Include="Models\Consultation.cs" />
     <Compile Include="Models\DeleteAnnouncementOnExpire.cs" />
     <Compile Include="Models\Centre.cs" />
     <Compile Include="Models\DepartmentStatus.cs" />
     <Compile Include="Models\Dto\AppointmentDto.cs" />
+    <Compile Include="Models\Dto\AuditDto.cs" />
     <Compile Include="Models\Dto\ConsultationDto.cs" />
     <Compile Include="Models\Dto\PatientDto.cs" />
     <Compile Include="Models\Dto\PaymentDto.cs" />
     <Compile Include="Models\Dto\PsychologistDto.cs" />
     <Compile Include="Models\Dto\SchedulesDto.cs" />
+    <Compile Include="Models\Extensions\AuditExtension.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\Psychologist.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -659,6 +614,7 @@
     <Content Include="Views\Admin\AddPayment.cshtml" />
     <Content Include="Views\Admin\ListOfPayment.cshtml" />
     <Content Include="Views\Admin\ViewPaymentInvoice.cshtml" />
+    <None Include="Views\Admin\ListOfAudits.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -674,50 +630,14 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202010101347353_init.resx">
-      <DependentUpon>202010101347353_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202010161045466_new.resx">
+      <DependentUpon>202010161045466_new.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010110925039_updtedAppointment.resx">
-      <DependentUpon>202010110925039_updtedAppointment.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202010181514338_ModelTrialLogEntity.resx">
+      <DependentUpon>202010181514338_ModelTrialLogEntity.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010111020478_updteScheduleDB.resx">
-      <DependentUpon>202010111020478_updteScheduleDB.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010111042453_updtePetentId.resx">
-      <DependentUpon>202010111042453_updtePetentId.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010111620009_consultation.resx">
-      <DependentUpon>202010111620009_consultation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010111704103_Diagnosis.resx">
-      <DependentUpon>202010111704103_Diagnosis.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010112226012_init1.resx">
-      <DependentUpon>202010112226012_init1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010121656190_updload.resx">
-      <DependentUpon>202010121656190_updload.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010122002364_payment.resx">
-      <DependentUpon>202010122002364_payment.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010122158192_paymenchanges.resx">
-      <DependentUpon>202010122158192_paymenchanges.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010132022388_updatePayment.resx">
-      <DependentUpon>202010132022388_updatePayment.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010132109159_updatethepayment.resx">
-      <DependentUpon>202010132109159_updatethepayment.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010132120216_PaymentTotal.resx">
-      <DependentUpon>202010132120216_PaymentTotal.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010132230358_removecentre.resx">
-      <DependentUpon>202010132230358_removecentre.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010142120390_updatepayments.resx">
-      <DependentUpon>202010142120390_updatepayments.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202010181523058_UpdateAuditLog.resx">
+      <DependentUpon>202010181523058_UpdateAuditLog.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

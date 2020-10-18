@@ -47,6 +47,9 @@ namespace Hospital_Management_System.Controllers
             }
         }
 
+
+
+
         // GET: Admin
         [Authorize(Roles = "Admin")]
         public ActionResult Index(string message)
@@ -927,7 +930,30 @@ namespace Hospital_Management_System.Controllers
         }
         #endregion
 
-        
 
+        [Authorize(Roles = "Admin")]
+        public ActionResult ListOfAudits()
+        {
+            var audits = db.AuditTrials
+                .Select(e => new AuditDto()
+                {
+                    Who = e.Who,
+                    Transaction = e.Transaction,
+                    Table = e.Where,
+                    Date = e.When.ToString()
+                
+                })
+                .ToList();
+
+            return View(audits);
+        }
+
+        public class AuditDto
+        {
+            public string Who { get; set; }
+            public string Transaction { get; set; }
+            public string Date { get; set; }
+            public string Table { get; set; }
+        }
     }
 }

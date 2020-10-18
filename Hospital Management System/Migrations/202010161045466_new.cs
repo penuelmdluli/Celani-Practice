@@ -3,7 +3,7 @@ namespace Hospital_Management_System.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class init : DbMigration
+    public partial class _new : DbMigration
     {
         public override void Up()
         {
@@ -26,6 +26,8 @@ namespace Hospital_Management_System.Migrations
                         PatientId = c.Int(nullable: false),
                         ScheduleId = c.Int(nullable: false),
                         AppointmentDate = c.DateTime(),
+                        StartTime = c.DateTime(nullable: false),
+                        EndTime = c.DateTime(nullable: false),
                         Problem = c.String(),
                         Status = c.Boolean(nullable: false),
                     })
@@ -128,6 +130,8 @@ namespace Hospital_Management_System.Migrations
                         ScheduleDate = c.DateTime(nullable: false),
                         StartTime = c.DateTime(nullable: false),
                         EndTime = c.DateTime(nullable: false),
+                        IsBooked = c.Boolean(nullable: false),
+                        PatientId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Psychologists", t => t.PsychologistId, cascadeDelete: true)
@@ -168,6 +172,8 @@ namespace Hospital_Management_System.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false),
+                        Contact = c.String(nullable: false),
+                        Location = c.String(nullable: false),
                         Description = c.String(nullable: false),
                         Status = c.String(nullable: false),
                     })
@@ -183,6 +189,58 @@ namespace Hospital_Management_System.Migrations
                         ComplainDate = c.DateTime(),
                     })
                 .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Consultations",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        PatientId = c.Int(nullable: false),
+                        PsychologistId = c.Int(nullable: false),
+                        ConsultationDate = c.DateTime(),
+                        Diagnosis = c.String(),
+                        TreatmentPlan = c.String(),
+                        ImageUrl = c.String(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Patients", t => t.PatientId, cascadeDelete: true)
+                .ForeignKey("dbo.Psychologists", t => t.PsychologistId, cascadeDelete: true)
+                .Index(t => t.PatientId)
+                .Index(t => t.PsychologistId);
+            
+            CreateTable(
+                "dbo.Payments",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        PatientId = c.Int(nullable: false),
+                        PatientAddress = c.String(),
+                        PatientName = c.String(),
+                        PatientNumber = c.String(),
+                        PatientEmail = c.String(),
+                        PatientGender = c.String(),
+                        PsychologistName = c.String(),
+                        PsychologistSpecialist = c.String(),
+                        PsychologistContact = c.String(),
+                        CentreContact = c.String(),
+                        CentrLocation = c.String(),
+                        CenterName = c.String(),
+                        PsychologistId = c.Int(nullable: false),
+                        PaymentDate = c.DateTime(),
+                        DateOfBirth = c.DateTime(),
+                        ServiceRecived = c.String(),
+                        HoursOfService = c.Int(nullable: false),
+                        ServiceAmount = c.Int(nullable: false),
+                        PaidbyMedicalAid = c.Int(nullable: false),
+                        PayByCash = c.Int(nullable: false),
+                        TotalDue = c.String(),
+                        InvoiceRefNo = c.String(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Patients", t => t.PatientId, cascadeDelete: true)
+                .ForeignKey("dbo.Psychologists", t => t.PsychologistId, cascadeDelete: true)
+                .Index(t => t.PatientId)
+                .Index(t => t.PsychologistId);
             
             CreateTable(
                 "dbo.Prescriptions",
@@ -257,6 +315,10 @@ namespace Hospital_Management_System.Migrations
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.Prescriptions", "Psychologist_Id", "dbo.Psychologists");
             DropForeignKey("dbo.Prescriptions", "PatientId", "dbo.Patients");
+            DropForeignKey("dbo.Payments", "PsychologistId", "dbo.Psychologists");
+            DropForeignKey("dbo.Payments", "PatientId", "dbo.Patients");
+            DropForeignKey("dbo.Consultations", "PsychologistId", "dbo.Psychologists");
+            DropForeignKey("dbo.Consultations", "PatientId", "dbo.Patients");
             DropForeignKey("dbo.Appointments", "ScheduleId", "dbo.Schedules");
             DropForeignKey("dbo.Schedules", "PsychologistId", "dbo.Psychologists");
             DropForeignKey("dbo.Psychologists", "Centre_Id", "dbo.Centres");
@@ -269,6 +331,10 @@ namespace Hospital_Management_System.Migrations
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.Prescriptions", new[] { "Psychologist_Id" });
             DropIndex("dbo.Prescriptions", new[] { "PatientId" });
+            DropIndex("dbo.Payments", new[] { "PsychologistId" });
+            DropIndex("dbo.Payments", new[] { "PatientId" });
+            DropIndex("dbo.Consultations", new[] { "PsychologistId" });
+            DropIndex("dbo.Consultations", new[] { "PatientId" });
             DropIndex("dbo.Psychologists", new[] { "Centre_Id" });
             DropIndex("dbo.Psychologists", new[] { "ApplicationUserId" });
             DropIndex("dbo.Schedules", new[] { "PsychologistId" });
@@ -282,6 +348,8 @@ namespace Hospital_Management_System.Migrations
             DropIndex("dbo.Appointments", new[] { "PatientId" });
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.Prescriptions");
+            DropTable("dbo.Payments");
+            DropTable("dbo.Consultations");
             DropTable("dbo.Complaints");
             DropTable("dbo.Centres");
             DropTable("dbo.Psychologists");
