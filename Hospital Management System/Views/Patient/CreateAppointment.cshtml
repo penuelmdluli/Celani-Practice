@@ -47,23 +47,18 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Schedule.PsychologistId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.Schedule.PsychologistId, new SelectList(Model.Psychologists, "Id", "FullName"), "Select Psychologist", new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Schedule.PsychologistId, "", new { @class = "text-danger" })
+            <dd>
+                @Html.DisplayFor(model => model.Schedule.PsychologistName)
+            </dd>
         </div>
     </div>
-
-
-
 
     <div class="form-group">
         @Html.LabelFor(model => model.Schedule.ScheduleDate, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Schedule.ScheduleDate, new { htmlAttributes = new { @class = "form-control" } })
-            @if (ViewBag.Messege != null)
-            {
-                <span class="text-danger">@ViewBag.Messege</span>
-            }
-            @Html.ValidationMessageFor(model => model.Schedule.ScheduleDate, "", new { @class = "text-danger" })
+            <dd>
+                @Html.DisplayFor(model => model.Schedule.ScheduleDate)
+            </dd>
         </div>
     </div>
 
@@ -71,19 +66,21 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Schedule.StartTime, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Schedule.StartTime, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Schedule.StartTime, "", new { @class = "text-danger" })
+            <dd>
+                @Html.DisplayFor(model => model.Schedule.StartTime)
+            </dd>
         </div>
     </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.Schedule.EndTime, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Schedule.EndTime, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Schedule.EndTime, "", new { @class = "text-danger" })
+            <dd>
+                @Html.DisplayFor(model => model.Schedule.EndTime)
+            </dd>
+
         </div>
     </div>
-
 
     <div class="form-group">
         @Html.LabelFor(model => model.Problem, htmlAttributes: new { @class = "control-label col-md-2" })

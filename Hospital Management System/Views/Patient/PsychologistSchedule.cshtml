@@ -29,7 +29,7 @@
                 @foreach (var product in productGroup.Select(x => x.Product))
                 {
                     <td>
-                        <button class="btn btn-success" type="button">@product.StartTime.ToShortTimeString() - @product.EndTime.ToShortTimeString()  : @product.ScheduleDate</button>
+                        <button class="btn btn-success" type="button">@product.StartTime.ToShortTimeString() - @product.EndTime.ToShortTimeString()  : @product.ScheduleDate.ToShortDateString()</button>
                         
                     </td>
                 }
