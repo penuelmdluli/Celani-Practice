@@ -153,7 +153,7 @@ namespace Hospital_Management_System.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeletePrescription(int id)
         {
-            var prescription = db.Prescription.Single(c => c.Id == id);
+           
             db.Prescription.Remove(prescription);
             db.SaveChanges();
             return RedirectToAction("ListOfPrescription");

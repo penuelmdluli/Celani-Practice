@@ -50,43 +50,7 @@ namespace Hospital_Management_System.Models
         }
 
 
-        /// <summary>
-        /// I could not import the namespace.
-        /// </summary>
-        public class AuditTrial
-        {
-            public int Id { get; set; }
-            [Required]
-            public string Who { get; set; }
-            [Required]
-            public string Transaction { get; set; }
-
-            [Required]
-            public string Where { get; set; }
-            public DateTime When { get; set; }
-            
-        }
-
-        /// <summary>
-        /// I could not import the namespace.
-        /// </summary>
-        public static class AuditExtension
-        {
-            public static void AddAudit(string who, string what, string tableName)
-            {
-                var context = new ApplicationDbContext();
-
-                var newTrial = new AuditTrial
-                {
-                    When = DateTime.Now,
-                    Who = who,
-                    Transaction = what,
-                    Where = tableName
-                };
-
-                context.AuditTrials.Add(newTrial);
-                context.SaveChanges();
-            }
-        }
+      
+       
     }
 }

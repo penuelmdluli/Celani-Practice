@@ -14,6 +14,10 @@ namespace Hospital_Management_System.Models
         public string Who { get; set; }
         [Required]
         public string Transaction { get; set; }
-        public DateTime What { get; set; }
+
+        [Required]
+        public string Where { get; set; }
+        public DateTime When { get; set; }
+
     }
 }
