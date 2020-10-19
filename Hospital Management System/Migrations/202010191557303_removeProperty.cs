@@ -3,16 +3,16 @@ namespace Hospital_Management_System.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class centrename : DbMigration
+    public partial class removeProperty : DbMigration
     {
         public override void Up()
         {
-            AddColumn("dbo.Schedules", "CentreName", c => c.String());
+            DropColumn("dbo.Psychologists", "Designation");
         }
         
         public override void Down()
         {
-            DropColumn("dbo.Schedules", "CentreName");
+            AddColumn("dbo.Psychologists", "Designation", c => c.String(nullable: false));
         }
     }
 }

@@ -285,7 +285,6 @@ namespace Hospital_Management_System.Controllers
                      Address = e.Address,
                      CentreName = db.Centre.FirstOrDefault(d => d.Id == e.Id).Name,
                      Status = e.Status,
-                     Designation = e.Designation,
                      ContactNo = e.ContactNo,
                      Education = e.Education,
                      Gender = e.Gender,

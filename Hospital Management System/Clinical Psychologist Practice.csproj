@@ -185,29 +185,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202010161045466_new.cs" />
-    <Compile Include="Migrations\202010161045466_new.Designer.cs">
-      <DependentUpon>202010161045466_new.cs</DependentUpon>
+    <Compile Include="Migrations\202010191532272_init.cs" />
+    <Compile Include="Migrations\202010191532272_init.Designer.cs">
+      <DependentUpon>202010191532272_init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202010181514338_ModelTrialLogEntity.cs" />
-    <Compile Include="Migrations\202010181514338_ModelTrialLogEntity.Designer.cs">
-      <DependentUpon>202010181514338_ModelTrialLogEntity.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202010181523058_UpdateAuditLog.cs" />
-    <Compile Include="Migrations\202010181523058_UpdateAuditLog.Designer.cs">
-      <DependentUpon>202010181523058_UpdateAuditLog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202010162311561_centrename.cs" />
-    <Compile Include="Migrations\202010162311561_centrename.Designer.cs">
-      <DependentUpon>202010162311561_centrename.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202010162322393_date.cs" />
-    <Compile Include="Migrations\202010162322393_date.Designer.cs">
-      <DependentUpon>202010162322393_date.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202010170056452_name.cs" />
-    <Compile Include="Migrations\202010170056452_name.Designer.cs">
-      <DependentUpon>202010170056452_name.cs</DependentUpon>
+    <Compile Include="Migrations\202010191557303_removeProperty.cs" />
+    <Compile Include="Migrations\202010191557303_removeProperty.Designer.cs">
+      <DependentUpon>202010191557303_removeProperty.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -643,23 +627,11 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202010161045466_new.resx">
-      <DependentUpon>202010161045466_new.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202010191532272_init.resx">
+      <DependentUpon>202010191532272_init.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010181514338_ModelTrialLogEntity.resx">
-      <DependentUpon>202010181514338_ModelTrialLogEntity.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010181523058_UpdateAuditLog.resx">
-      <DependentUpon>202010181523058_UpdateAuditLog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010162311561_centrename.resx">
-      <DependentUpon>202010162311561_centrename.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010162322393_date.resx">
-      <DependentUpon>202010162322393_date.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202010170056452_name.resx">
-      <DependentUpon>202010170056452_name.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202010191557303_removeProperty.resx">
+      <DependentUpon>202010191557303_removeProperty.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

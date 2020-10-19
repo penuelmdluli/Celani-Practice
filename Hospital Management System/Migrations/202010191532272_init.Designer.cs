@@ -7,13 +7,13 @@ namespace Hospital_Management_System.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class UpdateAuditLog : IMigrationMetadata
+    public sealed partial class init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdateAuditLog));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(init));
         
         string IMigrationMetadata.Id
         {
-            get { return "202010181523058_UpdateAuditLog"; }
+            get { return "202010191532272_init"; }
         }
         
         string IMigrationMetadata.Source

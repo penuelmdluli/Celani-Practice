@@ -194,7 +194,7 @@ namespace Hospital_Management_System.Controllers
                     EmailAddress = model.ApplicationUser.Email,
                     ContactNo = model.Psychologist.ContactNo,
                     PhoneNo = model.Psychologist.PhoneNo,
-                    Designation = model.Psychologist.Designation,
+                 
                     Education = model.Psychologist.Education,
                     DepartmentId = model.Psychologist.DepartmentId,
 
@@ -213,8 +213,6 @@ namespace Hospital_Management_System.Controllers
             }
 
             return RedirectToAction("ListOfPsychologists");
-            //return HttpNotFound();
-
         }
 
         //List Of Psychologists
@@ -230,7 +228,6 @@ namespace Hospital_Management_System.Controllers
                     Address = e.Address,
                     CentreName = db.Centre.FirstOrDefault(d => d.Id == e.Id).Name,
                     Status = e.Status,
-                    Designation = e.Designation,
                     ContactNo = e.ContactNo,
                     Education = e.Education,
                     Gender = e.Gender,
@@ -271,7 +268,6 @@ namespace Hospital_Management_System.Controllers
             psychologist.FullName = "Dr. " + model.Psychologist.FirstName + " " + model.Psychologist.LastName;
             psychologist.ContactNo = model.Psychologist.ContactNo;
             psychologist.PhoneNo = model.Psychologist.PhoneNo;
-            psychologist.Designation = model.Psychologist.Designation;
             psychologist.Education = model.Psychologist.Education;
             psychologist.DepartmentId = model.Psychologist.DepartmentId;
             psychologist.Specialization = model.Psychologist.Specialization;

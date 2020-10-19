@@ -7,13 +7,13 @@ namespace Hospital_Management_System.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class name : IMigrationMetadata
+    public sealed partial class removeProperty : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(name));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(removeProperty));
         
         string IMigrationMetadata.Id
         {
-            get { return "202010170056452_name"; }
+            get { return "202010191557303_removeProperty"; }
         }
         
         string IMigrationMetadata.Source

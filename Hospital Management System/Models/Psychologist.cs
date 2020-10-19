@@ -27,9 +27,6 @@ namespace Hospital_Management_System.Models
         [EmailAddress]
         public string EmailAddress { get; set; }
 
-        [Required]
-        public string Designation { get; set; }
-
         public Centre Centre { get; set; }
         [Display(Name = "Centre")]
         public int DepartmentId { get; set; }

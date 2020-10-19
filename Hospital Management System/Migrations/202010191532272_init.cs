@@ -3,7 +3,7 @@ namespace Hospital_Management_System.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class _new : DbMigration
+    public partial class init : DbMigration
     {
         public override void Up()
         {
@@ -126,6 +126,8 @@ namespace Hospital_Management_System.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
+                        CentreName = c.String(),
+                        PsychologistName = c.String(),
                         PsychologistId = c.Int(nullable: false),
                         ScheduleDate = c.DateTime(nullable: false),
                         StartTime = c.DateTime(nullable: false),
@@ -176,6 +178,18 @@ namespace Hospital_Management_System.Migrations
                         Location = c.String(nullable: false),
                         Description = c.String(nullable: false),
                         Status = c.String(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.AuditTrials",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Who = c.String(nullable: false),
+                        Transaction = c.String(nullable: false),
+                        Where = c.String(nullable: false),
+                        When = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -351,6 +365,7 @@ namespace Hospital_Management_System.Migrations
             DropTable("dbo.Payments");
             DropTable("dbo.Consultations");
             DropTable("dbo.Complaints");
+            DropTable("dbo.AuditTrials");
             DropTable("dbo.Centres");
             DropTable("dbo.Psychologists");
             DropTable("dbo.Schedules");
