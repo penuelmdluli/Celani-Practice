@@ -160,10 +160,6 @@ namespace Hospital_Management_System.Controllers
             var patient = db.Patients.Single(c => c.ApplicationUserId == user);
 
             var schedule = db.Schedules.Single(c => c.Id == id);
-            schedule.PsychologistId = model.Schedule.PsychologistId;
-            schedule.EndTime = model.Schedule.EndTime;
-            schedule.ScheduleDate = model.Schedule.ScheduleDate;
-            schedule.StartTime = model.Schedule.StartTime;
             schedule.PatientId = patient.Id;
             schedule.IsBooked = true;
             db.SaveChanges();
@@ -171,7 +167,7 @@ namespace Hospital_Management_System.Controllers
         var appointment = new Appointment();
             appointment.PatientId = patient.Id;
             appointment.ScheduleId = schedule.Id;
-            appointment.AppointmentDate = schedule.ScheduleDate;
+
             appointment.StartTime = schedule.StartTime;
             appointment.EndTime = schedule.EndTime;
             appointment.Problem = model.Problem;
@@ -189,10 +185,11 @@ namespace Hospital_Management_System.Controllers
         {
             string user = User.Identity.GetUserId();
             var patient = db.Patients.Single(c => c.ApplicationUserId == user);
+           
             var appointment = db.Appointments.Where(c => c.PatientId == patient.Id)
                 .Select(e => new AppointmentDto()
                 {
-                    AppointmentDate = e.AppointmentDate,
+                    AppointmentDate = db.Schedules.FirstOrDefault(d => d.PatientId == patient.Id).ScheduleDate,
                     Id = e.Id,
                     PatientName = e.Patient.FullName,
                     Problem = e.Problem,
