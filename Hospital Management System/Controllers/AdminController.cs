@@ -232,6 +232,7 @@ namespace Hospital_Management_System.Controllers
                     Education = e.Education,
                     Gender = e.Gender,
                     Id = e.Id,
+                    ApplicationUserId =e.ApplicationUserId,
                 })
                 .ToList();
 
