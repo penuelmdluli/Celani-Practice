@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Hospital_Management_System.Models;
+using System.Net.Mail;
+using System.Net;
 
 namespace Hospital_Management_System.Controllers
 {
@@ -226,18 +228,37 @@ namespace Hospital_Management_System.Controllers
         //
         // POST: /Account/ForgotPassword
         [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
+      
         public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+
+                var userEmail =  UserManager.Users.FirstOrDefault(x => x.Email == model.Email).Email;
+                var Username = UserManager.Users.FirstOrDefault(x => x.Email == model.Email).UserName;
+
+                if (userEmail != null )
                 {
+                   
+                    string resetCode = Guid.NewGuid().ToString();
+                    var verifyUrl = "/Account/ResetPassword/" + resetCode;
+                    var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
+
+                    var subject = "Password Reset Request";
+                    var body = "Hi " + Username + ", <br/> You recently requested to reset your password for your account. Click the link below to reset it. " +
+
+                         " <br/><br/><a href='" + link + "'>" + link + "</a> <br/><br/>" +
+                         "If you did not request a password reset, please ignore this email or reply to let us know.<br/><br/> Thank you";
+
+                    SendEmail(userEmail, body, subject);
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
                 }
+                else
+                {
+                    ViewBag.Message = "Reset password link has been sent to your email id.";
+                }
+
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
@@ -250,6 +271,68 @@ namespace Hospital_Management_System.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+        public string SendEmail(string Email, string Message, string Subject )
+        {
+
+            try
+            {
+                // Credentials
+                var credentials = new NetworkCredential("celanipyc@gmail.com", "111111Sp/");
+
+                // Mail message
+                var mail = new MailMessage()
+                {
+                    From = new MailAddress("noreply@codinginfinite.com"),
+                    Subject = Subject,
+                    Body = Message
+                };
+
+                mail.IsBodyHtml = true;
+                mail.To.Add(new MailAddress(Email));
+
+                // Smtp client
+                var client = new SmtpClient()
+                {
+                    Port = 587,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Host = "smtp.gmail.com",
+                    EnableSsl = true,
+                    Credentials = credentials
+                };
+
+                client.Send(mail);
+
+                return "Email Sent Successfully!";
+            }
+            catch (System.Exception e)
+            {
+                return e.Message;
+            }
+
+        }
+
+        //private void SendEmail(string emailAddress, string body, string subject)
+        //{
+        //    using (MailMessage mm = new MailMessage("celanipyc@gmail.com", emailAddress))
+        //    {
+        //        mm.Subject = subject;
+        //        mm.Body = body;
+        //        mm.IsBodyHtml = true;
+        //        mm.Priority = MailPriority.High;
+        //        SmtpClient smtp = new SmtpClient();
+        //        smtp.Host = "smtp.gmail.com";
+        //        smtp.EnableSsl = true;
+        //        smtp.UseDefaultCredentials = true;
+        //        NetworkCredential NetworkCred = new NetworkCredential("celanipyc@gmail.com", "111111Sp/");
+        //        smtp.EnableSsl = true;
+        //        smtp.Credentials = NetworkCred;
+        //        smtp.Port = 587;
+        //        smtp.Send(mm);
+
+        //    }
+        //}
 
         //
         // GET: /Account/ForgotPasswordConfirmation
