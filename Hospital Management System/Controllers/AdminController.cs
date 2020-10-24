@@ -8,10 +8,11 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-
+using CrystalDecisions.CrystalReports.Engine;
 using Hospital_Management_System.CollectionViewModels;
 using Hospital_Management_System.Models;
 using Hospital_Management_System.Models.Dto;
+using System.IO;
 
 namespace Hospital_Management_System.Controllers
 {
@@ -956,6 +957,48 @@ namespace Hospital_Management_System.Controllers
             public string Transaction { get; set; }
             public string Date { get; set; }
             public string Table { get; set; }
+        }
+
+        //List of Active Appointment
+        [Authorize(Roles = "Admin")]
+        public ActionResult AppointmentsReport()
+        {
+            var date = DateTime.Now.Date;
+            var appointment = db.Appointments.Include(c => c.Schedule).Include(c => c.Patient)
+                .Select(e => new AppointmentDto()
+                {
+                    AppointmentDate = e.AppointmentDate,
+                    Id = e.Id,
+                    PatientName = e.Patient.FullName,
+                    Problem = e.Problem,
+                    StartTime = e.StartTime,
+                    EndTime = e.EndTime,
+                    PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.Schedule.PsychologistId).FullName,
+                    Status = e.Status
+                }).Where(c => c.Status == true).Where(c => c.AppointmentDate >= date)
+                .ToList();
+            return View(appointment);
+        }
+        public ActionResult DownLoadReport()
+        {
+            ReportDocument rd = new ReportDocument();
+            rd.Load(Path.Combine(Server.MapPath("~/Reports/AppointmentReport.rpt")));
+            rd.SetDataSource(db.Appointments.Select(e => new
+            {
+                AppointmentDate = e.AppointmentDate,
+                Id = e.Id,
+                PatientName = e.Patient.FullName,
+                Problem = e.Problem,
+                StartTime = e.StartTime,
+                EndTime = e.EndTime,
+                PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.Schedule.PsychologistId).FullName,
+            }).ToList());
+            Response.Buffer = false;
+            Response.ClearContent();
+            Response.ClearHeaders();
+            Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+            stream.Seek(0, SeekOrigin.Begin);
+            return File(stream, "application/pdf", "AppointmentReport.pdf");
         }
     }
 }
