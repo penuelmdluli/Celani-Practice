@@ -237,6 +237,11 @@
       <DependentUpon>AppointmentReport.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reports\PatientsReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PatientsReport.rpt</DependentUpon>
+    </Compile>
     <Compile Include="Reports\ScheduleReport.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -635,6 +640,7 @@
     <Content Include="Views\Admin\AppointmentsReport.cshtml" />
     <None Include="Views\Admin\ListOfAudits.cshtml" />
     <Content Include="Views\Admin\SchedulesReport.cshtml" />
+    <Content Include="Views\Admin\PatientsReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -659,6 +665,10 @@
     <EmbeddedResource Include="Reports\AppointmentReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>AppointmentReport.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\PatientsReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>PatientsReport.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\ScheduleReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

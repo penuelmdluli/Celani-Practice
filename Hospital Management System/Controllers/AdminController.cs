@@ -1035,7 +1035,6 @@ namespace Hospital_Management_System.Controllers
                 EndTime = e.EndTime,
                 IsBooked = e.IsBooked,
                 PatientId = e.PatientId,
-
             }).ToList());
             Response.Buffer = false;
             Response.ClearContent();
@@ -1043,6 +1042,47 @@ namespace Hospital_Management_System.Controllers
             Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
             stream.Seek(0, SeekOrigin.Begin);
             return File(stream, "application/pdf", "ScheduleReport.pdf");
+        }
+
+        //List of Patients
+        [Authorize(Roles = "Admin")]
+        public ActionResult PatientsReport()
+        {
+            var patients = db.Patients.Select(e => new PatientDto
+            {
+                Id = e.Id,
+                FirstName = e.FirstName,
+                LastName = e.LastName,
+                FullName = e.FullName,
+                Contact = e.Contact,
+                Age = e.Age,
+                Gender = e.Gender
+            }).
+            ToList();
+            return View(patients);
+        }
+        public ActionResult DownLoadPatientsReport()
+        {
+            ReportDocument rd = new ReportDocument();
+            rd.Load(Path.Combine(Server.MapPath("~/Reports/PatientsReport.rpt")));
+            rd.SetDataSource(db.Patients.Select(e => new
+            {
+
+                Gender = e.Gender,
+                MaritalStatus = e.MaritalStatus,
+                Id = e.Id,
+                FullName = e.FullName,
+                EmailAddress = e.EmailAddress,
+                Contact = e.Contact,
+                Age = e.Age,
+
+            }).ToList());
+            Response.Buffer = false;
+            Response.ClearContent();
+            Response.ClearHeaders();
+            Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+            stream.Seek(0, SeekOrigin.Begin);
+            return File(stream, "application/pdf", "PatientsReport.pdf");
         }
     }
 }
