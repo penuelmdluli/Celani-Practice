@@ -626,6 +626,7 @@
     <Content Include="Views\Admin\AddPayment.cshtml" />
     <Content Include="Views\Admin\ListOfPayment.cshtml" />
     <Content Include="Views\Admin\ViewPaymentInvoice.cshtml" />
+    <Content Include="Views\Admin\AppointmentsReport.cshtml" />
     <None Include="Views\Admin\ListOfAudits.cshtml" />
   </ItemGroup>
   <ItemGroup>

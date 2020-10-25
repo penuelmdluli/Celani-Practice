@@ -167,7 +167,7 @@ namespace Hospital_Management_System.Controllers
         var appointment = new Appointment();
             appointment.PatientId = patient.Id;
             appointment.ScheduleId = schedule.Id;
-
+            appointment.AppointmentDate = db.Schedules.FirstOrDefault(d => d.Id == schedule.Id).ScheduleDate;
             appointment.StartTime = schedule.StartTime;
             appointment.EndTime = schedule.EndTime;
             appointment.Problem = model.Problem;
@@ -335,7 +335,7 @@ namespace Hospital_Management_System.Controllers
                 .Select(e => new SchedulesDto()
                 {
                     PsychologistName = e.PsychologistName,
-                    // CentreName = db.Centre.FirstOrDefault(d => d.Id == e.CentreId).Name,
+                    // CentreName = db.Centre.FirstOrDefault(d => d.Id == e.DepartmentId).Name,
                     EndTime = e.EndTime,
                     StartTime = e.StartTime,
                     ScheduleDate = e.ScheduleDate,

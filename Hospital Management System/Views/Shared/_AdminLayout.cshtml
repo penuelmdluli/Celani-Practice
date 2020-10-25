@@ -104,20 +104,15 @@
                 </div>
             </li>
 
+
             <li>
-                <button class="collapsible"><em class="fa fa-bar-chart">&nbsp; &nbsp;</em>reports </button>
+                <button class="collapsible"><em class="fa fa-bar-chart">&nbsp; &nbsp;</em>reports</button>
                 <div style="width: 100% !important" class="children content">
-
-                    <div style="width: 100% !important" class="children content">
-                        @Html.ActionLink("Patient Report", "PatientReport", "Admin", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
-                        @Html.ActionLink("Payment Report", "PatientReport", "Admin", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
-                        @Html.ActionLink("Consultation Report", "PatientReport", "Admin", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
-                        @Html.ActionLink("Appoinment Report", "PatientReport", "Admin", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
-                    </div>
-
+                    @Html.ActionLink("Appoinment Report", "AppointmentsReport", "Admin", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
                 </div>
             </li>
 
+          
             <li>
                 <button class="collapsible"><em class="fa fa-cog">&nbsp; &nbsp;</em>Manage</button>
                 <div style="width: 100% !important" class="children content">

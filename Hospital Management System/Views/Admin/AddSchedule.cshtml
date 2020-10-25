@@ -46,10 +46,10 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
     @*<div class="form-group">
-        @Html.LabelFor(model => model.Schedule.CentreId, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Schedule.DepartmentId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.Schedule.CentreId, new SelectList(Model.Centres, "Id", "Name"), "Select Centre", new { @id = "dropdown", @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Schedule.CentreId, "", new { @class = "text-danger" })
+            @Html.DropDownListFor(model => model.Schedule.DepartmentId, new SelectList(Model.Centres, "Id", "Name"), "Select Centre", new { @id = "dropdown", @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Schedule.DepartmentId, "", new { @class = "text-danger" })
         </div>
     </div>*@
 

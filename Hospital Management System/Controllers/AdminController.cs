@@ -227,12 +227,12 @@ namespace Hospital_Management_System.Controllers
                     FirstName = e.FirstName,
                     LastName = e.LastName,
                     Address = e.Address,
-                    CentreName = db.Centre.FirstOrDefault(d => d.Id == e.Id).Name,
                     Status = e.Status,
                     ContactNo = e.ContactNo,
                     Education = e.Education,
                     Gender = e.Gender,
                     Id = e.Id,
+                    CentreName =  db.Centre.FirstOrDefault(c=> c.Id == e.DepartmentId).Name,
                     ApplicationUserId =e.ApplicationUserId,
                 })
                 .ToList();
@@ -351,6 +351,7 @@ namespace Hospital_Management_System.Controllers
                 ViewBag.Messege = "Ops ,You Only allowed to to add schedule for 1 Hour Per slot.";
                 return View(collection);
             }
+            ///     to fix  this isuue
             model.Schedule.CentreName = db.Centre.FirstOrDefault(d => d.Id == model.Schedule.PsychologistId).Name;
             model.Schedule.PsychologistName = db.Psychologists.FirstOrDefault(db => db.Id == model.Schedule.PsychologistId).FullName;
             model.Schedule.IsBooked = false;
@@ -404,7 +405,7 @@ namespace Hospital_Management_System.Controllers
             schedule.EndTime = model.Schedule.EndTime;
             schedule.ScheduleDate = model.Schedule.ScheduleDate;
 
-            //  schedule.CentreId = model.Schedule.CentreId;
+            //  schedule.DepartmentId = model.Schedule.DepartmentId;
             schedule.StartTime = model.Schedule.StartTime;
             db.SaveChanges();
             return RedirectToAction("ListOfSchedules");
@@ -623,7 +624,7 @@ namespace Hospital_Management_System.Controllers
                     EndTime = e.EndTime,
                     PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.Schedule.PsychologistId).FullName,
                     Status = e.Status
-                }).Where(c => c.Status == true).Where(c => c.AppointmentDate >= date)
+                }).Where(c => c.Status == true)
                 .ToList();
             return View(appointment);
         }
@@ -642,7 +643,7 @@ namespace Hospital_Management_System.Controllers
                     Problem = e.Problem,
                     PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.Schedule.PsychologistId).FullName,
                     Status = e.Status
-                }).Where(c => c.Status == false).Where(c => c.AppointmentDate >= date).ToList();
+                }).Where(c => c.Status == false).ToList();
             return View(appointment);
         }
 
@@ -975,7 +976,7 @@ namespace Hospital_Management_System.Controllers
                     EndTime = e.EndTime,
                     PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.Schedule.PsychologistId).FullName,
                     Status = e.Status
-                }).Where(c => c.Status == true).Where(c => c.AppointmentDate >= date)
+                })
                 .ToList();
             return View(appointment);
         }
@@ -985,7 +986,7 @@ namespace Hospital_Management_System.Controllers
             rd.Load(Path.Combine(Server.MapPath("~/Reports/AppointmentReport.rpt")));
             rd.SetDataSource(db.Appointments.Select(e => new
             {
-                AppointmentDate = e.AppointmentDate,
+               
                 Id = e.Id,
                 PatientName = e.Patient.FullName,
                 Problem = e.Problem,
