@@ -1002,5 +1002,47 @@ namespace Hospital_Management_System.Controllers
             stream.Seek(0, SeekOrigin.Begin);
             return File(stream, "application/pdf", "AppointmentReport.pdf");
         }
+
+        //List Of Schedules
+        [Authorize(Roles = "Admin")]
+        public ActionResult SchedulesReport()
+        {
+            var schedule = db.Schedules.Include(c => c.Psychologist)
+                .Select(e => new SchedulesDto()
+                {
+                    PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.PsychologistId).FullName,
+                    CentreName = db.Centre.FirstOrDefault(d => d.Id == e.Id).Name,
+                    EndTime = e.EndTime,
+                    StartTime = e.StartTime,
+                    ScheduleDate = e.ScheduleDate,
+                    Id = e.Id,
+                }).ToList();
+            return View(schedule);
+        }
+
+        public ActionResult DownLoadScheduleReport()
+        {
+            ReportDocument rd = new ReportDocument();
+            rd.Load(Path.Combine(Server.MapPath("~/Reports/ScheduleReport.rpt")));
+            rd.SetDataSource(db.Schedules.Select(e => new
+            {
+                CentreName = e.CentreName,
+                Id = e.Id,
+                PsychologistName = e.PsychologistName,
+                PsychologistId = e.PsychologistId,
+                ScheduleDate = e.ScheduleDate,
+                StartTime = e.StartTime,
+                EndTime = e.EndTime,
+                IsBooked = e.IsBooked,
+                PatientId = e.PatientId,
+
+            }).ToList());
+            Response.Buffer = false;
+            Response.ClearContent();
+            Response.ClearHeaders();
+            Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+            stream.Seek(0, SeekOrigin.Begin);
+            return File(stream, "application/pdf", "ScheduleReport.pdf");
+        }
     }
 }

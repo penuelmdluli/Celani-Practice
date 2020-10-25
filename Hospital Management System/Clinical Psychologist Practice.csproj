@@ -236,6 +236,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppointmentReport.rpt</DependentUpon>
     </Compile>
+    <Compile Include="Reports\ScheduleReport.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ScheduleReport.rpt</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -628,6 +633,7 @@
     <Content Include="Views\Admin\ViewPaymentInvoice.cshtml" />
     <Content Include="Views\Admin\AppointmentsReport.cshtml" />
     <None Include="Views\Admin\ListOfAudits.cshtml" />
+    <Content Include="Views\Admin\SchedulesReport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -652,6 +658,10 @@
     <EmbeddedResource Include="Reports\AppointmentReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>AppointmentReport.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\ScheduleReport.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ScheduleReport.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
