@@ -883,20 +883,18 @@ namespace Hospital_Management_System.Controllers
                 PaidbyMedicalAid = model.Payment.PaidbyMedicalAid,
                 PayByCash = model.Payment.PayByCash,
                 TotalDue = model.Payment.TotalDue,
+
                 PatientName = db.Patients.FirstOrDefault(d => d.Id == model.Payment.PatientId).FullName,
                 PatientEmail = db.Patients.FirstOrDefault(d => d.Id == model.Payment.PatientId).EmailAddress,
                 PatientGender= db.Patients.FirstOrDefault(d => d.Id == model.Payment.PatientId).Gender,
                 PatientNumber = db.Patients.FirstOrDefault(d => d.Id == model.Payment.PatientId).Contact,
                 DateOfBirth = db.Patients.FirstOrDefault(d => d.Id == model.Payment.PatientId).DateOfBirth,
-
                 PsychologistContact = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PsychologistId).ContactNo,
                 PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PsychologistId).FullName,
                 PsychologistSpecialist = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PsychologistId).Specialization,
-
-               CentreContact = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PsychologistId).Centre.Contact,
-               CentrLocation = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PsychologistId).Centre.Location,
-               CenterName = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PatientId).Centre.Name,
-
+               //CentreContact = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PsychologistId).Centre.Contact,
+               //CentrLocation = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PsychologistId).Centre.Location,
+               //CenterName = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PatientId).Centre.Name,
             };
             
             db.Payments.Add(payment);
@@ -919,7 +917,8 @@ namespace Hospital_Management_System.Controllers
                     PatientName = db.Patients.FirstOrDefault(d => d.Id == e.PatientId).FirstName,
                     PaymentDate = e.PaymentDate,
                     InvoiceRefNo =e.InvoiceRefNo,
-                    ServiceRecived = e.ServiceRecived
+                    ServiceRecived = e.ServiceRecived,
+                    TotalDue = e.TotalDue
                 })
                 .ToList();
             return View(appointment);
@@ -960,6 +959,7 @@ namespace Hospital_Management_System.Controllers
             public string Table { get; set; }
         }
 
+        #region Reports
         //List of Active Appointment
         [Authorize(Roles = "Admin")]
         public ActionResult AppointmentsReport()
@@ -988,12 +988,12 @@ namespace Hospital_Management_System.Controllers
             {
                 Id = e.Id,
                 PatientId = e.PatientId,
-                ScheduleId =e.ScheduleId,
+                ScheduleId = e.ScheduleId,
                 StartTime = e.StartTime,
-                EndTime = e.EndTime  ,
+                EndTime = e.EndTime,
                 Problem = e.Problem,
-                Status  = e.Status,
-               
+                Status = e.Status,
+
             }).ToList());
             Response.Buffer = false;
             Response.ClearContent();
@@ -1084,5 +1084,6 @@ namespace Hospital_Management_System.Controllers
             stream.Seek(0, SeekOrigin.Begin);
             return File(stream, "application/pdf", "PatientsReport.pdf");
         }
+        #endregion
     }
 }
