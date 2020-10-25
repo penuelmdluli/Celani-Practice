@@ -980,19 +980,20 @@ namespace Hospital_Management_System.Controllers
                 .ToList();
             return View(appointment);
         }
-        public ActionResult DownLoadReport()
+        public ActionResult DownLoadAppointmentsReport()
         {
             ReportDocument rd = new ReportDocument();
             rd.Load(Path.Combine(Server.MapPath("~/Reports/AppointmentReport.rpt")));
             rd.SetDataSource(db.Appointments.Select(e => new
             {
-               
                 Id = e.Id,
-                PatientName = e.Patient.FullName,
-                Problem = e.Problem,
+                PatientId = e.PatientId,
+                ScheduleId =e.ScheduleId,
                 StartTime = e.StartTime,
-                EndTime = e.EndTime,
-                PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.Schedule.PsychologistId).FullName,
+                EndTime = e.EndTime  ,
+                Problem = e.Problem,
+                Status  = e.Status,
+               
             }).ToList());
             Response.Buffer = false;
             Response.ClearContent();

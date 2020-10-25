@@ -195,7 +195,6 @@ namespace Hospital_Management_System.Controllers
                     Problem = e.Problem,
                     StartTime = e.StartTime,
                     EndTime = e.EndTime,
-                    
                     PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.Schedule.PsychologistId).FullName,
                     Status = e.Status,
     

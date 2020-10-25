@@ -162,19 +162,12 @@
             </div>
 
             <div class="form-group">
-                <div class="col-md-offset-2 col-md-4">
-                    <input type="submit" value="Calculate" class="btn btn-primary" />
-                </div>
-            </div>
-
-            <div class="form-group">
                 @Html.LabelFor(model => model.Payment.TotalDue, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
                     @Html.EditorFor(model => model.Payment.TotalDue, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Payment.TotalDue, "", new { @class = "text-danger" })
                 </div>
             </div>
-
         </div>
         <div class="col span-1-of-3">
 
