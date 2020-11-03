@@ -58,14 +58,14 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Psychologist.PhoneNo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Psychologist.PhoneNo, new { htmlAttributes = new { @type = "number", @min = "0", @max = "10", @class = "form-control " } })
+                @Html.EditorFor(model => model.Psychologist.PhoneNo, new { htmlAttributes = new { @type = "number", @class = "form-control " } })
                 @Html.ValidationMessageFor(model => model.Psychologist.PhoneNo, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(model => model.Psychologist.ContactNo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Psychologist.ContactNo, new {  htmlAttributes = new { @type = "number", @min = "0", @max = "10",  @class = "form-control" } })
+                @Html.EditorFor(model => model.Psychologist.ContactNo, new {  htmlAttributes = new { @type = "number",  @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Psychologist.ContactNo, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -107,6 +107,7 @@
                 @Html.ValidationMessageFor(model => model.Psychologist.Gender, "", new { @class = "text-danger" })
             </div>
         </div>
+
         <div class="form-group">
             @Html.LabelFor(model => model.Psychologist.DateOfBirth, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -176,6 +177,7 @@
     <script>
         $(function() {
             $("#dropdown").chosen();
+
         });
     </script>
 }

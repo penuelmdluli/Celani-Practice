@@ -33,10 +33,12 @@ namespace Hospital_Management_System.Models
 
         public string Address { get; set; }
         [Display(Name = "Phone No")]
+        [StringLength(10, ErrorMessage = "Phone No: length can't be more than 10.")]
         public string PhoneNo { get; set; }
 
         [Required]
         [Display(Name = "Mobile No")]
+        [StringLength(10, ErrorMessage = "Mobile No: length can't be more than 10.")]
         public string ContactNo { get; set; }
 
         [Required]
@@ -52,6 +54,7 @@ namespace Hospital_Management_System.Models
         [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+       
         public DateTime? DateOfBirth { get; set; }
 
         [Display(Name = "Education/Degree")]
