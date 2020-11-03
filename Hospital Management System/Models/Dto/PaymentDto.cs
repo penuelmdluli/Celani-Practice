@@ -12,6 +12,8 @@ namespace Hospital_Management_System.Models.Dto
 
     
         public string PatientName { get; set; }
+
+        [RegularExpression("([1-9][0-9]*)", ErrorMessage = "Contact No: must be a natural number")]
         public string PatientNumber { get; set; }
         public string PatientEmail { get; set; }
         public string PatientGender { get; set; }
@@ -25,6 +27,7 @@ namespace Hospital_Management_System.Models.Dto
         public string PsychologistSpecialist { get; set; }
         public string PsychologistContact { get; set; }
 
+        [RegularExpression("([1-9][0-9]*)", ErrorMessage = "Contact No: must be a natural number")]
         public string CentreContact { get; set; }
 
         public string CentrLocation { get; set; }

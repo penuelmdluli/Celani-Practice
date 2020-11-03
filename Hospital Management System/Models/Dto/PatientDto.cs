@@ -24,7 +24,9 @@ namespace Hospital_Management_System.Models.Dto
         [Display(Name = "Email Id")]
         public string EmailAddress { get; set; }
         [Display(Name = "Phone No")]
+        [RegularExpression("([1-9][0-9]*)", ErrorMessage = "Contact No: must be a natural number")]
         public string PhoneNo { get; set; }
+        [RegularExpression("([1-9][0-9]*)", ErrorMessage = "Contact No: must be a natural number")]
         public string Contact { get; set; }
 
         [Display(Name = "Age")]

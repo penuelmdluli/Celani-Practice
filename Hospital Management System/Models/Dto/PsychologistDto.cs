@@ -33,10 +33,13 @@ namespace Hospital_Management_System.Models.Dto
 
         public string Address { get; set; }
         [Display(Name = "Phone No")]
+
+        [RegularExpression("([1-9][0-9]*)", ErrorMessage = "Contact No: must be a natural number")]
         public string PhoneNo { get; set; }
 
         [Required]
         [Display(Name = "Mobile No")]
+        [RegularExpression("([1-9][0-9]*)", ErrorMessage = "Contact No: must be a natural number")]
         public string ContactNo { get; set; }
 
         [Required]
