@@ -20,10 +20,10 @@
 
 <h2>Add Psychologist</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -51,7 +51,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ApplicationUser.Email, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ApplicationUser.Email, new { htmlAttributes = new {  @class = "form-control" } })
+                @Html.EditorFor(model => model.ApplicationUser.Email, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ApplicationUser.Email, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -65,13 +65,13 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Psychologist.ContactNo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Psychologist.ContactNo, new {  htmlAttributes = new { @type = "number",  @class = "form-control" } })
+                @Html.EditorFor(model => model.Psychologist.ContactNo, new { htmlAttributes = new { @type = "number", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Psychologist.ContactNo, "", new { @class = "text-danger" })
             </div>
         </div>
         @{
             var bloodlist = new List<Psychologist>
-            {
+    {
                 new Psychologist {BloodGroup = "A+", Gender = "Male"},
                 new Psychologist {BloodGroup = "O+", Gender = "Female"},
                 new Psychologist {BloodGroup = "B+", Gender = "Other"},
@@ -82,13 +82,13 @@
                 new Psychologist {BloodGroup = "AB-"}
             };
             var genderlist = new List<Psychologist>
-            {
+    {
                 new Psychologist {Gender = "Male"},
                 new Psychologist {Gender = "Female"},
                 new Psychologist {Gender = "Other"}
             };
             var statuslist = new List<Psychologist>
-            {
+    {
                 new Psychologist {Status = "Active"},
                 new Psychologist {Status = "Inactive"}
             };
@@ -103,7 +103,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Psychologist.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Psychologist.Gender, new SelectList(genderlist, "Gender", "Gender"), "Select Gender", new {@class = "form-control" })
+                @Html.DropDownListFor(model => model.Psychologist.Gender, new SelectList(genderlist, "Gender", "Gender"), "Select Gender", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Psychologist.Gender, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -115,7 +115,7 @@
                 @Html.ValidationMessageFor(model => model.Psychologist.DateOfBirth, "", new { @class = "text-danger" })
             </div>
         </div>
-       
+
         <div class="form-group">
             @Html.LabelFor(model => model.Psychologist.DepartmentId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -158,7 +158,7 @@
                 @Html.ValidationMessageFor(model => model.ApplicationUser.ConfirmPassword, "", new { @class = "text-danger" })
             </div>
         </div>
-        
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-success" />
@@ -174,10 +174,25 @@
 @section scripts
 {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/cssjqryUi")
     <script>
-        $(function() {
+        $(function () {
             $("#dropdown").chosen();
 
         });
+
+        
+        $("#datepicker").datepicker({
+                dateFormat: "dd/Mm/yyyy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-60:+0"
+        });
+
+       
     </script>
+
+
+
 }

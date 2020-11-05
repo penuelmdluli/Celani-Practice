@@ -30,6 +30,14 @@ namespace Hospital_Management_System
                       "~/Content/datatables/css/datatables.bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/Chosen/chosen.min.js"));
+
+           
+ //js  
+ bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
+           "~/Scripts/jquery-ui-{version}.js"));
+ //css  
+ bundles.Add(new StyleBundle("~/Content/cssjqryUi").Include(
+        "~/Content/jquery-ui.css"));
         }
     }
 }

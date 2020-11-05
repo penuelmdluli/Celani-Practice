@@ -50,10 +50,10 @@ namespace Hospital_Management_System.Models
         [Required]
         [Display(Name = "Blood Group")]
         public string BloodGroup { get; set; }
-
+        
         [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+       // [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
        
         public DateTime? DateOfBirth { get; set; }
 
