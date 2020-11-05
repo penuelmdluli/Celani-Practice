@@ -30,7 +30,9 @@ namespace Hospital_Management_System.Models
         [Display(Name = "Phone No")]
         [StringLength(10, ErrorMessage = "Mobile No: length can't be more than 10.")]
         public string PhoneNo { get; set; }
+
         [StringLength(10, ErrorMessage = " No: length can't be more than 10.")]
+       
         public string Contact { get; set; }
 
         [Display(Name = "Age")]

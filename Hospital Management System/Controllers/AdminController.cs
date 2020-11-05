@@ -195,19 +195,16 @@ namespace Hospital_Management_System.Controllers
                     EmailAddress = model.ApplicationUser.Email,
                     ContactNo = model.Psychologist.ContactNo,
                     PhoneNo = model.Psychologist.PhoneNo,
-                 
+
                     Education = model.Psychologist.Education,
                     DepartmentId = model.Psychologist.DepartmentId,
-
                     Specialization = model.Psychologist.Specialization,
                     Gender = model.Psychologist.Gender,
-                    BloodGroup = model.Psychologist.BloodGroup,
                     ApplicationUserId = user.Id,
                     DateOfBirth = model.Psychologist.DateOfBirth,
                     Address = model.Psychologist.Address,
                     Status = model.Psychologist.Status
                 };
-
                 db.Psychologists.Add(psychologist);
                 db.SaveChanges();
                 return RedirectToAction("ListOfPsychologists");
@@ -274,7 +271,7 @@ namespace Hospital_Management_System.Controllers
             psychologist.DepartmentId = model.Psychologist.DepartmentId;
             psychologist.Specialization = model.Psychologist.Specialization;
             psychologist.Gender = model.Psychologist.Gender;
-            psychologist.BloodGroup = model.Psychologist.BloodGroup;
+         
             psychologist.DateOfBirth = model.Psychologist.DateOfBirth;
             psychologist.Address = model.Psychologist.Address;
             psychologist.Status = model.Psychologist.Status;
@@ -446,7 +443,8 @@ namespace Hospital_Management_System.Controllers
                 FullName = e.FullName,
                 Contact = e.Contact,
                 Age = e.Age,
-                Gender = e.Gender
+                Gender = e.Gender,
+                ApplicationUserId = e.ApplicationUserId,
             }).
             ToList();
             return View(patients);

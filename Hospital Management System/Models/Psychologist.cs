@@ -39,6 +39,7 @@ namespace Hospital_Management_System.Models
         [Required]
         [Display(Name = "Mobile No")]
         [StringLength(10, ErrorMessage = "Mobile No: length can't be more than 10.")]
+        
         public string ContactNo { get; set; }
 
         [Required]
@@ -47,13 +48,11 @@ namespace Hospital_Management_System.Models
         [Required]
         public string Gender { get; set; }
 
-        [Required]
-        [Display(Name = "Blood Group")]
-        public string BloodGroup { get; set; }
+       
         
         [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
-       // [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+       [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
        
         public DateTime? DateOfBirth { get; set; }
 

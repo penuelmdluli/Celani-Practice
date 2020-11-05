@@ -229,6 +229,18 @@
     <Compile Include="Migrations\202011032207020_num.Designer.cs">
       <DependentUpon>202011032207020_num.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011051600411_cenre.cs" />
+    <Compile Include="Migrations\202011051600411_cenre.Designer.cs">
+      <DependentUpon>202011051600411_cenre.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011051721240_sgs.cs" />
+    <Compile Include="Migrations\202011051721240_sgs.Designer.cs">
+      <DependentUpon>202011051721240_sgs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011051726085_sgsff.cs" />
+    <Compile Include="Migrations\202011051726085_sgsff.Designer.cs">
+      <DependentUpon>202011051726085_sgsff.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Announcement.cs" />
@@ -736,6 +748,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011032207020_num.resx">
       <DependentUpon>202011032207020_num.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011051600411_cenre.resx">
+      <DependentUpon>202011051600411_cenre.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011051721240_sgs.resx">
+      <DependentUpon>202011051721240_sgs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011051726085_sgsff.resx">
+      <DependentUpon>202011051726085_sgsff.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\AppointmentReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

@@ -38,13 +38,11 @@ namespace Hospital_Management_System.Controllers
             var date = DateTime.Now.Date;
             var model = new CollectionOfAll
             {
-
                 Departments = db.Centre.ToList(),
                 Psychologists = db.Psychologists.ToList(),
                 Patients = db.Patients.ToList(),
                 ActiveAppointments = db.Appointments.Where(c => c.Status).Where(c => c.PatientId == patient.Id).Where(c => c.AppointmentDate >= date).ToList(),
                 PendingAppointments = db.Appointments.Where(c => c.Status == false).Where(c => c.PatientId == patient.Id).Where(c => c.AppointmentDate >= date).ToList(),
-
                 Announcements = db.Announcements.Where(c => c.AnnouncementFor == "Patient").ToList()
             };
             return View(model);
@@ -72,15 +70,12 @@ namespace Hospital_Management_System.Controllers
             patient.Age = model.Age;
             patient.MaritalStatus = model.MaritalStatus;
             patient.Language = model.Language;
-            patient.DateOfBirth = model.DateOfBirth;
             patient.Gender = model.Gender;
             patient.PhoneNo = model.PhoneNo;
             db.SaveChanges();
-
             string audiuserName = User.Identity.GetUserName();
             AuditExtension.AddAudit(audiuserName, "Update", "Patients");
-
-            return View();
+            return RedirectToAction("ListOfAppointments");
         }
 
 
@@ -115,7 +110,7 @@ namespace Hospital_Management_System.Controllers
                 ViewBag.Messege = "Please Enter the Date greater than today or equal!!";
                 return View(collection);
             }
-            string user = User.Identity.GetUserId();
+                string user = User.Identity.GetUserId();
                 var patient = db.Patients.Single(c => c.ApplicationUserId == user);
                 var appointment = new Appointment();
                 appointment.PatientId = patient.Id;
@@ -128,7 +123,7 @@ namespace Hospital_Management_System.Controllers
 
             string audiuserName = User.Identity.GetUserName();
             AuditExtension.AddAudit(audiuserName, "Create", "Appointments");
-            return RedirectToAction("ListOfAppointments");
+            return RedirectToAction("Index");
         }
 
 
