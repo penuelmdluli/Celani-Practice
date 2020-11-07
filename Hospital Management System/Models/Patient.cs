@@ -52,6 +52,10 @@ namespace Hospital_Management_System.Models
         public string Address { get; set; }
         [Display(Name = "Marital Status ")]
         public string MaritalStatus { get; set; }
+        public int BookedPsychologistId { get; set; }
+        public bool CompletedStatus { get; set; }
+   
+
 
     }
 }

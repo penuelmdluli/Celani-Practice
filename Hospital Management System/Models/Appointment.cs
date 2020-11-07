@@ -40,6 +40,7 @@ namespace Hospital_Management_System.Models
 
         [Display(Name = "Aprove Appointment")]
         public bool Status { get; set; }
+        public bool CompletedStatus { get; set; }
 
     }
 }

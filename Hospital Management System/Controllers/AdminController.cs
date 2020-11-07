@@ -362,7 +362,7 @@ namespace Hospital_Management_System.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult ListOfSchedules()
         {
-            var schedule = db.Schedules.Include(c => c.Psychologist)
+            var schedule = db.Schedules.Include(c => c.Psychologist).Where(x => x.IsBooked ==false)
                 .Select(e => new SchedulesDto()
                 {
                     PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.PsychologistId).FullName,
@@ -371,7 +371,24 @@ namespace Hospital_Management_System.Controllers
                     StartTime = e.StartTime,
                     ScheduleDate = e.ScheduleDate,
                     Id = e.Id,
-                }).ToList();
+                }).OrderBy(c => c.ScheduleDate).ToList();
+            return View(schedule);
+        }
+
+        //List Of Schedules
+        [Authorize(Roles = "Admin")]
+        public ActionResult ListOfBookedSchedules()
+        {
+            var schedule = db.Schedules.Include(c => c.Psychologist).Where(x =>x.IsBooked)
+                .Select(e => new SchedulesDto()
+                {
+                    PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.PsychologistId).FullName,
+                    CentreName = db.Centre.FirstOrDefault(d => d.Id == e.Id).Name,
+                    EndTime = e.EndTime,
+                    StartTime = e.StartTime,
+                    ScheduleDate = e.ScheduleDate,
+                    Id = e.Id,
+                }).OrderBy(c => c.ScheduleDate).ToList();
             return View(schedule);
         }
 
@@ -398,12 +415,19 @@ namespace Hospital_Management_System.Controllers
             }
 
             var schedule = db.Schedules.Single(c => c.Id == id);
+
+            if (schedule.IsBooked ==true)
+            {
+                ViewBag.Messege = "Schedule  has  been  Booked, can not be  adited";
+                return RedirectToAction("ListOfSchedules");
+            }
             schedule.PsychologistId = model.Schedule.PsychologistId;
             schedule.EndTime = model.Schedule.EndTime;
             schedule.ScheduleDate = model.Schedule.ScheduleDate;
 
             //  schedule.DepartmentId = model.Schedule.DepartmentId;
             schedule.StartTime = model.Schedule.StartTime;
+
             db.SaveChanges();
             return RedirectToAction("ListOfSchedules");
         }
@@ -420,6 +444,11 @@ namespace Hospital_Management_System.Controllers
         public ActionResult DeleteSchedule(int id)
         {
             var schedule = db.Schedules.Single(c => c.Id == id);
+            if (schedule.IsBooked == true)
+            {
+                ViewBag.Messege = "Schedule  has  been  Booked, can not be deleted";
+                return RedirectToAction("ListOfSchedules");
+            }
             db.Schedules.Remove(schedule);
             db.SaveChanges();
             return RedirectToAction("ListOfSchedules");

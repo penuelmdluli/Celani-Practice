@@ -10,13 +10,14 @@ namespace Hospital_Management_System.CollectionViewModels
     public class ConsultationCollection
     {
         public Consultation Consultation{ get; set; }
-
+      
         [DataType(DataType.Upload)]
        public  HttpPostedFileBase ImageUpload { get; set; }
 
         public IEnumerable<Psychologist> Psychologists { get; set; }
 
         public IEnumerable<Patient> Patients { get; set; }
+        public IEnumerable<Appointment>  Appointments{ get; set; }
 
     }
 }

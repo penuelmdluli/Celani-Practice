@@ -39,6 +39,8 @@ namespace Hospital_Management_System.Models.Dto
         public string Language { get; set; }
 
         public string Gender { get; set; }
+
+
         [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]

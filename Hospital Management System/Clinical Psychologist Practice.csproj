@@ -241,6 +241,14 @@
     <Compile Include="Migrations\202011051726085_sgsff.Designer.cs">
       <DependentUpon>202011051726085_sgsff.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011072055370_bookedid.cs" />
+    <Compile Include="Migrations\202011072055370_bookedid.Designer.cs">
+      <DependentUpon>202011072055370_bookedid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011072143067_appo.cs" />
+    <Compile Include="Migrations\202011072143067_appo.Designer.cs">
+      <DependentUpon>202011072143067_appo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Announcement.cs" />
@@ -723,6 +731,8 @@
     <None Include="Views\Admin\ListOfAudits.cshtml" />
     <Content Include="Views\Admin\SchedulesReport.cshtml" />
     <Content Include="Views\Admin\PatientsReport.cshtml" />
+    <Content Include="Views\Admin\ListOfBookedSchedules.cshtml" />
+    <Content Include="Views\Psychologist\CommpletedAppointments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -757,6 +767,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011051726085_sgsff.resx">
       <DependentUpon>202011051726085_sgsff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011072055370_bookedid.resx">
+      <DependentUpon>202011072055370_bookedid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011072143067_appo.resx">
+      <DependentUpon>202011072143067_appo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\AppointmentReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

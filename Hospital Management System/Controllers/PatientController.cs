@@ -75,7 +75,7 @@ namespace Hospital_Management_System.Controllers
             db.SaveChanges();
             string audiuserName = User.Identity.GetUserName();
             AuditExtension.AddAudit(audiuserName, "Update", "Patients");
-            return RedirectToAction("ListOfAppointments");
+            return RedirectToAction("Index");
         }
 
 
@@ -89,7 +89,7 @@ namespace Hospital_Management_System.Controllers
             {
                 Appointment = new Appointment(),
                 Psychologists = db.Psychologists.ToList(),
-                Schedules = db.Schedules.Where(c => c.IsBooked == false).ToList()
+                Schedules = db.Schedules.Where(c => c.IsBooked == false).OrderBy(c => c.ScheduleDate).ToList()
             };
             return View(collection);
         }
@@ -110,16 +110,16 @@ namespace Hospital_Management_System.Controllers
                 ViewBag.Messege = "Please Enter the Date greater than today or equal!!";
                 return View(collection);
             }
-                string user = User.Identity.GetUserId();
-                var patient = db.Patients.Single(c => c.ApplicationUserId == user);
-                var appointment = new Appointment();
-                appointment.PatientId = patient.Id;
-                appointment.Schedule.PsychologistId = model.Appointment.Schedule.PsychologistId;
-                appointment.AppointmentDate = model.Appointment.AppointmentDate;
-                appointment.Problem = model.Appointment.Problem;
-                appointment.Status = false;
-                db.Appointments.Add(appointment);
-                db.SaveChanges();
+            string user = User.Identity.GetUserId();
+            var patient = db.Patients.Single(c => c.ApplicationUserId == user);
+            var appointment = new Appointment();
+            appointment.PatientId = patient.Id;
+            appointment.Schedule.PsychologistId = model.Appointment.Schedule.PsychologistId;
+            appointment.AppointmentDate = model.Appointment.AppointmentDate;
+            appointment.Problem = model.Appointment.Problem;
+            appointment.Status = false;
+            db.Appointments.Add(appointment);
+            db.SaveChanges();
 
             string audiuserName = User.Identity.GetUserName();
             AuditExtension.AddAudit(audiuserName, "Create", "Appointments");
@@ -154,24 +154,37 @@ namespace Hospital_Management_System.Controllers
             string user = User.Identity.GetUserId();
             var patient = db.Patients.Single(c => c.ApplicationUserId == user);
 
-            var schedule = db.Schedules.Single(c => c.Id == id);
-            schedule.PatientId = patient.Id;
-            schedule.IsBooked = true;
-            db.SaveChanges();
+            if (patient.CompletedStatus == true  || patient.BookedPsychologistId ==0)
+            {
+                var schedule = db.Schedules.Single(c => c.Id == id);
+                schedule.PatientId = patient.Id;
+                schedule.IsBooked = true;
+                db.SaveChanges();
 
-        var appointment = new Appointment();
-            appointment.PatientId = patient.Id;
-            appointment.ScheduleId = schedule.Id;
-            appointment.AppointmentDate = db.Schedules.FirstOrDefault(d => d.Id == schedule.Id).ScheduleDate;
-            appointment.StartTime = schedule.StartTime;
-            appointment.EndTime = schedule.EndTime;
-            appointment.Problem = model.Problem;
-            appointment.Status = false;
-         
-            db.Appointments.Add(appointment);
-            db.SaveChanges();
+                var appointment = new Appointment();
+                appointment.PatientId = patient.Id;
+                appointment.ScheduleId = schedule.Id;
+                appointment.AppointmentDate = db.Schedules.FirstOrDefault(d => d.Id == schedule.Id).ScheduleDate;
+                appointment.StartTime = schedule.StartTime;
+                appointment.EndTime = schedule.EndTime;
+                appointment.Problem = model.Problem;
+                appointment.Status = false;
+                appointment.CompletedStatus = false;
+
+                db.Appointments.Add(appointment);
+                db.SaveChanges();
+
+                patient.BookedPsychologistId = db.Schedules.FirstOrDefault(d => d.Id == schedule.Id).PsychologistId;
+                db.SaveChanges();
+               
+            }
+            else
+            {
+               ModelState.AddModelError("error.error", "You  have still have an  ongoing appointment");
+            }
 
             return RedirectToAction("ListOfAppointments");
+
         }
 
         //List of Appointments
@@ -333,14 +346,9 @@ namespace Hospital_Management_System.Controllers
                     EndTime = e.EndTime,
                     StartTime = e.StartTime,
                     ScheduleDate = e.ScheduleDate,
-                    
-
-
                     CentreName = e.CentreName,
                     Id = e.Id,
-
-
-                }).ToList();
+                }).OrderBy(c => c.ScheduleDate).ToList();
             string audiuserName = User.Identity.GetUserName();
             AuditExtension.AddAudit(audiuserName, "Read", "Schedules");
             return View(schedule);

@@ -12,6 +12,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Hospital_Management_System.Models.Dto;
 using System.Net;
 using System.IO;
+using System.Security.Cryptography;
 
 namespace Hospital_Management_System.Controllers
 {
@@ -390,7 +391,7 @@ namespace Hospital_Management_System.Controllers
             var user = User.Identity.GetUserId();
             var doctor = db.Psychologists.Single(c => c.ApplicationUserId == user);
             var date = DateTime.Now.Date;
-            var appointment = db.Appointments.Include(c => c.Schedule).Include(c => c.Patient).Where(c => c.Schedule.PsychologistId == doctor.Id).Where(c => c.Status == true).Where(c => c.AppointmentDate >= date).ToList();
+            var appointment = db.Appointments.Include(c => c.Schedule).Include(c => c.Patient).Where(c =>c.CompletedStatus==false).Where(c => c.Schedule.PsychologistId == doctor.Id).Where(c => c.Status == true).Where(c => c.AppointmentDate >= date).ToList();
             return View(appointment);
         }
 
@@ -400,7 +401,18 @@ namespace Hospital_Management_System.Controllers
             var user = User.Identity.GetUserId();
             var doctor = db.Psychologists.Single(c => c.ApplicationUserId == user);
             var date = DateTime.Now.Date;
-            var appointment = db.Appointments.Include(c => c.Schedule).Include(c => c.Patient).Where(c => c.Schedule.PsychologistId == doctor.Id).Where(c => c.Status == false).Where(c => c.AppointmentDate >= date).ToList();
+            var appointment = db.Appointments.Include(c => c.Schedule).Include(c => c.Patient).Where(c => c.CompletedStatus == false).Where(c => c.Schedule.PsychologistId == doctor.Id).Where(c => c.Status == false).Where(c => c.AppointmentDate >= date).ToList();
+            return View(appointment);
+        }
+
+
+        //List of Pending Appointments
+        public ActionResult CommpletedAppointments()
+        {
+            var user = User.Identity.GetUserId();
+            var doctor = db.Psychologists.Single(c => c.ApplicationUserId == user);
+            var date = DateTime.Now.Date;
+            var appointment = db.Appointments.Include(c => c.Schedule).Include(c => c.Patient).Where(c => c.CompletedStatus == true).Where(c => c.Schedule.PsychologistId == doctor.Id).ToList();
             return View(appointment);
         }
 
@@ -486,10 +498,25 @@ namespace Hospital_Management_System.Controllers
         [Authorize(Roles = "Psychologist")]
         public ActionResult AddConsultation()
         {
+            var user = User.Identity.GetUserId();
+            var doctor = db.Psychologists.Single(c => c.ApplicationUserId == user);
+            var date = DateTime.Now.Date;
+
+            var appointment = db.Appointments.Include(c => c.Schedule).Include(c => c.Patient).Where(c => c.Schedule.PsychologistId == doctor.Id).Where(c => c.Status == true).Where(c => c.AppointmentDate >= date).Select(c => c.PatientId).ToList();
+            var Patients = db.Patients.ToList();
+
+
             var collection = new ConsultationCollection
             {
+
+
                 Consultation = new Consultation(),
-                Patients = db.Patients.ToList()
+
+                Appointments = db.Appointments.Where(c => c.Schedule.PsychologistId == doctor.Id).Where(c => c.Status == true).ToList(),
+
+                Patients = db.Patients.Where(c  =>c.BookedPsychologistId ==doctor.Id).ToList(),
+
+
             };
             return View(collection);
         }
@@ -551,9 +578,15 @@ namespace Hospital_Management_System.Controllers
             consultation.ConsultationDate = model.Consultation.ConsultationDate;
             consultation.TreatmentPlan = model.Consultation.TreatmentPlan;
             consultation.Diagnosis = model.Consultation.Diagnosis;
-
+            var Appointment = db.Appointments.Single(c => c.PatientId == model.Consultation.PatientId);
+             Appointment.CompletedStatus = true;
+             var patient = db.Patients.Single(c => c.Id == model.Consultation.PatientId);
+            patient.CompletedStatus = true;
+            
             db.Consultations.Add(consultation);
             db.SaveChanges();
+
+
           return RedirectToAction("ListOfConsultation");
           
         }

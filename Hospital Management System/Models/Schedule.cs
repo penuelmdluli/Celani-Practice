@@ -17,7 +17,7 @@ namespace Hospital_Management_System.Models
         public Psychologist Psychologist { get; set; }
         [Display(Name = "Psychologist Name")]
         public int PsychologistId { get; set; }
-        
+
         [Required]
         [Display(Name = "Schedule Date")]
         [DataType(DataType.Date)]
