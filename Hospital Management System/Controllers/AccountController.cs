@@ -191,8 +191,8 @@ namespace Hospital_Management_System.Controllers
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     var patient = new Patient { FirstName = model.FirstName, LastName = model.LastName, EmailAddress = model.Email, ApplicationUserId = user.Id };
-                    db.Users.Add(user);
-                   // db.SaveChanges();
+                     db.Patients.Add(patient);
+                     db.SaveChanges();
                     await UserManager.AddToRoleAsync(user.Id, "Admin");
                     return RedirectToAction("Login", "Account");
                 }
