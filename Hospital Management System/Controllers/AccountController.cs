@@ -9,8 +9,6 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Hospital_Management_System.Models;
-using System.Net.Mail;
-using System.Net;
 
 namespace Hospital_Management_System.Controllers
 {
@@ -26,7 +24,7 @@ namespace Hospital_Management_System.Controllers
             db = new ApplicationDbContext();
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -38,9 +36,9 @@ namespace Hospital_Management_System.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -77,13 +75,14 @@ namespace Hospital_Management_System.Controllers
                 return View(model);
             }
 
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
-                    var user = await UserManager.FindAsync(model.Email, model.Password);
+                   var user = await UserManager.FindAsync(model.Email, model.Password);
                     if (UserManager.IsInRole(user.Id, "Admin"))
                     {
                         return RedirectToAction("Index", "Admin");
@@ -97,7 +96,7 @@ namespace Hospital_Management_System.Controllers
                         var patient = db.Patients.Single(c => c.ApplicationUserId == user.Id);
                         if (patient.MaritalStatus == null || patient.Contact == null || patient.Gender == null)
                         {
-                            return RedirectToAction("UpdateProfile", "Patient", new {id = user.Id});
+                            return RedirectToAction("UpdateProfile", "Patient", new { id = user.Id });
                         }
                         else
                         {
@@ -148,7 +147,7 @@ namespace Hospital_Management_System.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -179,29 +178,41 @@ namespace Hospital_Management_System.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, UserRole = "Patient", RegisteredDate = DateTime.Now.Date};
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, UserRole = "Admin", RegisteredDate = DateTime.Now.Date };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
                     var patient = new Patient { FirstName = model.FirstName, LastName = model.LastName, EmailAddress = model.Email, ApplicationUserId = user.Id };
-                     db.Patients.Add(patient);
-                    db.SaveChanges();
-                    await UserManager.AddToRoleAsync(user.Id, "Patient");
+                    db.Users.Add(user);
+                   // db.SaveChanges();
+                    await UserManager.AddToRoleAsync(user.Id, "Admin");
                     return RedirectToAction("Login", "Account");
                 }
                 AddErrors(result);
             }
-           
+
             // If we got this far, something failed, redisplay form
 
             return View(model);
+        }
+
+        private async Task<string> SendEmailConfirmationTokenAsync(string userID, string subject)
+        {
+            string code = await UserManager.GenerateEmailConfirmationTokenAsync(userID);
+            var callbackUrl = Url.Action("ConfirmEmail", "Account",
+               new { userId = userID, code = code }, protocol: Request.Url.Scheme);
+            await UserManager.SendEmailAsync(userID, subject,
+               "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+            return callbackUrl;
         }
 
         //
@@ -228,111 +239,28 @@ namespace Hospital_Management_System.Controllers
         //
         // POST: /Account/ForgotPassword
         [HttpPost]
-      
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
             if (ModelState.IsValid)
             {
-
-                var userEmail =  UserManager.Users.FirstOrDefault(x => x.Email == model.Email).Email;
-                var Username = UserManager.Users.FirstOrDefault(x => x.Email == model.Email).UserName;
-
-                if (userEmail != null )
+                var user = await UserManager.FindByEmailAsync(model.Email);
+                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
-                   
-                    string resetCode = Guid.NewGuid().ToString();
-                    var verifyUrl = "/Account/ResetPassword/" + resetCode;
-                    var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
-
-                    var subject = "Password Reset Request";
-                    var body = "Hi " + Username + ", <br/> You recently requested to reset your password for your account. Click the link below to reset it. " +
-
-                         " <br/><br/><a href='" + link + "'>" + link + "</a> <br/><br/>" +
-                         "If you did not request a password reset, please ignore this email or reply to let us know.<br/><br/> Thank you";
-
-                    SendEmail(userEmail, body, subject);
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
                 }
-                else
-                {
-                    ViewBag.Message = "Reset password link has been sent to your email id.";
-                }
-
-
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code , email = model.Email }, protocol: Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-
-        public string SendEmail(string Email, string Message, string Subject )
-        {
-
-            try
-            {
-                // Credentials
-                var credentials = new NetworkCredential("celanipyc@gmail.com", "111111Sp/");
-
-                // Mail message
-                var mail = new MailMessage()
-                {
-                    From = new MailAddress("noreply@codinginfinite.com"),
-                    Subject = Subject,
-                    Body = Message
-                };
-
-                mail.IsBodyHtml = true;
-                mail.To.Add(new MailAddress(Email));
-
-                // Smtp client
-                var client = new SmtpClient()
-                {
-                    Port = 587,
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    UseDefaultCredentials = false,
-                    Host = "smtp.gmail.com",
-                    EnableSsl = true,
-                    Credentials = credentials
-                };
-
-                client.Send(mail);
-
-                return "Email Sent Successfully!";
-            }
-            catch (System.Exception e)
-            {
-                return e.Message;
-            }
-
-        }
-
-        //private void SendEmail(string emailAddress, string body, string subject)
-        //{
-        //    using (MailMessage mm = new MailMessage("celanipyc@gmail.com", emailAddress))
-        //    {
-        //        mm.Subject = subject;
-        //        mm.Body = body;
-        //        mm.IsBodyHtml = true;
-        //        mm.Priority = MailPriority.High;
-        //        SmtpClient smtp = new SmtpClient();
-        //        smtp.Host = "smtp.gmail.com";
-        //        smtp.EnableSsl = true;
-        //        smtp.UseDefaultCredentials = true;
-        //        NetworkCredential NetworkCred = new NetworkCredential("celanipyc@gmail.com", "111111Sp/");
-        //        smtp.EnableSsl = true;
-        //        smtp.Credentials = NetworkCred;
-        //        smtp.Port = 587;
-        //        smtp.Send(mm);
-
-        //    }
-        //}
 
         //
         // GET: /Account/ForgotPasswordConfirmation
@@ -345,12 +273,12 @@ namespace Hospital_Management_System.Controllers
         //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
-        public ActionResult ResetPassword(string code)
+        public ActionResult ResetPassword(string code, string email)
         {
-            return code == null ? View("Error") : View();
+            return email == null &&  code == null ? View("Error") : View();
         }
 
-        //
+        ///
         // POST: /Account/ResetPassword
         [HttpPost]
         [AllowAnonymous]
@@ -361,7 +289,7 @@ namespace Hospital_Management_System.Controllers
             {
                 return View(model);
             }
-            var user = await UserManager.FindByNameAsync(model.Email);
+            var user = await UserManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
                 // Don't reveal that the user does not exist

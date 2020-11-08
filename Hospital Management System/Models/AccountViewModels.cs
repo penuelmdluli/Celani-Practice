@@ -113,6 +113,7 @@ namespace Hospital_Management_System.Models
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
+
     }
 
     public class ForgotPasswordViewModel
