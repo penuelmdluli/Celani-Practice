@@ -411,8 +411,8 @@ namespace Hospital_Management_System.Controllers
         {
             var user = User.Identity.GetUserId();
             var doctor = db.Psychologists.Single(c => c.ApplicationUserId == user);
-            var date = DateTime.Now.Date;
-            var appointment = db.Appointments.Include(c => c.Schedule).Include(c => c.Patient).Where(c => c.CompletedStatus == true).Where(c => c.Schedule.PsychologistId == doctor.Id).ToList();
+           // var date = DateTime.Now.Date;
+            var appointment = db.Appointments.Include(c => c.Schedule).Include(c => c.Patient).Where(c => c.CompletedStatus == true).Where(c => c.Status == false).Where(c => c.Schedule.PsychologistId == doctor.Id).ToList();
             return View(appointment);
         }
 
@@ -450,7 +450,10 @@ namespace Hospital_Management_System.Controllers
                
                 appointment.Problem = model.Appointment.Problem;
                 appointment.Status = model.Appointment.Status;
-                db.SaveChanges();
+
+               var patient = db.Patients.Single(c => c.Id == model.Appointment.PatientId);
+               patient.AppointmentStatus = true;
+            db.SaveChanges();
                 if (model.Appointment.Status == true)
                 {
                     return RedirectToAction("ActiveAppointments");
@@ -514,8 +517,7 @@ namespace Hospital_Management_System.Controllers
 
                 Appointments = db.Appointments.Where(c => c.Schedule.PsychologistId == doctor.Id).Where(c => c.Status == true).ToList(),
 
-                Patients = db.Patients.Where(c  =>c.BookedPsychologistId ==doctor.Id).ToList(),
-
+                Patients = db.Patients.Where(c  =>c.BookedPsychologistId ==doctor.Id).Where(c =>c.AppointmentStatus == true).ToList(),
 
             };
             return View(collection);
@@ -582,6 +584,11 @@ namespace Hospital_Management_System.Controllers
              Appointment.CompletedStatus = true;
              var patient = db.Patients.Single(c => c.Id == model.Consultation.PatientId);
             patient.CompletedStatus = true;
+            patient.AppointmentStatus = false;
+            Appointment.Status = false;
+         
+            
+
             
             db.Consultations.Add(consultation);
             db.SaveChanges();

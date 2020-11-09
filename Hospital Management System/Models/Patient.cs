@@ -54,7 +54,9 @@ namespace Hospital_Management_System.Models
         public string MaritalStatus { get; set; }
         public int BookedPsychologistId { get; set; }
         public bool CompletedStatus { get; set; }
-   
+
+        public bool AppointmentStatus { get; set; }
+
 
 
     }

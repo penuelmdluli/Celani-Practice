@@ -262,6 +262,10 @@
     <Compile Include="Migrations\202011072143067_appo.Designer.cs">
       <DependentUpon>202011072143067_appo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011091851351_statusa.cs" />
+    <Compile Include="Migrations\202011091851351_statusa.Designer.cs">
+      <DependentUpon>202011091851351_statusa.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Announcement.cs" />
@@ -786,6 +790,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011072143067_appo.resx">
       <DependentUpon>202011072143067_appo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011091851351_statusa.resx">
+      <DependentUpon>202011091851351_statusa.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\AppointmentReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
