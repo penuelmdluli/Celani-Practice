@@ -266,6 +266,22 @@
     <Compile Include="Migrations\202011091851351_statusa.Designer.cs">
       <DependentUpon>202011091851351_statusa.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011092007027_sdkf.cs" />
+    <Compile Include="Migrations\202011092007027_sdkf.Designer.cs">
+      <DependentUpon>202011092007027_sdkf.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011092123503_sf.cs" />
+    <Compile Include="Migrations\202011092123503_sf.Designer.cs">
+      <DependentUpon>202011092123503_sf.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011092144072_pych.cs" />
+    <Compile Include="Migrations\202011092144072_pych.Designer.cs">
+      <DependentUpon>202011092144072_pych.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011092201080_ispaid.cs" />
+    <Compile Include="Migrations\202011092201080_ispaid.Designer.cs">
+      <DependentUpon>202011092201080_ispaid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Announcement.cs" />
@@ -793,6 +809,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011091851351_statusa.resx">
       <DependentUpon>202011091851351_statusa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011092007027_sdkf.resx">
+      <DependentUpon>202011092007027_sdkf.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011092123503_sf.resx">
+      <DependentUpon>202011092123503_sf.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011092144072_pych.resx">
+      <DependentUpon>202011092144072_pych.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011092201080_ispaid.resx">
+      <DependentUpon>202011092201080_ispaid.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\AppointmentReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

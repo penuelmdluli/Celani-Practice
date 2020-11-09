@@ -33,7 +33,7 @@
 
     <div class="col">
         <div class="col-lg-10">
-            
+
         </div>
 
         <div class="col-lg-2">
@@ -53,13 +53,6 @@
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Payment.PatientAddress, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Payment.PatientAddress, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Payment.PatientAddress, "", new { @class = "text-danger" })
-        </div>
-    </div>
 
 
     <div class="form-group">
@@ -79,14 +72,6 @@
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Payment.PsychologistId, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.Payment.PsychologistId, new SelectList(Model.Psychologists, "Id", "FullName"), "Select Psychologist", new { @id = "dropdown1", @class = "form-control" })
-            <br />
-            @Html.ValidationMessageFor(model => model.Payment.PsychologistId, "", new { @class = "text-danger" })
-        </div>
-    </div>
     @{
 
         var ServiceRecivedlist = new List<Payment>
@@ -107,12 +92,8 @@
 
             };
 
-        var HoursOfServicelist = new List<Payment>
-{
-                new Payment {HoursOfService =1},
-                new Payment {HoursOfService = 2},
-                new Payment {HoursOfService = 3},
-            };
+
+
 
     }
 
@@ -126,11 +107,10 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Payment.HoursOfService, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.Payment.HoursOfService, new SelectList(HoursOfServicelist, "HoursOfService", "HoursOfService"), "Select Hour(s) Of Service", new { @class = "form-control" })
+            @Html.EditorFor(model => model.Payment.HoursOfService, new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.Payment.HoursOfService, "", new { @class = "text-danger" })
         </div>
     </div>
-
 
     <div class="row">
         <div class="col-md-4">
@@ -148,7 +128,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Payment.PaidbyMedicalAid, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
-                    @Html.EditorFor(model => model.Payment.PaidbyMedicalAid, new { @class = "form-control" })
+                    @Html.EditorFor(model => model.Payment.PaidbyMedicalAid, new { @id = "PaidbyMedicalAid", @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Payment.PaidbyMedicalAid, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -156,15 +136,17 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Payment.PayByCash, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
-                    @Html.EditorFor(model => model.Payment.PayByCash, new { @class = "form-control" })
+                    @Html.EditorFor(model => model.Payment.PayByCash, new { @id = "PayByCash", @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Payment.PayByCash, "", new { @class = "text-danger" })
                 </div>
             </div>
 
+            
+
             <div class="form-group">
                 @Html.LabelFor(model => model.Payment.TotalDue, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
-                    @Html.EditorFor(model => model.Payment.TotalDue, new { @class = "form-control" })
+                    @Html.EditorFor(model => model.Payment.TotalDue, new { @id = "TotalDue", @class = "form-control"   })
                     @Html.ValidationMessageFor(model => model.Payment.TotalDue, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -174,14 +156,13 @@
         </div>
     </div>
 </div>
-
     <div class="container">
 
         <div class="row">
             <div class="col-md-8">
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value=">>>>>>>>>>>>>>>>>>>>>>>>>> Save <<<<<<<<<<<<<<<<<<<<<<<<" class="btn btn-success" />
+                        <input  n type="submit" value=">>>>>>>>>>>>>>>>>>>>>>>>>> Save <<<<<<<<<<<<<<<<<<<<<<<<" class="btn btn-success" />
                     </div>
                 </div>
             </div>
@@ -207,6 +188,16 @@
                 $(function () {
                     $("#dropdown2").chosen();
                 });
+
+                function sum() {
+                    var txtFirstNumberValue = document.getElementById('PaidbyMedicalAid').value;
+                    var txtSecondNumberValue = document.getElementById('PayByCash').value;
+                 
+                    var result = parseFloat(txtFirstNumberValue) + parseFloat(txtSecondNumberValue);
+                    if (!isNaN(result)) {
+                        document.getElementById('TotalMoney').value = result.toFixed(2);
+                    }
+                }
             </script>
         }
 

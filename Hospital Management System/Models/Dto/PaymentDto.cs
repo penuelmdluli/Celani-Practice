@@ -50,16 +50,16 @@ namespace Hospital_Management_System.Models.Dto
         public int HoursOfService { get; set; }
 
         [Display(Name = "Service Amount (R)")]
-        public int ServiceAmount { get; set; }
+        public double ServiceAmount { get; set; }
 
         [Display(Name = "Paid by Medical Aid (R)")]
-        public int PaidbyMedicalAid { get; set; }
+        public double PaidbyMedicalAid { get; set; }
 
         [Display(Name = "Pay by Cash (R)")]
-        public int PayByCash { get; set; }
+        public double PayByCash { get; set; }
 
         [Display(Name = "Total Due")]
-        public string TotalDue { get; set; }
+        public double TotalDue { get; set; }
 
         [Display(Name = "Invoice Refference")]
         public string InvoiceRefNo { get; set; }

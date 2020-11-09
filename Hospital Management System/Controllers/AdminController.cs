@@ -887,8 +887,8 @@ namespace Hospital_Management_System.Controllers
             var collection = new PaymentCollection
             {
                 Payment = new Payment(),
-                Patients = db.Patients.ToList(),
-                Psychologists = db.Psychologists.ToList(),
+                Patients = db.Patients.Where(c => c.CompletedStatus == true).Where(c => c.IsPaid == false).ToList(),
+               
             };
             return View(collection);
         }
@@ -898,11 +898,8 @@ namespace Hospital_Management_System.Controllers
         public ActionResult AddPayment(PaymentCollection model)
         {
             var payment = new Payment {
-
-                PatientAddress = model.Payment.PatientAddress,
                 PaymentDate = DateTime.Now,
                 InvoiceRefNo = model.Payment.InvoiceRefNo,
-                PsychologistId = model.Payment.PsychologistId,
                 PatientId = model.Payment.PatientId,
                 ServiceRecived = model.Payment.ServiceRecived,
                 HoursOfService = model.Payment.HoursOfService,
@@ -910,20 +907,22 @@ namespace Hospital_Management_System.Controllers
                 PaidbyMedicalAid = model.Payment.PaidbyMedicalAid,
                 PayByCash = model.Payment.PayByCash,
                 TotalDue = model.Payment.TotalDue,
-
+                PatientAddress = db.Patients.FirstOrDefault(d => d.Id == model.Payment.PatientId).Address,
                 PatientName = db.Patients.FirstOrDefault(d => d.Id == model.Payment.PatientId).FullName,
                 PatientEmail = db.Patients.FirstOrDefault(d => d.Id == model.Payment.PatientId).EmailAddress,
                 PatientGender= db.Patients.FirstOrDefault(d => d.Id == model.Payment.PatientId).Gender,
                 PatientNumber = db.Patients.FirstOrDefault(d => d.Id == model.Payment.PatientId).Contact,
                 DateOfBirth = db.Patients.FirstOrDefault(d => d.Id == model.Payment.PatientId).DateOfBirth,
-                PsychologistContact = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PsychologistId).ContactNo,
-                PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PsychologistId).FullName,
-                PsychologistSpecialist = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PsychologistId).Specialization,
-               //CentreContact = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PsychologistId).Centre.Contact,
-               //CentrLocation = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PsychologistId).Centre.Location,
-               //CenterName = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PatientId).Centre.Name,
-            };
-            
+                PsychologistContact = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PatientId).ContactNo,
+                PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PatientId).FullName,
+                PsychologistSpecialist = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PatientId).Specialization,
+                //CentreContact = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PsychologistId).Centre.Contact,
+                //CentrLocation = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PsychologistId).Centre.Location,
+                //CenterName = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PatientId).Centre.Name,
+              
+        };
+            var patient = db.Patients.Single(c => c.Id == model.Payment.PatientId);
+            patient.IsPaid = true;
             db.Payments.Add(payment);
             db.SaveChanges();
             return RedirectToAction("ListOfPayment");
@@ -936,11 +935,11 @@ namespace Hospital_Management_System.Controllers
         public ActionResult ListOfPayment()
         {
             
-            var appointment = db.Payments.Include(c => c.Psychologist).Include(c => c.Patient)
+            var appointment = db.Payments.Include(c => c.Patient)
                 .Select(e => new PaymentDto()
                 {
                     Id = e.Id,
-                    PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.Psychologist.Id).FullName,
+                    PsychologistName = e.PsychologistName,
                     PatientName = db.Patients.FirstOrDefault(d => d.Id == e.PatientId).FirstName,
                     PaymentDate = e.PaymentDate,
                     InvoiceRefNo =e.InvoiceRefNo,

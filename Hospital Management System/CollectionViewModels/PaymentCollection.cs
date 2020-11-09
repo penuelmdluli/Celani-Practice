@@ -10,7 +10,7 @@ namespace Hospital_Management_System.CollectionViewModels
     {
         public Payment  Payment { get; set; }
         public IEnumerable<Patient> Patients { get; set; }
-        public IEnumerable<Psychologist> Psychologists { get; set; }
+        //public IEnumerable<Psychologist> Psychologists { get; set; }
      
     }
 }

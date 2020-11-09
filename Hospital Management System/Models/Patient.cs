@@ -57,7 +57,8 @@ namespace Hospital_Management_System.Models
 
         public bool AppointmentStatus { get; set; }
 
-
+        public bool IsConsulted { get; set; }
+        public bool IsPaid { get; set; }
 
     }
 }

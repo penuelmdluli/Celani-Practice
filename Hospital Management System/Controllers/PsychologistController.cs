@@ -46,9 +46,10 @@ namespace Hospital_Management_System.Controllers
                 Psychologists = db.Psychologists.ToList(),
                 Patients = db.Patients.ToList(),
                 ActiveAppointments = db.Appointments.Where(c => c.Schedule.PsychologistId == doctor.Id).Where(c => c.Status).Where(c => c.AppointmentDate >= date).ToList(),
-                PendingAppointments = db.Appointments.Where(c => c.Schedule.PsychologistId == doctor.Id).Where(c => c.Status == false).Where(c => c.AppointmentDate >= date).ToList(),
-            
-                Announcements = db.Announcements.Where(c => c.AnnouncementFor == "Psychologist").ToList()
+                //PendingAppointments = db.Appointments.Where(c => c.Schedule.PsychologistId == doctor.Id).Where(c => c.Status == false).Where(c => c.AppointmentDate >= date).ToList(),
+                PendingAppointments = db.Appointments.Include(c => c.Schedule).Include(c => c.Patient).Where(c => c.CompletedStatus == false).Where(c => c.Schedule.PsychologistId == doctor.Id).Where(c => c.Status == false).Where(c => c.AppointmentDate >= date).ToList(),
+
+            Announcements = db.Announcements.Where(c => c.AnnouncementFor == "Psychologist").ToList()
             };
             return View(model);
         }
@@ -584,6 +585,7 @@ namespace Hospital_Management_System.Controllers
              Appointment.CompletedStatus = true;
              var patient = db.Patients.Single(c => c.Id == model.Consultation.PatientId);
             patient.CompletedStatus = true;
+            
             patient.AppointmentStatus = false;
             Appointment.Status = false;
          
