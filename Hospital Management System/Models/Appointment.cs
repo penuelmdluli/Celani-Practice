@@ -38,7 +38,7 @@ namespace Hospital_Management_System.Models
         [Display(Name = "Reason for visit")]
         public string Problem { get; set; }
 
-        [Display(Name = "Aprove Appointment")]
+        [Display(Name = "Approve Appointment")]
         public bool Status { get; set; }
         public bool CompletedStatus { get; set; }
 
