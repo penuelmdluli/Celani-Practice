@@ -1,0 +1,36 @@
+﻿@model Hospital_Management_System.Models.Patient
+
+@{
+    ViewBag.Title = "DeletePatient";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <ol class="breadcrumb">
+        <li>
+            <a href="#">
+                <em class="fa fa-home"></em>
+            </a>
+        </li>
+        <li class="active">Patient</li>
+        <li class="active">Delete Patient</li>
+    </ol>
+</div>
+
+<h2>Delete Patient</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <hr />
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="hidden" value="@Model.ApplicationUserId" name="id" />
+            <input type="submit" value="Delete" class="btn btn-danger" /> 
+            @*@Html.ActionLink("Delete","Delete",Model.ApplicationUserId, new { @class="btn btn-danger"}) |*@
+            @Html.ActionLink("Back to List", "ListOfPatients", null, new { @class="btn btn-default"})
+        </div>
+    }
+</div>
