@@ -1,12 +1,27 @@
 ﻿using System;
+<<<<<<< HEAD
 using System.Security.Claims;
 using System.Threading.Tasks;
+=======
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using System.Web;
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Hospital_Management_System.Models;
+<<<<<<< HEAD
+=======
+using System.Net.Mail;
+using System.Configuration;
+using System.Net.Mime;
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
 
 namespace Hospital_Management_System
 {
@@ -15,14 +30,48 @@ namespace Hospital_Management_System
         public Task SendAsync(IdentityMessage message)
         {
             // Plug in your email service here to send an email.
+<<<<<<< HEAD
             return Task.FromResult(0);
         }
     }
 
+=======
+            return Task.Factory.StartNew(() =>
+            {
+                sendMail(message);
+            });
+        }
+
+        void sendMail(IdentityMessage message)
+        {
+            #region formatter
+            string text = string.Format("Please click on this link to {0}: {1}", message.Subject, message.Body);
+            string html = "Please confirm your account by clicking this link: <a href=\"" + message.Body + "\">link</a><br/>";
+            html += HttpUtility.HtmlEncode(@"Or click on the copy the following link on the browser:" + message.Body);
+            #endregion
+
+            MailMessage msg = new MailMessage();
+            msg.From = new MailAddress(ConfigurationManager.AppSettings["Email"].ToString());
+            msg.To.Add(new MailAddress(message.Destination));
+            msg.Subject = message.Subject;
+            msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(text, null, MediaTypeNames.Text.Plain));
+            msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(html, null, MediaTypeNames.Text.Html));
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", Convert.ToInt32(587));
+            System.Net.NetworkCredential credentials = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["Email"].ToString(), ConfigurationManager.AppSettings["Password"].ToString());
+            smtpClient.Credentials = credentials;
+            smtpClient.EnableSsl = true;
+            smtpClient.Send(msg);
+        }
+    }
+
+    
+
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
     public class SmsService : IIdentityMessageService
     {
         public Task SendAsync(IdentityMessage message)
         {
+<<<<<<< HEAD
             //Plug in your SMS service here to send a text message.
            var soapSms = new Hospital_Management_System.ASPSMSX2.ASPSMSX2SoapClient("ASPSMSX2Soap");
             soapSms.SendSimpleTextSMS(
@@ -32,6 +81,9 @@ namespace Hospital_Management_System
                 System.Configuration.ConfigurationManager.AppSettings["+27843262153"],
                 message.Body);
             soapSms.Close();
+=======
+            // Plug in your SMS service here to send a text message.
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
             return Task.FromResult(0);
         }
     }

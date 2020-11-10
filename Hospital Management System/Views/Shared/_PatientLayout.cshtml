@@ -36,6 +36,7 @@
     <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
         <div class="profile-sidebar">
             <div class="profile-userpic">
+<<<<<<< HEAD
                 @if (ViewBag.Pic != null)
                 {
                     <img src="~/Content/img/@ViewBag.Pic" class="img-responsive" alt="profile-picture"> 
@@ -44,6 +45,9 @@
                 {
                     <img src="~/Content/img/Administrator.png" class="img-responsive" alt="profile-picture">
                 }*@
+=======
+                <img src="~/Content/img/Administrator.png" class="img-responsive" alt="">
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
             </div>
             <div class="profile-usertitle">
                 <div class="profile-usertitle-name">@User.Identity.Name</div>
@@ -81,6 +85,16 @@
                 </div>
             </li>
 
+<<<<<<< HEAD
+=======
+            @*<li>
+                <button class="collapsible"><em class="fa fa-hospital-o">&nbsp; &nbsp;</em>Treatment Plan</button>
+                <div style="width: 100% !important" class="children content">
+                    @Html.ActionLink("Your Treatment Plan", "ListOfPrescription", "Patient", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
+                </div>
+            </li>*@
+
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
             <li>
                 <button class="collapsible"><em class="fa fa-telegram">&nbsp; &nbsp;</em>Complaint</button>
                 <div style="width: 100% !important" class="children content">
@@ -95,6 +109,7 @@
                     @Html.ActionLink("Change Password", "ChangePassword", "Manage", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
                 </div>
             </li>
+<<<<<<< HEAD
 
             <li>
                 <button class="collapsible"><em class="fa fa-question">&nbsp; &nbsp;</em>Help</button>
@@ -102,6 +117,8 @@
                     @Html.ActionLink("Help", "ComplaintHelp", "Home", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
                 </div>
             </li>
+=======
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
             @Html.Partial("_LoginPartial")
         </ul>
     </div><!--/.sidebar-->

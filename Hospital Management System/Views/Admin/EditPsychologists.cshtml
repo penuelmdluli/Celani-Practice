@@ -96,6 +96,7 @@
         </div>
 
         @{
+<<<<<<< HEAD
             var bloodlist = new List<Psychologist>
             {
                 new Psychologist {BloodGroup = "A+", Gender = "Male"},
@@ -107,6 +108,9 @@
                 new Psychologist {BloodGroup = "B-"},
                 new Psychologist {BloodGroup = "AB-"}
             };
+=======
+            
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
             var genderlist = new List<Psychologist>
             {
                 new Psychologist {Gender = "Male"},
@@ -119,6 +123,7 @@
                 new Psychologist {Status = "Inactive"}
             };
         }
+<<<<<<< HEAD
         <div class="form-group">
             @Html.LabelFor(model => model.Psychologist.BloodGroup, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -126,6 +131,9 @@
                 @Html.ValidationMessageFor(model => model.Psychologist.BloodGroup, "", new { @class = "text-danger" })
             </div>
         </div>
+=======
+       
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         <div class="form-group">
             @Html.LabelFor(model => model.Psychologist.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">

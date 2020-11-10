@@ -27,10 +27,15 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
+<<<<<<< HEAD
             <input type="hidden" value="@Model.ApplicationUserId" name="id" />
             <input type="submit" value="Delete" class="btn btn-danger" /> 
             @*@Html.ActionLink("Delete","Delete",Model.ApplicationUserId, new { @class="btn btn-danger"}) |*@
             @Html.ActionLink("Back to List", "ListOfPatients", null, new { @class="btn btn-default"})
+=======
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Back to List", "ListOfPatients")
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         </div>
     }
 </div>

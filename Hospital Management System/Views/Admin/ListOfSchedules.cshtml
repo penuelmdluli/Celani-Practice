@@ -23,6 +23,7 @@
     @Html.ActionLink("Add Schedule", "AddSchedule", null, new { @class = "btn btn-primary" })
 </p>
 <table id="table_id" class="table">
+<<<<<<< HEAD
         <tbody>
             <tr>
                 @foreach (var productGroup in Model.Select((e, i) => new { Product = e, Grouping = (i / 4) }).GroupBy(e => e.Grouping))
@@ -32,15 +33,51 @@
                     {
                     <td>
                         <button class="btn btn-success" type="button">@product.StartTime.ToShortTimeString() - @product.EndTime.ToShortTimeString() </button>
+=======
+    <tbody>
+        <tr>
+            @foreach (var productGroup in Model.Select((e, i) => new { Product = e, Grouping = (i / 3) }).GroupBy(e => e.Grouping))
+            {
+            <tr>
+                @foreach (var product in productGroup.Select(x => x.Product))
+                {
+                    <td>
+                        <div typeof="button" class="btn btn-primary">
+
+                            <div class="col-md-10">
+                                @product.PsychologistName
+                            </div>
+                            <div class="col-md-10">
+                                @product.ScheduleDate.ToShortDateString()
+                            </div>
+                            <div class="col-md-10">
+                                @product.StartTime.ToShortTimeString() - @product.EndTime.ToShortTimeString()
+                            </div>
+                        </div>
+                       
+                    </td>
+                    <td>
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
                         <a href="@Url.Action("EditSchedule", new {id = product.Id})" class="fa fa-pencil-square-o" style="font-size: 19px"></a> |
                         <a href="@Url.Action("DeleteSchedule", new {id = product.Id})" class="fa fa-trash" style="font-size: 19px; color: red"></a>
                     </td>
 
+<<<<<<< HEAD
                     }
                 </tr>
             }
                 </tr>
             </tbody>
+=======
+                }
+            </tr>
+
+           
+
+        }
+            </tr>
+        </tbody>
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
 
         </table>
 

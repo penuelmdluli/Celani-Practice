@@ -48,10 +48,17 @@ namespace Hospital_Management_System.Controllers
             }
         }
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         // GET: Admin
         [Authorize(Roles = "Admin")]
         public ActionResult Index(string message)
         {
+<<<<<<< HEAD
             try
             {
                 var date = DateTime.Now.Date;
@@ -79,6 +86,24 @@ namespace Hospital_Management_System.Controllers
 
             //if we got here sometthing is wrong 
             return View();
+=======
+            var date = DateTime.Now.Date;
+            ViewBag.Messege = message;
+            var model = new CollectionOfAll
+            {
+            
+                Departments = db.Centre.ToList(),
+                Psychologists = db.Psychologists.ToList(),
+                Patients = db.Patients.ToList(),
+            
+                ActiveAppointments =
+                    db.Appointments.Where(c => c.Status).Where(c => c.AppointmentDate >= date).ToList(),
+                PendingAppointments = db.Appointments.Where(c => c.Status == false)
+                    .Where(c => c.AppointmentDate >= date).ToList(),
+            
+            };
+            return View(model);
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         }
 
         #region  Centre Section
@@ -103,6 +128,7 @@ namespace Hospital_Management_System.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddDepartment(Centre model)
         {
+<<<<<<< HEAD
             try
             {
                 if (db.Centre.Any(c => c.Name == model.Name))
@@ -126,6 +152,17 @@ namespace Hospital_Management_System.Controllers
 
             //if we got here sometthing is wrong 
             return View();
+=======
+            if (db.Centre.Any(c => c.Name == model.Name))
+            {
+                ModelState.AddModelError("Name", "Name already present!");
+                return View(model);
+            }
+
+            db.Centre.Add(model);
+            db.SaveChanges();
+            return RedirectToAction("DepartmentList");
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         }
 
         //Edit Centre
@@ -140,6 +177,7 @@ namespace Hospital_Management_System.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditDepartment(int id, Centre model)
         {
+<<<<<<< HEAD
             try
             {
                 var department = db.Centre.Single(c => c.Id == id);
@@ -163,6 +201,17 @@ namespace Hospital_Management_System.Controllers
 
             //if we got here sometthing is wrong 
             return View();
+=======
+            var department = db.Centre.Single(c => c.Id == id);
+            department.Name = model.Name;
+            department.Description = model.Description;
+            department.Status = model.Status;
+            department.Contact = model.Contact;
+            department.Location = model.Location;
+            
+            db.SaveChanges();
+            return RedirectToAction("DepartmentList");
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         }
 
         [Authorize(Roles = "Admin")]
@@ -176,6 +225,7 @@ namespace Hospital_Management_System.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteDepartment(int id)
         {
+<<<<<<< HEAD
             try
             {
                 var department = db.Centre.SingleOrDefault(c => c.Id == id);
@@ -196,6 +246,12 @@ namespace Hospital_Management_System.Controllers
 
             //if we got here sometthing is wrong 
             return View();
+=======
+            var department = db.Centre.SingleOrDefault(c => c.Id == id);
+            db.Centre.Remove(department);
+            db.SaveChanges();
+            return RedirectToAction("DepartmentList");
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         }
 
         //End Centre Section
@@ -215,6 +271,7 @@ namespace Hospital_Management_System.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult AddPsychologist()
         {
+<<<<<<< HEAD
             try
             {
                 var collection = new DoctorCollection
@@ -233,12 +290,22 @@ namespace Hospital_Management_System.Controllers
 
             //if we got here sometthing is wrong 
             return View();
+=======
+            var collection = new DoctorCollection
+            {
+                ApplicationUser = new RegisterViewModel(),
+                Psychologist = new Psychologist(),
+                Centres = db.Centre.ToList()
+            };
+            return View(collection);
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddPsychologist(DoctorCollection model)
         {
+<<<<<<< HEAD
             try
             {
                 var user = new ApplicationUser
@@ -291,12 +358,50 @@ namespace Hospital_Management_System.Controllers
 
             //if we got here sometthing is wrong 
             return View();
+=======
+            var user = new ApplicationUser
+            {
+                UserName = model.ApplicationUser.UserName,
+                Email = model.ApplicationUser.Email,
+                UserRole = "Psychologist",
+                RegisteredDate = DateTime.Now.Date
+            };
+            var result = await UserManager.CreateAsync(user, model.ApplicationUser.Password);
+            if (result.Succeeded)
+            {
+                await UserManager.AddToRoleAsync(user.Id, "Psychologist");
+                var psychologist = new Psychologist
+                {
+                    FirstName = model.Psychologist.FirstName,
+                    LastName = model.Psychologist.LastName,
+                    FullName = "Dr. " + model.Psychologist.FirstName + " " + model.Psychologist.LastName,
+                    EmailAddress = model.ApplicationUser.Email,
+                    ContactNo = model.Psychologist.ContactNo,
+                    PhoneNo = model.Psychologist.PhoneNo,
+
+                    Education = model.Psychologist.Education,
+                    DepartmentId = model.Psychologist.DepartmentId,
+                    Specialization = model.Psychologist.Specialization,
+                    Gender = model.Psychologist.Gender,
+                    ApplicationUserId = user.Id,
+                    DateOfBirth = model.Psychologist.DateOfBirth,
+                    Address = model.Psychologist.Address,
+                    Status = model.Psychologist.Status
+                };
+                db.Psychologists.Add(psychologist);
+                db.SaveChanges();
+                return RedirectToAction("ListOfPsychologists");
+            }
+
+            return RedirectToAction("ListOfPsychologists");
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         }
 
         //List Of Psychologists
         [Authorize(Roles = "Admin")]
         public ActionResult ListOfPsychologists()
         {
+<<<<<<< HEAD
             try
             {
                 var psychologist = db.Psychologists.Include(c => c.Centre)
@@ -327,6 +432,26 @@ namespace Hospital_Management_System.Controllers
 
             //if we got here something is wrong
             return View();
+=======
+            var psychologist = db.Psychologists.Include(c => c.Centre)
+                .Select(e => new PsychologistDto()
+                {
+                    FullName = e.FullName,
+                    FirstName = e.FirstName,
+                    LastName = e.LastName,
+                    Address = e.Address,
+                    Status = e.Status,
+                    ContactNo = e.ContactNo,
+                    Education = e.Education,
+                    Gender = e.Gender,
+                    Id = e.Id,
+                    CentreName =  db.Centre.FirstOrDefault(c=> c.Id == e.DepartmentId).Name,
+                    ApplicationUserId =e.ApplicationUserId,
+                })
+                .ToList();
+
+            return View(psychologist);
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         }
 
         //Detail of Psychologist
@@ -353,6 +478,7 @@ namespace Hospital_Management_System.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditPsychologists(int id, DoctorCollection model)
         {
+<<<<<<< HEAD
             try
             {
                 var psychologist = db.Psychologists.Single(c => c.Id == id);
@@ -384,6 +510,25 @@ namespace Hospital_Management_System.Controllers
 
             //if we got here something is wrong
             return View();
+=======
+            var psychologist = db.Psychologists.Single(c => c.Id == id);
+            psychologist.FirstName = model.Psychologist.FirstName;
+            psychologist.LastName = model.Psychologist.LastName;
+            psychologist.FullName = "Dr. " + model.Psychologist.FirstName + " " + model.Psychologist.LastName;
+            psychologist.ContactNo = model.Psychologist.ContactNo;
+            psychologist.PhoneNo = model.Psychologist.PhoneNo;
+            psychologist.Education = model.Psychologist.Education;
+            psychologist.DepartmentId = model.Psychologist.DepartmentId;
+            psychologist.Specialization = model.Psychologist.Specialization;
+            psychologist.Gender = model.Psychologist.Gender;
+         
+            psychologist.DateOfBirth = model.Psychologist.DateOfBirth;
+            psychologist.Address = model.Psychologist.Address;
+            psychologist.Status = model.Psychologist.Status;
+            db.SaveChanges();
+
+            return RedirectToAction("ListOfPsychologists");
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         }
 
         //Delete Psychologist
@@ -398,6 +543,7 @@ namespace Hospital_Management_System.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeletePsychologist(string id, Psychologist model)
         {
+<<<<<<< HEAD
             try
             {
                 var doctor = db.Psychologists.Single(c => c.ApplicationUserId == id);
@@ -424,6 +570,20 @@ namespace Hospital_Management_System.Controllers
 
             //if we got here something is wrong
             return View();
+=======
+            var doctor = db.Psychologists.Single(c => c.ApplicationUserId == id);
+            var user = db.Users.Single(c => c.Id == id);
+            if (db.Schedules.Where(c => c.PsychologistId == doctor.Id).Equals(null))
+            {
+                var schedule = db.Schedules.Single(c => c.PsychologistId == doctor.Id);
+                db.Schedules.Remove(schedule);
+            }
+
+            db.Users.Remove(user);
+            db.Psychologists.Remove(doctor);
+            db.SaveChanges();
+            return RedirectToAction("ListOfPsychologists");
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         }
 
         //End Psychologist Section
@@ -482,7 +642,11 @@ namespace Hospital_Management_System.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult ListOfSchedules()
         {
+<<<<<<< HEAD
             var schedule = db.Schedules.Include(c => c.Psychologist)
+=======
+            var schedule = db.Schedules.Include(c => c.Psychologist).Where(x => x.IsBooked ==false)
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
                 .Select(e => new SchedulesDto()
                 {
                     PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.PsychologistId).FullName,
@@ -491,7 +655,28 @@ namespace Hospital_Management_System.Controllers
                     StartTime = e.StartTime,
                     ScheduleDate = e.ScheduleDate,
                     Id = e.Id,
+<<<<<<< HEAD
                 }).ToList();
+=======
+                }).OrderBy(c => c.ScheduleDate).ToList();
+            return View(schedule);
+        }
+
+        //List Of Schedules
+        [Authorize(Roles = "Admin")]
+        public ActionResult ListOfBookedSchedules()
+        {
+            var schedule = db.Schedules.Include(c => c.Psychologist).Where(x =>x.IsBooked)
+                .Select(e => new SchedulesDto()
+                {
+                    PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.PsychologistId).FullName,
+                    CentreName = db.Centre.FirstOrDefault(d => d.Id == e.Id).Name,
+                    EndTime = e.EndTime,
+                    StartTime = e.StartTime,
+                    ScheduleDate = e.ScheduleDate,
+                    Id = e.Id,
+                }).OrderBy(c => c.ScheduleDate).ToList();
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
             return View(schedule);
         }
 
@@ -518,12 +703,25 @@ namespace Hospital_Management_System.Controllers
             }
 
             var schedule = db.Schedules.Single(c => c.Id == id);
+<<<<<<< HEAD
+=======
+
+            if (schedule.IsBooked ==true)
+            {
+                ViewBag.Messege = "Schedule  has  been  Booked, can not be  adited";
+                return RedirectToAction("ListOfSchedules");
+            }
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
             schedule.PsychologistId = model.Schedule.PsychologistId;
             schedule.EndTime = model.Schedule.EndTime;
             schedule.ScheduleDate = model.Schedule.ScheduleDate;
 
             //  schedule.DepartmentId = model.Schedule.DepartmentId;
             schedule.StartTime = model.Schedule.StartTime;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
             db.SaveChanges();
             return RedirectToAction("ListOfSchedules");
         }
@@ -540,6 +738,14 @@ namespace Hospital_Management_System.Controllers
         public ActionResult DeleteSchedule(int id)
         {
             var schedule = db.Schedules.Single(c => c.Id == id);
+<<<<<<< HEAD
+=======
+            if (schedule.IsBooked == true)
+            {
+                ViewBag.Messege = "Schedule  has  been  Booked, can not be deleted";
+                return RedirectToAction("ListOfSchedules");
+            }
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
             db.Schedules.Remove(schedule);
             db.SaveChanges();
             return RedirectToAction("ListOfSchedules");
@@ -563,7 +769,12 @@ namespace Hospital_Management_System.Controllers
                 FullName = e.FullName,
                 Contact = e.Contact,
                 Age = e.Age,
+<<<<<<< HEAD
                 Gender = e.Gender
+=======
+                Gender = e.Gender,
+                ApplicationUserId = e.ApplicationUserId,
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
             }).
             ToList();
             return View(patients);
@@ -580,6 +791,7 @@ namespace Hospital_Management_System.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditPatient(int id, Patient model)
         {
+<<<<<<< HEAD
             try
             {
                 if (!ModelState.IsValid)
@@ -616,10 +828,34 @@ namespace Hospital_Management_System.Controllers
 
             //if we got here something is wrong
             return View();
+=======
+            if (!ModelState.IsValid)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var patient = db.Patients.Single(c => c.Id == id);
+            patient.FirstName = model.FirstName;
+            patient.LastName = model.LastName;
+            patient.FullName = model.FirstName + " " + model.LastName;
+            patient.Address = model.Address;
+            patient.LevelOfEducation = model.LevelOfEducation;
+            patient.Age = model.Age;
+            patient.MaritalStatus = model.MaritalStatus;
+            patient.Language = model.Language;
+            patient.Contact = model.Contact;
+            patient.DateOfBirth = model.DateOfBirth;
+            patient.EmailAddress = model.EmailAddress;
+            patient.Gender = model.Gender;
+            patient.PhoneNo = model.PhoneNo;
+            db.SaveChanges();
+            return RedirectToAction("ListOfPatients");
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         }
 
         //Delete Patient
         [Authorize(Roles = "Admin")]
+<<<<<<< HEAD
         public ActionResult DeletePatient(int id)
         {
             var patient = db.Patients.Single(c => c.Id == id);
@@ -651,6 +887,23 @@ namespace Hospital_Management_System.Controllers
 
             //if we got here something is wrong
             return View();
+=======
+        public ActionResult DeletePatient()
+        {
+            return View();
+        }
+
+        [HttpPost, ActionName("DeletePatient")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeletePatient(string id)
+        {
+            var patient = db.Patients.Single(c => c.ApplicationUserId == id);
+            var user = db.Users.Single(c => c.Id == id);
+            db.Users.Remove(user);
+            db.Patients.Remove(patient);
+            db.SaveChanges();
+            return RedirectToAction("ListOfPatients");
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         }
         //End Patient Section
         #endregion
@@ -1008,8 +1261,13 @@ namespace Hospital_Management_System.Controllers
             var collection = new PaymentCollection
             {
                 Payment = new Payment(),
+<<<<<<< HEAD
                 Patients = db.Patients.ToList(),
                 Psychologists = db.Psychologists.ToList(),
+=======
+                Patients = db.Patients.Where(c => c.CompletedStatus == true).Where(c => c.IsPaid == false).ToList(),
+               
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
             };
             return View(collection);
         }
@@ -1019,11 +1277,16 @@ namespace Hospital_Management_System.Controllers
         public ActionResult AddPayment(PaymentCollection model)
         {
             var payment = new Payment {
+<<<<<<< HEAD
 
                 PatientAddress = model.Payment.PatientAddress,
                 PaymentDate = DateTime.Now,
                 InvoiceRefNo = model.Payment.InvoiceRefNo,
                 PsychologistId = model.Payment.PsychologistId,
+=======
+                PaymentDate = DateTime.Now,
+                InvoiceRefNo = model.Payment.InvoiceRefNo,
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
                 PatientId = model.Payment.PatientId,
                 ServiceRecived = model.Payment.ServiceRecived,
                 HoursOfService = model.Payment.HoursOfService,
@@ -1031,12 +1294,17 @@ namespace Hospital_Management_System.Controllers
                 PaidbyMedicalAid = model.Payment.PaidbyMedicalAid,
                 PayByCash = model.Payment.PayByCash,
                 TotalDue = model.Payment.TotalDue,
+<<<<<<< HEAD
 
+=======
+                PatientAddress = db.Patients.FirstOrDefault(d => d.Id == model.Payment.PatientId).Address,
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
                 PatientName = db.Patients.FirstOrDefault(d => d.Id == model.Payment.PatientId).FullName,
                 PatientEmail = db.Patients.FirstOrDefault(d => d.Id == model.Payment.PatientId).EmailAddress,
                 PatientGender= db.Patients.FirstOrDefault(d => d.Id == model.Payment.PatientId).Gender,
                 PatientNumber = db.Patients.FirstOrDefault(d => d.Id == model.Payment.PatientId).Contact,
                 DateOfBirth = db.Patients.FirstOrDefault(d => d.Id == model.Payment.PatientId).DateOfBirth,
+<<<<<<< HEAD
                 PsychologistContact = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PsychologistId).ContactNo,
                 PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PsychologistId).FullName,
                 PsychologistSpecialist = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PsychologistId).Specialization,
@@ -1045,6 +1313,18 @@ namespace Hospital_Management_System.Controllers
                //CenterName = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PatientId).Centre.Name,
             };
             
+=======
+                PsychologistContact = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PatientId).ContactNo,
+                PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PatientId).FullName,
+                PsychologistSpecialist = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PatientId).Specialization,
+                //CentreContact = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PsychologistId).Centre.Contact,
+                //CentrLocation = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PsychologistId).Centre.Location,
+                //CenterName = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PatientId).Centre.Name,
+              
+        };
+            var patient = db.Patients.Single(c => c.Id == model.Payment.PatientId);
+            patient.IsPaid = true;
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
             db.Payments.Add(payment);
             db.SaveChanges();
             return RedirectToAction("ListOfPayment");
@@ -1057,11 +1337,19 @@ namespace Hospital_Management_System.Controllers
         public ActionResult ListOfPayment()
         {
             
+<<<<<<< HEAD
             var appointment = db.Payments.Include(c => c.Psychologist).Include(c => c.Patient)
                 .Select(e => new PaymentDto()
                 {
                     Id = e.Id,
                     PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.Psychologist.Id).FullName,
+=======
+            var appointment = db.Payments.Include(c => c.Patient)
+                .Select(e => new PaymentDto()
+                {
+                    Id = e.Id,
+                    PsychologistName = e.PsychologistName,
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
                     PatientName = db.Patients.FirstOrDefault(d => d.Id == e.PatientId).FirstName,
                     PaymentDate = e.PaymentDate,
                     InvoiceRefNo =e.InvoiceRefNo,
@@ -1112,6 +1400,7 @@ namespace Hospital_Management_System.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult AppointmentsReport()
         {
+<<<<<<< HEAD
             try
             {
                 var date = DateTime.Now.Date;
@@ -1180,12 +1469,52 @@ namespace Hospital_Management_System.Controllers
             //if we got here sometthing is wrong 
             return View();
 
+=======
+            var date = DateTime.Now.Date;
+            var appointment = db.Appointments.Include(c => c.Schedule).Include(c => c.Patient)
+                .Select(e => new AppointmentDto()
+                {
+                    AppointmentDate = e.AppointmentDate,
+                    Id = e.Id,
+                    PatientName = e.Patient.FullName,
+                    Problem = e.Problem,
+                    StartTime = e.StartTime,
+                    EndTime = e.EndTime,
+                    PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.Schedule.PsychologistId).FullName,
+                    Status = e.Status
+                })
+                .ToList();
+            return View(appointment);
+        }
+        public ActionResult DownLoadAppointmentsReport()
+        {
+            ReportDocument rd = new ReportDocument();
+            rd.Load(Path.Combine(Server.MapPath("~/Reports/AppointmentReport.rpt")));
+            rd.SetDataSource(db.Appointments.Select(e => new
+            {
+                Id = e.Id,
+                PatientId = e.PatientId,
+                ScheduleId = e.ScheduleId,
+                StartTime = e.StartTime,
+                EndTime = e.EndTime,
+                Problem = e.Problem,
+                Status = e.Status,
+
+            }).ToList());
+            Response.Buffer = false;
+            Response.ClearContent();
+            Response.ClearHeaders();
+            Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+            stream.Seek(0, SeekOrigin.Begin);
+            return File(stream, "application/pdf", "AppointmentReport.pdf");
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         }
 
         //List Of Schedules
         [Authorize(Roles = "Admin")]
         public ActionResult SchedulesReport()
         {
+<<<<<<< HEAD
             try
             {
                 var schedule = db.Schedules.Include(c => c.Psychologist)
@@ -1211,10 +1540,24 @@ namespace Hospital_Management_System.Controllers
 
             //if we got here sometthing is wrong 
             return View();
+=======
+            var schedule = db.Schedules.Include(c => c.Psychologist)
+                .Select(e => new SchedulesDto()
+                {
+                    PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.PsychologistId).FullName,
+                    CentreName = db.Centre.FirstOrDefault(d => d.Id == e.Id).Name,
+                    EndTime = e.EndTime,
+                    StartTime = e.StartTime,
+                    ScheduleDate = e.ScheduleDate,
+                    Id = e.Id,
+                }).ToList();
+            return View(schedule);
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         }
 
         public ActionResult DownLoadScheduleReport()
         {
+<<<<<<< HEAD
             try
             {
                 ReportDocument rd = new ReportDocument();
@@ -1249,12 +1592,35 @@ namespace Hospital_Management_System.Controllers
 
             //if we got here sometthing is wrong 
             return View();
+=======
+            ReportDocument rd = new ReportDocument();
+            rd.Load(Path.Combine(Server.MapPath("~/Reports/ScheduleReport.rpt")));
+            rd.SetDataSource(db.Schedules.Select(e => new
+            {
+                CentreName = e.CentreName,
+                Id = e.Id,
+                PsychologistName = e.PsychologistName,
+                PsychologistId = e.PsychologistId,
+                ScheduleDate = e.ScheduleDate,
+                StartTime = e.StartTime,
+                EndTime = e.EndTime,
+                IsBooked = e.IsBooked,
+                PatientId = e.PatientId,
+            }).ToList());
+            Response.Buffer = false;
+            Response.ClearContent();
+            Response.ClearHeaders();
+            Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+            stream.Seek(0, SeekOrigin.Begin);
+            return File(stream, "application/pdf", "ScheduleReport.pdf");
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         }
 
         //List of Patients
         [Authorize(Roles = "Admin")]
         public ActionResult PatientsReport()
         {
+<<<<<<< HEAD
             try
             {
                 var patients = db.Patients.Select(e => new PatientDto
@@ -1318,6 +1684,43 @@ namespace Hospital_Management_System.Controllers
 
             //if we got here sometthing is wrong 
             return View();
+=======
+            var patients = db.Patients.Select(e => new PatientDto
+            {
+                Id = e.Id,
+                FirstName = e.FirstName,
+                LastName = e.LastName,
+                FullName = e.FullName,
+                Contact = e.Contact,
+                Age = e.Age,
+                Gender = e.Gender
+            }).
+            ToList();
+            return View(patients);
+        }
+        public ActionResult DownLoadPatientsReport()
+        {
+            ReportDocument rd = new ReportDocument();
+            rd.Load(Path.Combine(Server.MapPath("~/Reports/PatientsReport.rpt")));
+            rd.SetDataSource(db.Patients.Select(e => new
+            {
+
+                Gender = e.Gender,
+                MaritalStatus = e.MaritalStatus,
+                Id = e.Id,
+                FullName = e.FullName,
+                EmailAddress = e.EmailAddress,
+                Contact = e.Contact,
+                Age = e.Age,
+
+            }).ToList());
+            Response.Buffer = false;
+            Response.ClearContent();
+            Response.ClearHeaders();
+            Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+            stream.Seek(0, SeekOrigin.Begin);
+            return File(stream, "application/pdf", "PatientsReport.pdf");
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         }
         #endregion
     }

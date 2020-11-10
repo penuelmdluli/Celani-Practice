@@ -12,6 +12,10 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Hospital_Management_System.Models.Dto;
 using System.Net;
 using System.IO;
+<<<<<<< HEAD
+=======
+using System.Security.Cryptography;
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
 
 namespace Hospital_Management_System.Controllers
 {
@@ -45,9 +49,16 @@ namespace Hospital_Management_System.Controllers
                 Psychologists = db.Psychologists.ToList(),
                 Patients = db.Patients.ToList(),
                 ActiveAppointments = db.Appointments.Where(c => c.Schedule.PsychologistId == doctor.Id).Where(c => c.Status).Where(c => c.AppointmentDate >= date).ToList(),
+<<<<<<< HEAD
                 PendingAppointments = db.Appointments.Where(c => c.Schedule.PsychologistId == doctor.Id).Where(c => c.Status == false).Where(c => c.AppointmentDate >= date).ToList(),
             
                 Announcements = db.Announcements.Where(c => c.AnnouncementFor == "Psychologist").ToList()
+=======
+                //PendingAppointments = db.Appointments.Where(c => c.Schedule.PsychologistId == doctor.Id).Where(c => c.Status == false).Where(c => c.AppointmentDate >= date).ToList(),
+                PendingAppointments = db.Appointments.Include(c => c.Schedule).Include(c => c.Patient).Where(c => c.CompletedStatus == false).Where(c => c.Schedule.PsychologistId == doctor.Id).Where(c => c.Status == false).Where(c => c.AppointmentDate >= date).ToList(),
+
+            Announcements = db.Announcements.Where(c => c.AnnouncementFor == "Psychologist").ToList()
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
             };
             return View(model);
         }
@@ -390,7 +401,11 @@ namespace Hospital_Management_System.Controllers
             var user = User.Identity.GetUserId();
             var doctor = db.Psychologists.Single(c => c.ApplicationUserId == user);
             var date = DateTime.Now.Date;
+<<<<<<< HEAD
             var appointment = db.Appointments.Include(c => c.Schedule).Include(c => c.Patient).Where(c => c.Schedule.PsychologistId == doctor.Id).Where(c => c.Status == true).Where(c => c.AppointmentDate >= date).ToList();
+=======
+            var appointment = db.Appointments.Include(c => c.Schedule).Include(c => c.Patient).Where(c =>c.CompletedStatus==false).Where(c => c.Schedule.PsychologistId == doctor.Id).Where(c => c.Status == true).Where(c => c.AppointmentDate >= date).ToList();
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
             return View(appointment);
         }
 
@@ -400,7 +415,22 @@ namespace Hospital_Management_System.Controllers
             var user = User.Identity.GetUserId();
             var doctor = db.Psychologists.Single(c => c.ApplicationUserId == user);
             var date = DateTime.Now.Date;
+<<<<<<< HEAD
             var appointment = db.Appointments.Include(c => c.Schedule).Include(c => c.Patient).Where(c => c.Schedule.PsychologistId == doctor.Id).Where(c => c.Status == false).Where(c => c.AppointmentDate >= date).ToList();
+=======
+            var appointment = db.Appointments.Include(c => c.Schedule).Include(c => c.Patient).Where(c => c.CompletedStatus == false).Where(c => c.Schedule.PsychologistId == doctor.Id).Where(c => c.Status == false).Where(c => c.AppointmentDate >= date).ToList();
+            return View(appointment);
+        }
+
+
+        //List of Pending Appointments
+        public ActionResult CommpletedAppointments()
+        {
+            var user = User.Identity.GetUserId();
+            var doctor = db.Psychologists.Single(c => c.ApplicationUserId == user);
+           // var date = DateTime.Now.Date;
+            var appointment = db.Appointments.Include(c => c.Schedule).Include(c => c.Patient).Where(c => c.CompletedStatus == true).Where(c => c.Status == false).Where(c => c.Schedule.PsychologistId == doctor.Id).ToList();
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
             return View(appointment);
         }
 
@@ -438,7 +468,14 @@ namespace Hospital_Management_System.Controllers
                
                 appointment.Problem = model.Appointment.Problem;
                 appointment.Status = model.Appointment.Status;
+<<<<<<< HEAD
                 db.SaveChanges();
+=======
+
+               var patient = db.Patients.Single(c => c.Id == model.Appointment.PatientId);
+               patient.AppointmentStatus = true;
+            db.SaveChanges();
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
                 if (model.Appointment.Status == true)
                 {
                     return RedirectToAction("ActiveAppointments");
@@ -486,10 +523,31 @@ namespace Hospital_Management_System.Controllers
         [Authorize(Roles = "Psychologist")]
         public ActionResult AddConsultation()
         {
+<<<<<<< HEAD
             var collection = new ConsultationCollection
             {
                 Consultation = new Consultation(),
                 Patients = db.Patients.ToList()
+=======
+            var user = User.Identity.GetUserId();
+            var doctor = db.Psychologists.Single(c => c.ApplicationUserId == user);
+            var date = DateTime.Now.Date;
+
+            var appointment = db.Appointments.Include(c => c.Schedule).Include(c => c.Patient).Where(c => c.Schedule.PsychologistId == doctor.Id).Where(c => c.Status == true).Where(c => c.AppointmentDate >= date).Select(c => c.PatientId).ToList();
+            var Patients = db.Patients.ToList();
+
+
+            var collection = new ConsultationCollection
+            {
+
+
+                Consultation = new Consultation(),
+
+                Appointments = db.Appointments.Where(c => c.Schedule.PsychologistId == doctor.Id).Where(c => c.Status == true).ToList(),
+
+                Patients = db.Patients.Where(c  =>c.BookedPsychologistId ==doctor.Id).Where(c =>c.AppointmentStatus == true).ToList(),
+
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
             };
             return View(collection);
         }
@@ -551,9 +609,27 @@ namespace Hospital_Management_System.Controllers
             consultation.ConsultationDate = model.Consultation.ConsultationDate;
             consultation.TreatmentPlan = model.Consultation.TreatmentPlan;
             consultation.Diagnosis = model.Consultation.Diagnosis;
+<<<<<<< HEAD
 
             db.Consultations.Add(consultation);
             db.SaveChanges();
+=======
+            var Appointment = db.Appointments.Single(c => c.PatientId == model.Consultation.PatientId);
+             Appointment.CompletedStatus = true;
+             var patient = db.Patients.Single(c => c.Id == model.Consultation.PatientId);
+            patient.CompletedStatus = true;
+            
+            patient.AppointmentStatus = false;
+            Appointment.Status = false;
+         
+            
+
+            
+            db.Consultations.Add(consultation);
+            db.SaveChanges();
+
+
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
           return RedirectToAction("ListOfConsultation");
           
         }

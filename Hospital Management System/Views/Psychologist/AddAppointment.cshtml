@@ -38,6 +38,7 @@
         <tr>
             @foreach (var productGroup in Model.Schedules.Select((e, i) => new { Product = e, Grouping = (i / 4) }).GroupBy(e => e.Grouping))
             {
+<<<<<<< HEAD
             <tr>
                 @foreach (var product in productGroup.Select(x => x.Product))
                 {
@@ -51,6 +52,27 @@
 
                 }
             </tr>
+=======
+        <tr>
+            @foreach (var product in productGroup.Select(x => x.Product))
+            {
+                <td>
+                    <div typeof="button" class="btn btn-primary">
+
+
+                        <div class="col-md-10">
+                            @product.ScheduleDate.ToShortDateString()
+                        </div>
+                        <div class="col-md-10">
+                            @product.StartTime.ToShortTimeString() - @product.EndTime.ToShortTimeString()
+                        </div>
+                    </div>
+
+                </td>
+               
+            }
+        </tr>
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         }
             </tr>
         </tbody>

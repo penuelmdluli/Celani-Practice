@@ -55,6 +55,17 @@
                 </div>
             </li>
 
+<<<<<<< HEAD
+=======
+
+            @*<li>
+                <button class="collapsible"><em class="fa fa-hospital-o">&nbsp; &nbsp;</em>Treatment Plan</button>
+                <div style="width: 100% !important" class="children content">
+                    @Html.ActionLink("Add Treatment Plan", "AddPrescription", "Psychologist", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
+                    @Html.ActionLink("List of Treatment Plan", "ListOfPrescription", "Psychologist", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
+                </div>
+            </li>*@
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
             <li>
                 <button class="collapsible"><em class="fa fa-calendar-check-o">&nbsp; &nbsp;</em>Schedule</button>
                 <div style="width: 100% !important" class="children content">
@@ -65,9 +76,16 @@
                 <button class="collapsible"><em class="fa fa-pencil-square-o">&nbsp; &nbsp;</em>Appointment</button>
                 <div style="width: 100% !important" class="children content">
 
+<<<<<<< HEAD
                     @Html.ActionLink("Add Appointments", "AddAppointment", "Psychologist", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
                     @Html.ActionLink("Active Appointments", "ActiveAppointments", "Psychologist", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
                     @Html.ActionLink("Pending Appointments", "PendingAppointments", "Psychologist", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
+=======
+                 
+                    @Html.ActionLink("Active Appointments", "ActiveAppointments", "Psychologist", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
+                    @Html.ActionLink("Pending Appointments", "PendingAppointments", "Psychologist", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
+                    @Html.ActionLink("Completed Appointments", "CommpletedAppointments", "Psychologist", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
                 </div>
             </li>
             <li>
@@ -76,6 +94,7 @@
                     @Html.ActionLink("Change Password", "ChangePassword", "Manage", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
                 </div>
             </li>
+<<<<<<< HEAD
 
             <li>
                 <button class="collapsible"><em class="fa fa-question">&nbsp; &nbsp;</em>Help</button>
@@ -84,6 +103,8 @@
                 </div>
             </li>
 
+=======
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
             @Html.Partial("_LoginPartial")
         </ul>
     </div><!--/.sidebar-->

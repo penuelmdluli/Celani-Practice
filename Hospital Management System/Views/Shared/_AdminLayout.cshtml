@@ -71,7 +71,12 @@
                 <button class="collapsible"><em class="fa fa-calendar-check-o">&nbsp; &nbsp;</em>Schedule</button>
                 <div style="width: 100% !important" class="children content">
                     @Html.ActionLink("Add Schedule", "AddSchedule", "Admin", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
+<<<<<<< HEAD
                     @Html.ActionLink("List of Schedule", "ListOfSchedules", "Admin", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
+=======
+                    @Html.ActionLink("List of Free Schedule", "ListOfSchedules", "Admin", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
+                    @Html.ActionLink("List of Booked Schedule", "ListOfBookedSchedules", "Admin", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
                 </div>
             </li>
             <li>
@@ -126,6 +131,7 @@
                     @Html.ActionLink("List Audits", "ListOfAudits", "Admin", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
                 </div>
             </li>
+<<<<<<< HEAD
 
             <li>
                 <button class="collapsible"><em class="fa fa-question">&nbsp; &nbsp;</em>Help</button>
@@ -133,6 +139,8 @@
                     @Html.ActionLink("Help", "ComplaintHelp", "Home", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
                 </div>
             </li>
+=======
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
             @Html.Partial("_LoginPartial")
         </ul>
     </div><!--/.sidebar-->

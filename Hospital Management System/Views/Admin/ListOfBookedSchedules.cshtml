@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Hospital_Management_System.Models.Dto.SchedulesDto>
+
+@{
+    ViewBag.Title = "ListOfBookedSchedules";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <ol class="breadcrumb">
+        <li>
+            <a href="#">
+                <em class="fa fa-home"></em>
+            </a>
+        </li>
+        <li class="active">Booked Schedule</li>
+        <li class="active">List of Schedules</li>
+    </ol>
+</div>
+
+<h2>List Of Booked Schedules</h2>
+
+
+<table id="table_id" class="table">
+    <tbody>
+        <tr>
+            @foreach (var productGroup in Model.Select((e, i) => new { Product = e, Grouping = (i / 3) }).GroupBy(e => e.Grouping))
+            {
+            <tr>
+                @foreach (var product in productGroup.Select(x => x.Product))
+                {
+                    <td>
+                        <div typeof="button" class="btn btn-danger">
+
+                            <div class="col-md-10">
+                                @product.PsychologistName
+                            </div>
+                            <div class="col-md-10">
+                                @product.ScheduleDate.ToShortDateString()
+                            </div>
+                            <div class="col-md-10">
+                                @product.StartTime.ToShortTimeString() - @product.EndTime.ToShortTimeString()
+                            </div>
+                        </div>
+                       
+                    </td>
+                }
+            </tr>
+        }
+            </tr>
+        </tbody>
+
+    </table>
+
+    @section scripts {
+        <script>
+        $(document).ready(function () {
+            $("#table_id").dataTable();
+        });
+        </script>
+    }

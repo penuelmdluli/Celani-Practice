@@ -9,8 +9,11 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Hospital_Management_System.Models;
+<<<<<<< HEAD
 using System.Net.Mail;
 using System.Net;
+=======
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
 
 namespace Hospital_Management_System.Controllers
 {
@@ -26,7 +29,11 @@ namespace Hospital_Management_System.Controllers
             db = new ApplicationDbContext();
         }
 
+<<<<<<< HEAD
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+=======
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -38,9 +45,15 @@ namespace Hospital_Management_System.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
+<<<<<<< HEAD
             private set 
             { 
                 _signInManager = value; 
+=======
+            private set
+            {
+                _signInManager = value;
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
             }
         }
 
@@ -61,7 +74,11 @@ namespace Hospital_Management_System.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+<<<<<<< HEAD
             //ViewBag.ReturnUrl = returnUrl;
+=======
+            ViewBag.ReturnUrl = returnUrl;
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
             return View();
         }
 
@@ -72,6 +89,7 @@ namespace Hospital_Management_System.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+<<<<<<< HEAD
             try
             {
                 if (!ModelState.IsValid)
@@ -126,6 +144,54 @@ namespace Hospital_Management_System.Controllers
 
             //if we got here sometthing is wrong 
             return View();
+=======
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+
+            // This doesn't count login failures towards account lockout
+            // To enable password failures to trigger account lockout, change to shouldLockout: true
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            switch (result)
+            {
+                case SignInStatus.Success:
+                   var user = await UserManager.FindAsync(model.Email, model.Password);
+                    if (UserManager.IsInRole(user.Id, "Admin"))
+                    {
+                        return RedirectToAction("Index", "Admin");
+                    }
+                    else if (UserManager.IsInRole(user.Id, "Psychologist"))
+                    {
+                        return RedirectToAction("Index", "Psychologist");
+                    }
+                    else if (UserManager.IsInRole(user.Id, "Patient"))
+                    {
+                        var patient = db.Patients.Single(c => c.ApplicationUserId == user.Id);
+                        if (patient.MaritalStatus == null || patient.Contact == null || patient.Gender == null)
+                        {
+                            return RedirectToAction("UpdateProfile", "Patient", new { id = user.Id });
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "Patient");
+                        }
+                    }
+                    else
+                    {
+                        return RedirectToLocal(returnUrl);
+                    }
+                case SignInStatus.LockedOut:
+                    return View("Lockout");
+                case SignInStatus.RequiresVerification:
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                case SignInStatus.Failure:
+                default:
+                    ModelState.AddModelError("", "Invalid login attempt.");
+                    return View(model);
+            }
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         }
 
         //
@@ -148,6 +214,7 @@ namespace Hospital_Management_System.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> VerifyCode(VerifyCodeViewModel model)
         {
+<<<<<<< HEAD
             try
             {
                 if (!ModelState.IsValid)
@@ -178,6 +245,29 @@ namespace Hospital_Management_System.Controllers
 
             //if we got here sometthing is wrong 
             return View();
+=======
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            // The following code protects for brute force attacks against the two factor codes. 
+            // If a user enters incorrect codes for a specified amount of time then the user account 
+            // will be locked out for a specified amount of time. 
+            // You can configure the account lockout settings in IdentityConfig
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
+            switch (result)
+            {
+                case SignInStatus.Success:
+                    return RedirectToLocal(model.ReturnUrl);
+                case SignInStatus.LockedOut:
+                    return View("Lockout");
+                case SignInStatus.Failure:
+                default:
+                    ModelState.AddModelError("", "Invalid code.");
+                    return View(model);
+            }
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         }
 
         //
@@ -195,6 +285,7 @@ namespace Hospital_Management_System.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+<<<<<<< HEAD
             try
             {
                 if (ModelState.IsValid)
@@ -236,6 +327,48 @@ namespace Hospital_Management_System.Controllers
             return View(model);
         }
 
+=======
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, UserRole = "Patient", RegisteredDate = DateTime.Now.Date };
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    //await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+
+                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    var patient = new Patient { FirstName = model.FirstName, LastName = model.LastName, EmailAddress = model.Email, ApplicationUserId = user.Id };
+                     db.Patients.Add(patient);
+                     db.SaveChanges();
+                    //db.Users.Add(user);
+                    await UserManager.AddToRoleAsync(user.Id, "Patient");
+                    return RedirectToAction("Login", "Account");
+                }
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form
+
+            return View(model);
+        }
+
+        private async Task<string> SendEmailConfirmationTokenAsync(string userID, string subject)
+        {
+            string code = await UserManager.GenerateEmailConfirmationTokenAsync(userID);
+            var callbackUrl = Url.Action("ConfirmEmail", "Account",
+               new { userId = userID, code = code }, protocol: Request.Url.Scheme);
+            await UserManager.SendEmailAsync(userID, subject,
+               "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+            return callbackUrl;
+        }
+
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
@@ -261,6 +394,7 @@ namespace Hospital_Management_System.Controllers
         // POST: /Account/ForgotPassword
         [HttpPost]
         [AllowAnonymous]
+<<<<<<< HEAD
         public ActionResult ForgotPassword(ForgotPasswordViewModel model)
         {
             if (ModelState.IsValid)
@@ -291,11 +425,31 @@ namespace Hospital_Management_System.Controllers
                     ViewBag.Message = "Oops! Something went wrong. Please contact celeni@support.co.za";
                 }
 
+=======
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await UserManager.FindByEmailAsync(model.Email);
+                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                {
+                    // Don't reveal that the user does not exist or is not confirmed
+                    return View("ForgotPasswordConfirmation");
+                }
+                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                // Send an email with this link
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code , email = model.Email }, protocol: Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
             }
             // If we got this far, something failed, redisplay form
             return View(model);
         }
 
+<<<<<<< HEAD
         public string SendEmail(string Email, string Message, string sub )
         {
 
@@ -327,6 +481,9 @@ namespace Hospital_Management_System.Controllers
 
         }
 
+=======
+        //
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         // GET: /Account/ForgotPasswordConfirmation
         [AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
@@ -337,6 +494,7 @@ namespace Hospital_Management_System.Controllers
         //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
+<<<<<<< HEAD
         [Route("Account/ResetPassword/{code}")]
         public ActionResult ResetPassword(string code)
         {
@@ -344,12 +502,21 @@ namespace Hospital_Management_System.Controllers
         }
 
         //
+=======
+        public ActionResult ResetPassword(string code, string email)
+        {
+            return email == null &&  code == null ? View("Error") : View();
+        }
+
+        ///
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         // POST: /Account/ResetPassword
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
         {
+<<<<<<< HEAD
             try
             {
                 if (!ModelState.IsValid)
@@ -378,6 +545,24 @@ namespace Hospital_Management_System.Controllers
             }
 
             //if we got here sometthing is wrong 
+=======
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var user = await UserManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                // Don't reveal that the user does not exist
+                return RedirectToAction("ResetPasswordConfirmation", "Account");
+            }
+            var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("ResetPasswordConfirmation", "Account");
+            }
+            AddErrors(result);
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
             return View();
         }
 
@@ -405,6 +590,7 @@ namespace Hospital_Management_System.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
         {
+<<<<<<< HEAD
             try { 
                 var userId = await SignInManager.GetVerifiedUserIdAsync();
                 if (userId == null)
@@ -422,6 +608,16 @@ namespace Hospital_Management_System.Controllers
 
             //if we got here sometthing is wrong 
             return View();
+=======
+            var userId = await SignInManager.GetVerifiedUserIdAsync();
+            if (userId == null)
+            {
+                return View("Error");
+            }
+            var userFactors = await UserManager.GetValidTwoFactorProvidersAsync(userId);
+            var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
+            return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         }
 
         //
@@ -431,6 +627,7 @@ namespace Hospital_Management_System.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SendCode(SendCodeViewModel model)
         {
+<<<<<<< HEAD
             try { 
                 if (!ModelState.IsValid)
                 {
@@ -451,6 +648,19 @@ namespace Hospital_Management_System.Controllers
 
             //if we got here sometthing is wrong 
             return View();
+=======
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            // Generate the token and send it
+            if (!await SignInManager.SendTwoFactorCodeAsync(model.SelectedProvider))
+            {
+                return View("Error");
+            }
+            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         }
 
         //
@@ -458,6 +668,7 @@ namespace Hospital_Management_System.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
+<<<<<<< HEAD
             try { 
 
                 var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
@@ -491,6 +702,31 @@ namespace Hospital_Management_System.Controllers
 
             //if we got here sometthing is wrong 
             return View();
+=======
+            var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
+            if (loginInfo == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            // Sign in the user with this external login provider if the user already has a login
+            var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+            switch (result)
+            {
+                case SignInStatus.Success:
+                    return RedirectToLocal(returnUrl);
+                case SignInStatus.LockedOut:
+                    return View("Lockout");
+                case SignInStatus.RequiresVerification:
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
+                case SignInStatus.Failure:
+                default:
+                    // If the user does not have an account, then prompt the user to create an account
+                    ViewBag.ReturnUrl = returnUrl;
+                    ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+            }
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         }
 
         //
@@ -500,6 +736,7 @@ namespace Hospital_Management_System.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
         {
+<<<<<<< HEAD
             try { 
                 if (User.Identity.IsAuthenticated)
                 {
@@ -538,6 +775,37 @@ namespace Hospital_Management_System.Controllers
 
             //if we got here sometthing is wrong 
             return View();
+=======
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Manage");
+            }
+
+            if (ModelState.IsValid)
+            {
+                // Get the information about the user from the external login provider
+                var info = await AuthenticationManager.GetExternalLoginInfoAsync();
+                if (info == null)
+                {
+                    return View("ExternalLoginFailure");
+                }
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var result = await UserManager.CreateAsync(user);
+                if (result.Succeeded)
+                {
+                    result = await UserManager.AddLoginAsync(user.Id, info.Login);
+                    if (result.Succeeded)
+                    {
+                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        return RedirectToLocal(returnUrl);
+                    }
+                }
+                AddErrors(result);
+            }
+
+            ViewBag.ReturnUrl = returnUrl;
+            return View(model);
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         }
 
         //

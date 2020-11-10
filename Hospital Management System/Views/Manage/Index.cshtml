@@ -36,7 +36,11 @@
              
              Uncomment the following block after you have set up two-factor authentication
         *@
+<<<<<<< HEAD
           
+=======
+        @*  
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
             <dt>Phone Number:</dt>
             <dd>
                 @(Model.PhoneNumber ?? "None")
@@ -52,17 +56,28 @@
                 }
                 else
                 {
+<<<<<<< HEAD
                     <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddPhoneNumber")</text>
                 }
             </dd>
         
+=======
+                    <text>[&nbsp;&nbsp;@Html.ActionLink("Add", "AddPhoneNumber")
+                }
+            </dd>
+        *@
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         <dt>Two-Factor Authentication:</dt>
         <dd>
             <p>
                 There are no two-factor authentication providers configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
                 for details on setting up this ASP.NET application to support two-factor authentication.
             </p>
+<<<<<<< HEAD
             @if (Model.TwoFactor)
+=======
+            @*@if (Model.TwoFactor)
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
                 {
                     using (Html.BeginForm("DisableTwoFactorAuthentication", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
@@ -81,7 +96,11 @@
                         <input type="submit" value="Enable" class="btn btn-link" />
                         </text>
                     }
+<<<<<<< HEAD
                 }
+=======
+                }*@
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         </dd>
     </dl>
 </div>

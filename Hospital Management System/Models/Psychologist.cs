@@ -32,6 +32,7 @@ namespace Hospital_Management_System.Models
         public int DepartmentId { get; set; }
 
         public string Address { get; set; }
+<<<<<<< HEAD
 
         [Phone]
         [Display(Name = "Phone No")]
@@ -40,6 +41,16 @@ namespace Hospital_Management_System.Models
         [Required]
         [Phone]
         [Display(Name = "Mobile No")]
+=======
+        [Display(Name = "Phone No")]
+        [StringLength(10, ErrorMessage = "Phone No: length can't be more than 10.")]
+        public string PhoneNo { get; set; }
+
+        [Required]
+        [Display(Name = "Mobile No")]
+        [StringLength(10, ErrorMessage = "Mobile No: length can't be more than 10.")]
+        
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         public string ContactNo { get; set; }
 
         [Required]
@@ -48,6 +59,7 @@ namespace Hospital_Management_System.Models
         [Required]
         public string Gender { get; set; }
 
+<<<<<<< HEAD
         [Required]
         [Display(Name = "Blood Group")]
         public string BloodGroup { get; set; }
@@ -55,6 +67,14 @@ namespace Hospital_Management_System.Models
         [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+=======
+       
+        
+        [Display(Name = "Date of Birth")]
+        [DataType(DataType.Date)]
+       [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+       
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         public DateTime? DateOfBirth { get; set; }
 
         [Display(Name = "Education/Degree")]

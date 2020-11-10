@@ -24,7 +24,13 @@ namespace Hospital_Management_System.Models.Dto
         [Display(Name = "Email Id")]
         public string EmailAddress { get; set; }
         [Display(Name = "Phone No")]
+<<<<<<< HEAD
         public string PhoneNo { get; set; }
+=======
+        [RegularExpression("([1-9][0-9]*)", ErrorMessage = "Contact No: must be a natural number")]
+        public string PhoneNo { get; set; }
+        [RegularExpression("([1-9][0-9]*)", ErrorMessage = "Contact No: must be a natural number")]
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         public string Contact { get; set; }
 
         [Display(Name = "Age")]
@@ -37,6 +43,11 @@ namespace Hospital_Management_System.Models.Dto
         public string Language { get; set; }
 
         public string Gender { get; set; }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         [Display(Name = "Date of Birth")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]

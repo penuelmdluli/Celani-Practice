@@ -13,6 +13,10 @@ namespace Hospital_Management_System.Models
         public string Name { get; set; }
 
         [Required]
+<<<<<<< HEAD
+=======
+        [StringLength(10, ErrorMessage = "Mobile No: length can't be more than 10.")]
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         public string Contact { get; set; }
 
         [Required]

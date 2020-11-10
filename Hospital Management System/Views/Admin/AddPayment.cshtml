@@ -33,7 +33,11 @@
 
     <div class="col">
         <div class="col-lg-10">
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
         </div>
 
         <div class="col-lg-2">
@@ -53,6 +57,7 @@
         </div>
     </div>
 
+<<<<<<< HEAD
     <div class="form-group">
         @Html.LabelFor(model => model.Payment.PatientAddress, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -60,6 +65,8 @@
             @Html.ValidationMessageFor(model => model.Payment.PatientAddress, "", new { @class = "text-danger" })
         </div>
     </div>
+=======
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
 
 
     <div class="form-group">
@@ -79,6 +86,7 @@
         </div>
     </div>
 
+<<<<<<< HEAD
     <div class="form-group">
         @Html.LabelFor(model => model.Payment.PsychologistId, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -87,6 +95,8 @@
             @Html.ValidationMessageFor(model => model.Payment.PsychologistId, "", new { @class = "text-danger" })
         </div>
     </div>
+=======
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
     @{
 
         var ServiceRecivedlist = new List<Payment>
@@ -107,12 +117,17 @@
 
             };
 
+<<<<<<< HEAD
         var HoursOfServicelist = new List<Payment>
 {
                 new Payment {HoursOfService =1},
                 new Payment {HoursOfService = 2},
                 new Payment {HoursOfService = 3},
             };
+=======
+
+
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
 
     }
 
@@ -126,12 +141,19 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Payment.HoursOfService, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
+<<<<<<< HEAD
             @Html.DropDownListFor(model => model.Payment.HoursOfService, new SelectList(HoursOfServicelist, "HoursOfService", "HoursOfService"), "Select Hour(s) Of Service", new { @class = "form-control" })
+=======
+            @Html.EditorFor(model => model.Payment.HoursOfService, new { @class = "form-control" })
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
             @Html.ValidationMessageFor(model => model.Payment.HoursOfService, "", new { @class = "text-danger" })
         </div>
     </div>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
     <div class="row">
         <div class="col-md-4">
 
@@ -148,7 +170,11 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Payment.PaidbyMedicalAid, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
+<<<<<<< HEAD
                     @Html.EditorFor(model => model.Payment.PaidbyMedicalAid, new { @class = "form-control" })
+=======
+                    @Html.EditorFor(model => model.Payment.PaidbyMedicalAid, new { @id = "PaidbyMedicalAid", @class = "form-control" })
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
                     @Html.ValidationMessageFor(model => model.Payment.PaidbyMedicalAid, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -156,15 +182,28 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Payment.PayByCash, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
+<<<<<<< HEAD
                     @Html.EditorFor(model => model.Payment.PayByCash, new { @class = "form-control" })
+=======
+                    @Html.EditorFor(model => model.Payment.PayByCash, new { @id = "PayByCash", @class = "form-control" })
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
                     @Html.ValidationMessageFor(model => model.Payment.PayByCash, "", new { @class = "text-danger" })
                 </div>
             </div>
 
+<<<<<<< HEAD
             <div class="form-group">
                 @Html.LabelFor(model => model.Payment.TotalDue, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
                     @Html.EditorFor(model => model.Payment.TotalDue, new { @class = "form-control" })
+=======
+            
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Payment.TotalDue, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.Payment.TotalDue, new { @id = "TotalDue", @class = "form-control"   })
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
                     @Html.ValidationMessageFor(model => model.Payment.TotalDue, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -174,14 +213,21 @@
         </div>
     </div>
 </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
     <div class="container">
 
         <div class="row">
             <div class="col-md-8">
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
+<<<<<<< HEAD
                         <input type="submit" value=">>>>>>>>>>>>>>>>>>>>>>>>>> Save <<<<<<<<<<<<<<<<<<<<<<<<" class="btn btn-success" />
+=======
+                        <input  n type="submit" value=">>>>>>>>>>>>>>>>>>>>>>>>>> Save <<<<<<<<<<<<<<<<<<<<<<<<" class="btn btn-success" />
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
                     </div>
                 </div>
             </div>
@@ -207,6 +253,19 @@
                 $(function () {
                     $("#dropdown2").chosen();
                 });
+<<<<<<< HEAD
+=======
+
+                function sum() {
+                    var txtFirstNumberValue = document.getElementById('PaidbyMedicalAid').value;
+                    var txtSecondNumberValue = document.getElementById('PayByCash').value;
+                 
+                    var result = parseFloat(txtFirstNumberValue) + parseFloat(txtSecondNumberValue);
+                    if (!isNaN(result)) {
+                        document.getElementById('TotalMoney').value = result.toFixed(2);
+                    }
+                }
+>>>>>>> 3c552410d40ec94cbecda862c77b7e85a15807a4
             </script>
         }
 
