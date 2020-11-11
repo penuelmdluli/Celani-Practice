@@ -141,8 +141,6 @@
                 </div>
             </div>
 
-            
-
             <div class="form-group">
                 @Html.LabelFor(model => model.Payment.TotalDue, htmlAttributes: new { @class = "control-label col-md-4" })
                 <div class="col-md-8">
@@ -189,15 +187,7 @@
                     $("#dropdown2").chosen();
                 });
 
-                function sum() {
-                    var txtFirstNumberValue = document.getElementById('PaidbyMedicalAid').value;
-                    var txtSecondNumberValue = document.getElementById('PayByCash').value;
-                 
-                    var result = parseFloat(txtFirstNumberValue) + parseFloat(txtSecondNumberValue);
-                    if (!isNaN(result)) {
-                        document.getElementById('TotalMoney').value = result.toFixed(2);
-                    }
-                }
+              
             </script>
         }
 

@@ -912,7 +912,7 @@ namespace Hospital_Management_System.Controllers
                 PatientEmail = db.Patients.FirstOrDefault(d => d.Id == model.Payment.PatientId).EmailAddress,
                 PatientGender= db.Patients.FirstOrDefault(d => d.Id == model.Payment.PatientId).Gender,
                 PatientNumber = db.Patients.FirstOrDefault(d => d.Id == model.Payment.PatientId).Contact,
-                DateOfBirth = db.Patients.FirstOrDefault(d => d.Id == model.Payment.PatientId).DateOfBirth,
+              
                 PsychologistContact = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PatientId).ContactNo,
                 PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PatientId).FullName,
                 PsychologistSpecialist = db.Psychologists.FirstOrDefault(d => d.Id == model.Payment.PatientId).Specialization,
