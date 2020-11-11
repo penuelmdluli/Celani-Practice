@@ -104,6 +104,10 @@
                     @Html.ActionLink("List of Payment", "ListOfPayment", "Admin", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
                 </div>
             </li>
+            <button class="collapsible"><em class="fa fa-user-md">&nbsp; &nbsp;</em>Help Facility</button>
+            <div style="width: 100% !important" class="children content">
+                @Html.ActionLink("Help", "HelpAdmin", "Admin", null, new { @class = "list-group-item", @style = "margin: 0px -20px; font-size: 13px" })
+            </div>
 
             <li>
                 <button class="collapsible"><em class="fa fa-bar-chart">&nbsp; &nbsp;</em>reports</button>

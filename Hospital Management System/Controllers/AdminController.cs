@@ -976,7 +976,10 @@ namespace Hospital_Management_System.Controllers
 
             return View(audits);
         }
-
+        public ActionResult HelpAdmin()
+        {
+            return View();
+        }
         public class AuditDto
         {
             public string Who { get; set; }

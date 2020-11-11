@@ -19,10 +19,10 @@
 
 <h2>Add Complain</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -39,6 +39,11 @@
                 <input type="submit" value="Submit Complain" class="btn btn-success" />
             </div>
         </div>
+    </div>
+    <div>
+        <video controls="controls" height="400" width="700">
+            <source src="~/PDF%20File/Complaint%20Caleni%20Video.mp4" type="video/mp4" />
+        </video>
     </div>
 }
 

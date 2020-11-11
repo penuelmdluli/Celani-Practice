@@ -537,6 +537,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="PDF File\Complaint Caleni Video.mp4" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -564,6 +565,7 @@
     <Content Include="Content\Layout\vendors\fonts\ionicons.ttf" />
     <Content Include="Content\Layout\vendors\fonts\ionicons.woff" />
     <Content Include="Content\Layout\vendors\fonts\ionicons.woff2" />
+    <Content Include="PDF File\CALENI PRACTICE HELP DOCUMENT FOR ADMINISTRATORS.pdf" />
     <None Include="Properties\PublishProfiles\Usman.pubxml" />
     <Content Include="Scripts\chosen.jquery.min.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
@@ -764,6 +766,7 @@
     <Content Include="Views\Admin\ListOfPayment.cshtml" />
     <Content Include="Views\Admin\ViewPaymentInvoice.cshtml" />
     <Content Include="Views\Admin\AppointmentsReport.cshtml" />
+    <Content Include="Views\Admin\HelpAdmin.cshtml" />
     <None Include="Views\Admin\ListOfAudits.cshtml" />
     <Content Include="Views\Admin\SchedulesReport.cshtml" />
     <Content Include="Views\Admin\PatientsReport.cshtml" />
