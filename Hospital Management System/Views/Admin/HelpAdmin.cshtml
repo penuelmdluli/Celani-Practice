@@ -1,0 +1,223 @@
+﻿
+@{
+    ViewBag.Title = "HelpAdmin";
+}
+
+<h2>HelpAdmin</h2>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<h2>Help Center for Admin</h2>
+<div style="float:right;">
+    <object data="CALENI PRACTICE HELP DOCUMENT FOR ADMINISTRATORS.pdf" type="application/pdf" width="100%" height="100%">
+        <p>
+            <a href="~/PDF File/CALENI PRACTICE HELP DOCUMENT FOR ADMINISTRATORS.pdf">
+                <h4 style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">
+                    Click here to
+                    to open Complete Help Document.
+                </h4>
+            </a>
+        </p>
+    </object>
+</div>
+<br/>
+<br />
+<div class="accordion" id="accordionExample">
+    <div>
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <h4>Select an menu option to view details</h4> <br />
+                    </button>
+                </h2>
+            </div>
+        </div>
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
+
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingTwo">
+            <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    CENTER INFORMATION
+                </button>
+            </h2>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+            <div class="card-body">
+                <p class="text-center">TO ADD A CENTER.</p>
+                <p class="text-center">1. Go to dashboard and select center.</p>
+                <p class="text-center">2.Select add center option under center collapse menu </p>
+                <p class="text-center">
+                    @Html.ActionLink("Go to add center", "AddDepartment", "Admin")
+                </p>
+                <p class="text-center">TO VIEW,EDIT,DELETE A CENTER.</p>
+                <p class="text-center">1. Go to dashboard and select center.</p>
+                <p class="text-center">2.Select center list option under center collapse menu </p>
+                <p class="text-center">
+                    @Html.ActionLink("Go to center list", "DepartmentList", "Admin")
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingThree">
+            <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    PSYCHOLOGIST INFORMATION
+                </button>
+            </h2>
+        </div>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+            <div class="card-body">
+                <p class="text-center">TO ADD A PSYCHOLOGIST.</p>
+                <p class="text-center">1. Go to dashboard and select psychologist.</p>
+                <p class="text-center">2.Select add psychologist option under psychologist collapse menu </p>
+                <p class="text-center">
+                    @Html.ActionLink("Go to add psychologist", "AddPsychologist", "Admin")
+                </p>
+                <p class="text-center">TO VIEW,EDIT,DELETE A PSYCHOLOGIST.</p>
+                <p class="text-center">1. Go to dashboard and select psychologisst.</p>
+                <p class="text-center">2.Select list of psychologist option under psychologist collapse menu </p>
+                <p class="text-center">
+                    @Html.ActionLink("Go to list of psychologist", "ListOfPsychologists", "Admin")
+                </p>
+            </div>
+        </div>
+        <div></div>
+        <div class="card">
+            <div class="card-header" id="headingFour">
+                <h2 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        SCHEDULE INFORMATION
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                <div class="card-body">
+                    <p class="text-center">TO ADD A SCHEDULE.</p>
+                    <p class="text-center">1. Go to dashboard and select schedule.</p>
+                    <p class="text-center">2.Select add schedule option under schedule collapse menu </p>
+                    <p class="text-center">
+                        @Html.ActionLink("Go to add schedule", "AddSchedule", "Admin")
+                    </p>
+                    <p class="text-center">TO VIEW,EDIT,DELETE A SCHEDULE.</p>
+                    <p class="text-center">1. Go to dashboard and select psychologisst.</p>
+                    <p class="text-center">2.Select list of schedule option under schedule collapse menu </p>
+                    <p class="text-center">
+                        @Html.ActionLink("Go to list of schedules", "ListOfSchedules", "Admin")
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingFive">
+                <h2 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        PAYMENT INFORMATION
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+                <div class="card-body">
+                    <p class="text-center">TO ADD A PAYMENT.</p>
+                    <p class="text-center">1. Go to dashboard and select payment.</p>
+                    <p class="text-center">2.Select add payment or medical aid claim option under payment collapse menu </p>
+                    <p class="text-center">
+                        @Html.ActionLink("Go to add cash payment", "AddPayment", "Admin")
+
+                    </p>
+                    <p class="text-center">TO VIEW,EDIT,DELETE A PAYMENT.</p>
+                    <p class="text-center">1. Go to dashboard and select psychologisst.</p>
+                    <p class="text-center">2.Select list of payment or medical aid claim option under payment collapse menu </p>
+                    <p class="text-center">
+                        @Html.ActionLink("Go to list of payments", "ListOfPayment", "Admin")
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingSix">
+                <h2 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                        COMPLAINT DETAILS
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionExample">
+                <div class="card-body">
+                    <p class="text-center">TO VIEW AND RESPOND A COMPLAINT.</p>
+                    <p class="text-center">1. Go to dashboard and select complaint.</p>
+                    <p class="text-center">2.Select list of complaints option under complaint collapse menu </p>
+                    <p class="text-center">
+                        @Html.ActionLink("Go to list of complaints", "ListOfComplains", "Admin")
+
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingSeven">
+                <h2 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                        ANNOUNCEMENTS
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordionExample">
+                <div class="card-body">
+                    <p class="text-center">TO ADD A ANNOUNCEMENT.</p>
+                    <p class="text-center">1. Go to dashboard and select announcements.</p>
+                    <p class="text-center">2.Select add announcement option under announcements collapse menu </p>
+                    <p class="text-center">
+                        @Html.ActionLink("Go to add announcement", "AddAnnouncement", "Admin")
+                    </p>
+                    <p class="text-center">TO VIEW,EDIT,DELETE A ANNOUNCEMENT.</p>
+                    <p class="text-center">1. Go to dashboard and select announcements.</p>
+                    <p class="text-center">2.Select list of announcement option under announcement collapse menu </p>
+                    <p class="text-center">
+                        @Html.ActionLink("Go to list of announcements", "ListOfAnnouncement", "Admin")
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" id="headingEight">
+            <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                    MANAGER USER INFORMATION
+                </button>
+            </h2>
+        </div>
+        <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#accordionExample">
+            <div class="card-body">
+                <p class="text-center">CHANGE PASSWORD.</p>
+                <p class="text-center">1. Go to dashboard and select manage.</p>
+                <p class="text-center">2.Select change password option under manage collapse menu </p>
+                <p class="text-center">
+                    @Html.ActionLink("Go to change password", "ChangePassword", "Manage")
+
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingNine">
+                <h2 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                        REPORT DETAILS
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseNine" class="collapse" aria-labelledby="headingNine" data-parent="#accordionExample">
+                <div class="card-body">
