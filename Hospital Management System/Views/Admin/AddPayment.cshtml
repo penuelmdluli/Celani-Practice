@@ -105,12 +105,14 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.Payment.HoursOfService, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Payment.HoursOfService, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Payment.HoursOfService, "", new { @class = "text-danger" })
-        </div>
+        @Html.LabelFor(model => model.Payment.HoursOfService, htmlAttributes: new { @class = "control-label col-md-2" })<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-info-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-toggle="popover" title="Consultation Hours" data-content="How many hours did the patient consult?">
+    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+    <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588z" />
+    <div class="col-md-10">
+        @Html.EditorFor(model => model.Payment.HoursOfService, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Payment.HoursOfService, "", new { @class = "text-danger" })
     </div>
+</div>
 
     <div class="row">
         <div class="col-md-4">
@@ -118,28 +120,34 @@
         </div>
         <div class="col-md-8">
             <div class="form-group">
-                @Html.LabelFor(model => model.Payment.ServiceAmount, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.Payment.ServiceAmount, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Payment.ServiceAmount, "", new { @class = "text-danger" })
-                </div>
-            </div>
+                @Html.LabelFor(model => model.Payment.ServiceAmount, htmlAttributes: new { @class = "control-label col-md-4" })<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-info-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-toggle="popover" title="Total service amount" data-content="1 hour=R500 2 hours=R1000 3hours=R1500">
+    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+    <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588z" />
+    <div class="col-md-8">
+        @Html.EditorFor(model => model.Payment.ServiceAmount, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Payment.ServiceAmount, "", new { @class = "text-danger" })
+    </div>
+</div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Payment.PaidbyMedicalAid, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.Payment.PaidbyMedicalAid, new { @id = "PaidbyMedicalAid", @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Payment.PaidbyMedicalAid, "", new { @class = "text-danger" })
-                </div>
-            </div>
+                @Html.LabelFor(model => model.Payment.PaidbyMedicalAid, htmlAttributes: new { @class = "control-label col-md-4" })<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-info-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-toggle="popover" title="Medical aid Amount" data-content="Only for Patients with Medical Aid-Check Medical Aid Payment">
+    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+    <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588z" />
+    <div class="col-md-8">
+        @Html.EditorFor(model => model.Payment.PaidbyMedicalAid, new { @id = "PaidbyMedicalAid", @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Payment.PaidbyMedicalAid, "", new { @class = "text-danger" })
+    </div>
+</div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Payment.PayByCash, htmlAttributes: new { @class = "control-label col-md-4" })
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.Payment.PayByCash, new { @id = "PayByCash", @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.Payment.PayByCash, "", new { @class = "text-danger" })
-                </div>
-            </div>
+                @Html.LabelFor(model => model.Payment.PayByCash, htmlAttributes: new { @class = "control-label col-md-4" }) <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-info-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg" data-toggle="popover" title="Paid Cash" data-content="Paid immediately afer consultation-Cash or Card">
+    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+    <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588z" />
+    <div class="col-md-8">
+        @Html.EditorFor(model => model.Payment.PayByCash, new { @id = "PayByCash", @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Payment.PayByCash, "", new { @class = "text-danger" })
+    </div>
+</div>
 
             
 
@@ -198,6 +206,13 @@
                         document.getElementById('TotalMoney').value = result.toFixed(2);
                     }
                 }
+                 $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
+            ;
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })
             </script>
         }
 
