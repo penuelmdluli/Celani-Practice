@@ -299,7 +299,7 @@ namespace Hospital_Management_System.Controllers
                 Patients = db.Patients.ToList()
             };
 
-            if (model.Appointment.AppointmentDate <= DateTime.Now.Date)
+            if (model.Appointment.AppointmentDate < DateTime.Now.Date)
             {
                 ViewBag.Messege = "Please Enter the Date greater than today or equal!!";
                 return View(collection);
