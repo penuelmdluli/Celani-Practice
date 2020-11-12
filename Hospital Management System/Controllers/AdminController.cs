@@ -336,7 +336,7 @@ namespace Hospital_Management_System.Controllers
                 Psychologists = db.Psychologists.ToList()
             };
 
-            if (model.Schedule.ScheduleDate <= DateTime.Now.Date)
+            if (model.Schedule.ScheduleDate < DateTime.Now.Date)
             {
                 ViewBag.Messege = "Please Enter the Date greater than today or equal!!";
                 return View(collection);
