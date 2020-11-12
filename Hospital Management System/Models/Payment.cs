@@ -81,7 +81,7 @@ namespace Hospital_Management_System.Models
         [Display(Name = "Total Due")]
         public double TotalDue { get; set; }
 
-        [Display(Name = "Invoice Refference")]
+        [Display(Name = "Invoice Reference")]
         public string InvoiceRefNo { get; set; }
 
     }
