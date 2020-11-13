@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -29,38 +30,85 @@ namespace Hospital_Management_System.Controllers
             db.Dispose();
         }
 
+        private readonly string default_image = "Administrator.png";
         [Authorize(Roles = "Patient")]
         public ActionResult Index(string message)
         {
-            ViewBag.Messege = message;
-            string user = User.Identity.GetUserId();
-            var patient = db.Patients.Single(c => c.ApplicationUserId == user);
-            var date = DateTime.Now.Date;
-            var model = new CollectionOfAll
+            try
             {
-                Departments = db.Centre.ToList(),
-                Psychologists = db.Psychologists.ToList(),
-                Patients = db.Patients.ToList(),
-                ActiveAppointments = db.Appointments.Where(c => c.Status).Where(c => c.PatientId == patient.Id).Where(c => c.AppointmentDate >= date).ToList(),
-                PendingAppointments = db.Appointments.Where(c => c.Status == false).Where(c => c.PatientId == patient.Id).Where(c => c.AppointmentDate >= date).ToList(),
-                Announcements = db.Announcements.Where(c => c.AnnouncementFor == "Patient").ToList()
-            };
-            return View(model);
+                ViewBag.Messege = message;
+                string user = User.Identity.GetUserId();
+                var patient = db.Patients.Single(c => c.ApplicationUserId == user);
+
+                if (patient.Image != null)
+                {
+                    ViewBag.propic = patient.Image;
+                }
+                else
+                {
+                    ViewBag.propic = default_image;
+                }
+
+                var date = DateTime.Now.Date;
+                var model = new CollectionOfAll
+                {
+                    Departments = db.Centre.ToList(),
+                    Psychologists = db.Psychologists.ToList(),
+                    Patients = db.Patients.ToList(),
+                    ActiveAppointments = db.Appointments.Where(c => c.Status).Where(c => c.PatientId == patient.Id).Where(c => c.AppointmentDate >= date).ToList(),
+                    PendingAppointments = db.Appointments.Where(c => c.Status == false).Where(c => c.PatientId == patient.Id).Where(c => c.AppointmentDate >= date).ToList(),
+                    Announcements = db.Announcements.Where(c => c.AnnouncementFor == "Patient").ToList()
+                };
+
+                return View(model);
+            }
+            catch (Exception error)
+            {
+                Console.Write(error.Message);
+            }
+
+            //if we got here something went wrong
+            return View();
         }
 
         //Update Patient profile
         [Authorize(Roles = "Patient")]
         public ActionResult UpdateProfile(string id)
         {
-            var patient = db.Patients.Single(c => c.ApplicationUserId == id);
-            return View(patient);
+            try { 
+                var patient = db.Patients.Single(c => c.ApplicationUserId == id);
+
+                if (patient.Image != null)
+                {
+                    ViewBag.propic = patient.Image;
+                }
+                else
+                {
+                    ViewBag.propic = default_image;
+                }
+                return View(patient);
+            }
+            catch (Exception error)
+            {
+                Console.Write(error.Message);
+            }
+
+            //if we got here something went wrong
+            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UpdateProfile(string id, Patient model)
+        public ActionResult UpdateProfile(string id, Patient model, HttpPostedFileWrapper picture)
         {
             var patient = db.Patients.Single(c => c.ApplicationUserId == id);
+
+            if (picture != null)
+            {
+                var path = Path.Combine(Server.MapPath("~/Content/img"), picture.FileName);
+                picture.SaveAs(path);
+                patient.Image = picture.FileName;
+            }
             patient.FirstName = model.FirstName;
             patient.LastName = model.LastName;
             patient.FullName = model.FirstName + " " + model.LastName;
@@ -74,7 +122,7 @@ namespace Hospital_Management_System.Controllers
             patient.PhoneNo = model.PhoneNo;
             db.SaveChanges();
             string audiuserName = User.Identity.GetUserName();
-            AuditExtension.AddAudit(audiuserName, "Update", "Patients");
+            AuditExtension.AddAudit(audiuserName, "Updated Patient Details", "Patients");
             return RedirectToAction("Index");
         }
 
@@ -122,7 +170,7 @@ namespace Hospital_Management_System.Controllers
             db.SaveChanges();
 
             string audiuserName = User.Identity.GetUserName();
-            AuditExtension.AddAudit(audiuserName, "Create", "Appointments");
+            AuditExtension.AddAudit(audiuserName, "Added Appointment", "Appointments");
             return RedirectToAction("Index");
         }
 
@@ -182,7 +230,8 @@ namespace Hospital_Management_System.Controllers
             {
                ModelState.AddModelError("error.error", "You  have still have an  ongoing appointment");
             }
-
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Created Appointment", "Appointments");
             return RedirectToAction("ListOfAppointments");
 
         }
@@ -208,8 +257,9 @@ namespace Hospital_Management_System.Controllers
     
                 })
                 .ToList();
+
             string audiuserName = User.Identity.GetUserName();
-            AuditExtension.AddAudit(audiuserName, "Read", "Appointments");
+            AuditExtension.AddAudit(audiuserName, "Retrieved Appointments", "Appointments");
             return View(appointment);
         }
 
@@ -247,7 +297,7 @@ namespace Hospital_Management_System.Controllers
                 appointment.Problem = model.Appointment.Problem;
                 db.SaveChanges();
             string audiuserName = User.Identity.GetUserName();
-            AuditExtension.AddAudit(audiuserName, "Update", "Appointments");
+            AuditExtension.AddAudit(audiuserName, "Updated Appointment Details", "Appointments");
             return RedirectToAction("ListOfAppointments");
           
         }
@@ -268,7 +318,7 @@ namespace Hospital_Management_System.Controllers
             db.Appointments.Remove(appointment);
             db.SaveChanges();
             string audiuserName = User.Identity.GetUserName();
-            AuditExtension.AddAudit(audiuserName, "Delete", "Appointments");
+            AuditExtension.AddAudit(audiuserName, "Deleted Appointment", "Appointments");
             return RedirectToAction("ListOfAppointments");
         }
 
@@ -296,7 +346,7 @@ namespace Hospital_Management_System.Controllers
                      
                  }).ToList();
             string audiuserName = User.Identity.GetUserName();
-            AuditExtension.AddAudit(audiuserName, "Read", "Psychologists");
+            AuditExtension.AddAudit(audiuserName, "Retrieved Psychologists", "Psychologists");
             return View(doctor);
         }
 
@@ -316,7 +366,7 @@ namespace Hospital_Management_System.Controllers
                     Id = e.Id,
                 }).ToList();
             string audiuserName = User.Identity.GetUserName();
-            AuditExtension.AddAudit(audiuserName, "Read", "Schedules");
+            AuditExtension.AddAudit(audiuserName, "Retrieved Schedules", "Schedules");
             return View(schedule);
         }
 
@@ -327,7 +377,7 @@ namespace Hospital_Management_System.Controllers
         {
             var doctor = db.Psychologists.Include(c => c.Centre).Single(c => c.Id == id);
             string audiuserName = User.Identity.GetUserName();
-            AuditExtension.AddAudit(audiuserName, "Read", "Psychologists");
+            AuditExtension.AddAudit(audiuserName, "Retrieved Psychologists", "Psychologists");
             return View(doctor);
         }
 
@@ -350,7 +400,7 @@ namespace Hospital_Management_System.Controllers
                     Id = e.Id,
                 }).OrderBy(c => c.ScheduleDate).ToList();
             string audiuserName = User.Identity.GetUserName();
-            AuditExtension.AddAudit(audiuserName, "Read", "Schedules");
+            AuditExtension.AddAudit(audiuserName, "Retrieved Schedules", "Schedules");
             return View(schedule);
         }
 
@@ -373,7 +423,7 @@ namespace Hospital_Management_System.Controllers
             db.Complaints.Add(complain);
             db.SaveChanges();
             string audiuserName = User.Identity.GetUserName();
-            AuditExtension.AddAudit(audiuserName, "Create", "Complaints");
+            AuditExtension.AddAudit(audiuserName, "Added Complaint", "Complaints");
             return RedirectToAction("ListOfComplains");
         }
 
@@ -382,7 +432,7 @@ namespace Hospital_Management_System.Controllers
         {
             var complain = db.Complaints.ToList();
             string audiuserName = User.Identity.GetUserName();
-            AuditExtension.AddAudit(audiuserName, "Read", "Complaints");
+            AuditExtension.AddAudit(audiuserName, "Retrieved Complaints", "Complaints");
             return View(complain);
         }
 
@@ -401,7 +451,7 @@ namespace Hospital_Management_System.Controllers
             complain.Complain = model.Complain;
             db.SaveChanges();
             string audiuserName = User.Identity.GetUserName();
-            AuditExtension.AddAudit(audiuserName, "Update", "Complaints");
+            AuditExtension.AddAudit(audiuserName, "Updated Complaint details", "Complaints");
             return RedirectToAction("ListOfComplains");
         }
 
@@ -419,7 +469,7 @@ namespace Hospital_Management_System.Controllers
             db.Complaints.Remove(complain);
             db.SaveChanges();
             string audiuserName = User.Identity.GetUserName();
-            AuditExtension.AddAudit(audiuserName, "Delete", "Complaints");
+            AuditExtension.AddAudit(audiuserName, "Deleted Complaint", "Complaints");
             return RedirectToAction("ListOfComplains");
         }
 
@@ -464,7 +514,7 @@ namespace Hospital_Management_System.Controllers
                     Id = e.Id,
                 }).ToList();
             string audiuserName = User.Identity.GetUserName();
-            AuditExtension.AddAudit(audiuserName, "Read", "Consultations");
+            AuditExtension.AddAudit(audiuserName, "Retrieved Consultations", "Consultations");
             return View(consultations);
         }
     }

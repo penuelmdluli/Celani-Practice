@@ -283,6 +283,10 @@
     <Compile Include="Migrations\202011092201080_ispaid.Designer.cs">
       <DependentUpon>202011092201080_ispaid.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011121413434_propic_property.cs" />
+    <Compile Include="Migrations\202011121413434_propic_property.Designer.cs">
+      <DependentUpon>202011121413434_propic_property.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Announcement.cs" />
@@ -827,6 +831,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011092201080_ispaid.resx">
       <DependentUpon>202011092201080_ispaid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011121413434_propic_property.resx">
+      <DependentUpon>202011121413434_propic_property.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\AppointmentReport.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

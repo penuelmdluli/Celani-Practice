@@ -81,6 +81,10 @@ namespace Hospital_Management_System.Controllers
         public ActionResult DepartmentList()
         {
             var model = db.Centre.ToList();
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Retrieved centres", "centres");
+
             return View(model);
         }
 
@@ -103,6 +107,10 @@ namespace Hospital_Management_System.Controllers
 
             db.Centre.Add(model);
             db.SaveChanges();
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Added Centre", "Centres");
+
             return RedirectToAction("DepartmentList");
         }
 
@@ -126,6 +134,10 @@ namespace Hospital_Management_System.Controllers
             department.Location = model.Location;
             
             db.SaveChanges();
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Updated Centre Details", "Centre");
+
             return RedirectToAction("DepartmentList");
         }
 
@@ -143,6 +155,10 @@ namespace Hospital_Management_System.Controllers
             var department = db.Centre.SingleOrDefault(c => c.Id == id);
             db.Centre.Remove(department);
             db.SaveChanges();
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Deleted Centre", "Centres");
+
             return RedirectToAction("DepartmentList");
         }
 
@@ -207,6 +223,10 @@ namespace Hospital_Management_System.Controllers
                 };
                 db.Psychologists.Add(psychologist);
                 db.SaveChanges();
+
+                string audiuserName = User.Identity.GetUserName();
+                AuditExtension.AddAudit(audiuserName, "Added Psychologist", "psychologists");
+
                 return RedirectToAction("ListOfPsychologists");
             }
 
@@ -234,6 +254,9 @@ namespace Hospital_Management_System.Controllers
                 })
                 .ToList();
 
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Retrieved Psychologists", "psychologists");
+
             return View(psychologist);
         }
 
@@ -242,6 +265,10 @@ namespace Hospital_Management_System.Controllers
         public ActionResult PsychologistDetail(int id)
         {
             var psychologist = db.Psychologists.Include(c => c.Centre).SingleOrDefault(c => c.Id == id);
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Retrieved Psychologist Details", "psychologists");
+
             return View(psychologist);
         }
 
@@ -277,6 +304,9 @@ namespace Hospital_Management_System.Controllers
             psychologist.Status = model.Psychologist.Status;
             db.SaveChanges();
 
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Updated Psychologist Details", "psychologists");
+
             return RedirectToAction("ListOfPsychologists");
         }
 
@@ -303,6 +333,11 @@ namespace Hospital_Management_System.Controllers
             db.Users.Remove(user);
             db.Psychologists.Remove(doctor);
             db.SaveChanges();
+
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Deleted Psychologist", "psychologists");
+
             return RedirectToAction("ListOfPsychologists");
         }
 
@@ -355,6 +390,10 @@ namespace Hospital_Management_System.Controllers
 
             db.Schedules.Add(model.Schedule);
             db.SaveChanges();
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Added Schedule", "Schedules");
+
             return RedirectToAction("ListOfSchedules");
         }
 
@@ -372,6 +411,10 @@ namespace Hospital_Management_System.Controllers
                     ScheduleDate = e.ScheduleDate,
                     Id = e.Id,
                 }).OrderBy(c => c.ScheduleDate).ToList();
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Retrieved Schedules", "Schedules");
+
             return View(schedule);
         }
 
@@ -389,6 +432,9 @@ namespace Hospital_Management_System.Controllers
                     ScheduleDate = e.ScheduleDate,
                     Id = e.Id,
                 }).OrderBy(c => c.ScheduleDate).ToList();
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Retrived Booked Schedules", "Schedules");
             return View(schedule);
         }
 
@@ -429,6 +475,10 @@ namespace Hospital_Management_System.Controllers
             schedule.StartTime = model.Schedule.StartTime;
 
             db.SaveChanges();
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Updated Schedule Details", "Schedules");
+
             return RedirectToAction("ListOfSchedules");
         }
 
@@ -451,6 +501,10 @@ namespace Hospital_Management_System.Controllers
             }
             db.Schedules.Remove(schedule);
             db.SaveChanges();
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Deleted Schedule", "Schedules");
+
             return RedirectToAction("ListOfSchedules");
         }
 
@@ -476,6 +530,10 @@ namespace Hospital_Management_System.Controllers
                 ApplicationUserId = e.ApplicationUserId,
             }).
             ToList();
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Retrieved Patients", "Patients");
+
             return View(patients);
         }
 
@@ -510,6 +568,10 @@ namespace Hospital_Management_System.Controllers
             patient.Gender = model.Gender;
             patient.PhoneNo = model.PhoneNo;
             db.SaveChanges();
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Updated Patient", "Patients");
+
             return RedirectToAction("ListOfPatients");
         }
 
@@ -529,6 +591,10 @@ namespace Hospital_Management_System.Controllers
             db.Users.Remove(user);
             db.Patients.Remove(patient);
             db.SaveChanges();
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Deleted Patient", "Patients");
+
             return RedirectToAction("ListOfPatients");
         }
         //End Patient Section
@@ -547,10 +613,8 @@ namespace Hospital_Management_System.Controllers
                 Patients = db.Patients.ToList(),
                 Psychologists = db.Psychologists.ToList(),
                 Schedules = db.Schedules.ToList()
-
-
             };
-
+            
             return View(collection);
         }
 
@@ -573,6 +637,10 @@ namespace Hospital_Management_System.Controllers
             appointment.Problem = model.Appointment.Problem;
             appointment.Status = model.Appointment.Status;
             db.Appointments.Add(appointment);
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Added Appointment", "Appointments");
+
             db.SaveChanges();
 
             if (model.Appointment.Status == true)
@@ -623,6 +691,12 @@ namespace Hospital_Management_System.Controllers
             appointment.Problem = model.Problem;
             appointment.Status = false;
             db.Appointments.Add(appointment);
+
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Created Appointment", "Appointments");
+
+
             db.SaveChanges();
 
             if (appointment.Status == true)
@@ -653,6 +727,11 @@ namespace Hospital_Management_System.Controllers
                     Status = e.Status
                 }).Where(c => c.Status == true)
                 .ToList();
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Retrived Appointments", "Appointments");
+
+
             return View(appointment);
         }
 
@@ -671,6 +750,10 @@ namespace Hospital_Management_System.Controllers
                     PsychologistName = db.Psychologists.FirstOrDefault(d => d.Id == e.Schedule.PsychologistId).FullName,
                     Status = e.Status
                 }).Where(c => c.Status == false).ToList();
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Retrived Pending Appointments", "Appointments");
+
             return View(appointment);
         }
 
@@ -704,6 +787,10 @@ namespace Hospital_Management_System.Controllers
                 appointment.AppointmentDate = model.Appointment.AppointmentDate;
                 appointment.Problem = model.Appointment.Problem;
                 appointment.Status = model.Appointment.Status;
+
+                string audiuserName = User.Identity.GetUserName();
+                AuditExtension.AddAudit(audiuserName, "Updated Appointment", "Appointments");
+
                 db.SaveChanges();
                 if (model.Appointment.Status == true)
                 {
@@ -741,6 +828,11 @@ namespace Hospital_Management_System.Controllers
         {
             var appointment = db.Appointments.Single(c => c.Id == id);
             db.Appointments.Remove(appointment);
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Deleted Appointment", "Appointments");
+
+
             db.SaveChanges();
             if (appointment.Status)
             {
@@ -753,7 +845,7 @@ namespace Hospital_Management_System.Controllers
         }
         #endregion
 
-        #region End Appointment Section
+        #region start Announcement Section
         //Add Announcement
         [Authorize(Roles = "Admin")]
         public ActionResult AddAnnouncement()
@@ -769,12 +861,17 @@ namespace Hospital_Management_System.Controllers
             {
                 db.Announcements.Add(model);
                 db.SaveChanges();
+
                 return RedirectToAction("ListOfAnnouncement");
             }
             else
             {
                 ViewBag.Messege = "Please Enter the Date greater than today!!";
             }
+
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Added Announcement", "Announcements");
 
             return View(model);
         }
@@ -784,6 +881,10 @@ namespace Hospital_Management_System.Controllers
         public ActionResult ListOfAnnouncement()
         {
             var list = db.Announcements.ToList();
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Retrived Announcements", "Announcements");
+
             return View(list);
         }
 
@@ -806,6 +907,10 @@ namespace Hospital_Management_System.Controllers
                 announcement.End = model.End;
                 announcement.AnnouncementFor = model.AnnouncementFor;
                 db.SaveChanges();
+
+                string audiuserName = User.Identity.GetUserName();
+                AuditExtension.AddAudit(audiuserName, "Updated Announcement", "Announcements");
+
                 return RedirectToAction("ListOfAnnouncement");
             }
             else
@@ -830,6 +935,10 @@ namespace Hospital_Management_System.Controllers
             var announcement = db.Announcements.Single(c => c.Id == id);
             db.Announcements.Remove(announcement);
             db.SaveChanges();
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Deleted Announcement", "Announcements");
+
             return RedirectToAction("ListOfAnnouncement");
         }
         #endregion
@@ -840,6 +949,10 @@ namespace Hospital_Management_System.Controllers
         public ActionResult ListOfComplains()
         {
             var complain = db.Complaints.ToList();
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Retrived Complaints", "Complaints");
+
             return View(complain);
         }
 
@@ -859,6 +972,10 @@ namespace Hospital_Management_System.Controllers
             complain.Complain = model.Complain;
             complain.Reply = model.Reply;
             db.SaveChanges();
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Updated Complaint", "Complaints");
+
             return RedirectToAction("ListOfComplains");
         }
 
@@ -876,6 +993,10 @@ namespace Hospital_Management_System.Controllers
             var complain = db.Complaints.Single(c => c.Id == id);
             db.Complaints.Remove(complain);
             db.SaveChanges();
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Deleted Complaint", "Complaints");
+
             return RedirectToAction("ListOfComplains");
         }
         #endregion
@@ -925,6 +1046,10 @@ namespace Hospital_Management_System.Controllers
             patient.IsPaid = true;
             db.Payments.Add(payment);
             db.SaveChanges();
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Added Payment", "Payments");
+
             return RedirectToAction("ListOfPayment");
           
         }
@@ -947,6 +1072,10 @@ namespace Hospital_Management_System.Controllers
                     TotalDue = e.TotalDue
                 })
                 .ToList();
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Retrieved Payments", "Payments");
+
             return View(appointment);
         }
 
@@ -1029,6 +1158,10 @@ namespace Hospital_Management_System.Controllers
             Response.ClearHeaders();
             Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
             stream.Seek(0, SeekOrigin.Begin);
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Generated Appointment Report", "Appointment");
+
             return File(stream, "application/pdf", "AppointmentReport.pdf");
         }
 
@@ -1070,6 +1203,10 @@ namespace Hospital_Management_System.Controllers
             Response.ClearHeaders();
             Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
             stream.Seek(0, SeekOrigin.Begin);
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Generated  Schedule Report", "Schedules");
+
             return File(stream, "application/pdf", "ScheduleReport.pdf");
         }
 
@@ -1111,6 +1248,10 @@ namespace Hospital_Management_System.Controllers
             Response.ClearHeaders();
             Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
             stream.Seek(0, SeekOrigin.Begin);
+
+            string audiuserName = User.Identity.GetUserName();
+            AuditExtension.AddAudit(audiuserName, "Generated Patients Report", "Patients");
+
             return File(stream, "application/pdf", "PatientsReport.pdf");
         }
         #endregion
