@@ -62,7 +62,7 @@ namespace Hospital_Management_System.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? DateOfBirth { get; set; } = DateTime.Now;
 
-        [Display(Name = "Service Recived")]
+        [Display(Name = "Service Received")]
 
         public string ServiceRecived { get; set; }
 
