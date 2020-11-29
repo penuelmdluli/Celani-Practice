@@ -34,27 +34,33 @@
             <th>
                 @Html.DisplayNameFor(model => model.TreatmentPlan)
             </th>
-       
+            <th>
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </th>
+
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PatientName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ConsultationDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Diagnosis)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TreatmentPlan)
-                </td>
-                
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PatientName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ConsultationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Diagnosis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TreatmentPlan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageUrl)
+            </td>
+
+        </tr>
         }
     </tbody>
 

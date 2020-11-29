@@ -29,6 +29,9 @@ namespace Hospital_Management_System.Models.Dto
         [Display(Name = "Treatment Plan")]
         public string TreatmentPlan { get; set; }
 
+        [Display(Name = "Uploaded Document")]
+        public string ImageUrl { get; set; }
+
         [DataType(DataType.Upload)]
         HttpPostedFileBase ImageUpload { get; set; }
     }

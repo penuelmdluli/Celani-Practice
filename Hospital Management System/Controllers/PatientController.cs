@@ -511,6 +511,7 @@ namespace Hospital_Management_System.Controllers
                     ConsultationDate = e.ConsultationDate,
                     Diagnosis = e.Diagnosis,
                     TreatmentPlan = e.TreatmentPlan,
+                    ImageUrl = e.ImageUrl,
                     Id = e.Id,
                 }).ToList();
             string audiuserName = User.Identity.GetUserName();

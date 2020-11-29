@@ -34,31 +34,41 @@
             <th>
                 @Html.DisplayNameFor(model => model.TreatmentPlan)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageUrl)
+            </th>
             <th>Action</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PsychologistName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ConsultationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Diagnosis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TreatmentPlan)
+            </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.PsychologistName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ConsultationDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Diagnosis)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TreatmentPlan)
-                </td>
-                <td>
-                    <a href="@Url.Action("EditPatient", new {id = item.Id})" class="fa fa-pencil-square-o" style="font-size: 19px"></a> |
-                    <a href="@Url.Action("DeletePatient", new {id = item.Id})" class="fa fa-trash" style="font-size: 19px; color: red"></a>
-                </td>
-            </tr>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.ImageUrl)
+            </td>*@
+
+            <td>
+                <img src="@item.ImageUrl" alt="" height=100 width=200 />
+            </td>
+            <td>
+                <a href="@Url.Action("EditPatient", new {id = item.Id})" class="fa fa-pencil-square-o" style="font-size: 19px"></a> |
+                <a href="@Url.Action("DeletePatient", new {id = item.Id})" class="fa fa-trash" style="font-size: 19px; color: red"></a>
+            </td>
+        </tr>
         }
     </tbody>
 
